@@ -12,12 +12,15 @@ function app() {
             function draw(text, size, offset) {
                 ctx.font = `${size}px Arial`;
                 const txtHeight = 0.9 * size;
+                // Investigate
                 const w = Math.ceil(ctx.measureText(text).width);
                 var txt = new Array(w * 2).join(text + '');
                 for (var i = 0; i < Math.ceil(canvas.height/txtHeight); i++) {
+                    // This needs to be fixed
                     const p = ctx.getImageData(10 * i, 20 * i, 1, 1).data;
                     console.log(p)
                     ctx.fillStyle = `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${p[3] / 255})`;
+                    // This needs to be per letter
                     ctx.fillText(txt, - (i * offset), i * txtHeight);
                 }
             }
