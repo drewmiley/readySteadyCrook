@@ -13,7 +13,7 @@ function app() {
         imageCanvas.height = img.naturalHeight;
         imageCanvas.width = img.naturalWidth;
 
-        function draw(text, size, offset, backgroundImage = false, rectRand = false, letterRand = true) {
+        function draw(text, size, offset, spacing, backgroundImage = true, rectRand = false, letterRand = true, colorRect = true) {
             if (backgroundImage) {
                 ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
             } else {
@@ -22,51 +22,53 @@ function app() {
                 imageCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
             }
 
+            const imageDataCtx = backgroundImage ? ctx : imageCtx;
+
             ctx.font = `bold ${size}px Arial`;
             const textWidthPerLetter = ctx.measureText(text).width / text.length;
             const columns = Math.ceil(textWidthPerLetter * canvas.width);
             const columnsRequiredWithOffset = Math.ceil((columns * size) / (size - offset));
-            const rows = Math.ceil(canvas.height / size);
+            const rowSpacing = size + spacing;
+            const rows = Math.ceil(canvas.height / rowSpacing);
             console.log(`Drawing Rows Total ${rows}`);
             for (var i = 0; i < rows; i++) {
-                console.log(`Drawing Row ${i + 1}`);
+                console.log(`Percentage Complete: ${100 * i / rows}%`);
                 for (var j = 0; j < columnsRequiredWithOffset; j++) {
                     // Word-based random (may bring it back)
-                    // const color = imageCtx.getImageData(-(i * offset) + (j * text.length + 0.5 * text.length) * textWidthPerLetter, size * i + 0.5 * size, 1, 1).data;
+                    // const color = imageCtx.getImageData(-(i * offset) + (j * text.length + 0.5 * text.length) * textWidthPerLetter, rowSpacing * i + 0.5 * rowSpacing, 1, 1).data;
                     // ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`;
-                    // ctx.fillRect(-(i * offset) + j * text.length * textWidthPerLetter, i * size, -(i * offset) + (j * text.length + text.length) * textWidthPerLetter, i * size + size);
+                    // ctx.fillRect(-(i * offset) + j * text.length * textWidthPerLetter, i * rowSpacing, -(i * offset) + (j * text.length + text.length) * textWidthPerLetter, i * rowSpacing + rowSpacing);
                     for (var k = 0; k < text.length; k++) {
-                        const rectColor = imageCtx.getImageData(
-                            -(i * offset) + (j * text.length + k) * textWidthPerLetter + (rectRand ? Math.random() : 0.5) * textWidthPerLetter,
-                            size * i + (rectRand ? Math.random() : 0.5) * size,
-                            1, 1
-                        ).data;
-                        ctx.fillStyle = `rgba(${rectColor[0]}, ${rectColor[1]}, ${rectColor[2]}, ${rectColor[3] / 255})`;
-                        ctx.fillRect(
-                            -(i * offset) + (j * text.length + k) * textWidthPerLetter,
-                            i * size,
-                            -(i * offset) + (j * text.length + k + 1) * textWidthPerLetter,
-                            i * size + size
-                        );
-                        const color = imageCtx.getImageData(
+                        if (!backgroundImage && colorRect) {
+                            const rectColor = imageDataCtx.getImageData(
+                                -(i * offset) + (j * text.length + k) * textWidthPerLetter + (rectRand ? Math.random() : 0.5) * textWidthPerLetter,
+                                rowSpacing * i + (rectRand ? Math.random() : 0.5) * rowSpacing,
+                                1, 1
+                            ).data;
+                            ctx.fillStyle = `rgba(${rectColor[0]}, ${rectColor[1]}, ${rectColor[2]}, ${rectColor[3] / 255})`;
+                            ctx.fillRect(
+                                -(i * offset) + (j * text.length + k) * textWidthPerLetter,
+                                i * rowSpacing,
+                                -(i * offset) + (j * text.length + k + 1) * textWidthPerLetter,
+                                i * rowSpacing + rowSpacing
+                            );
+                        }
+                        const color = imageDataCtx.getImageData(
                             -(i * offset) + (j * text.length + k) * textWidthPerLetter + (letterRand ? Math.random() : 0.5) * textWidthPerLetter,
-                            size * i + (letterRand ? Math.random() : 0.5) * size,
+                            rowSpacing * i + (letterRand ? Math.random() : 0.5) * rowSpacing,
                             1, 1
                         ).data;
-                        ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`;
+                        ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${255 / 255})`;
                         ctx.fillText(
                             text[k],
                             -(i * offset) + (j * text.length + k) * textWidthPerLetter,
-                            i * size
+                            i * rowSpacing
                         );
                     }
                 }
             }
         }
-        const backgroundImage = false;
-        const letterRand = true;
-        const rectRand = false;
-        draw('CHIANTI', 7, 3, backgroundImage, letterRand, rectRand);
+        draw('TEXT', 15, 5, 10);
     };
 
     img.crossOrigin = "Anonymous";
