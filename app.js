@@ -9,25 +9,22 @@ function app() {
             canvas.width = img.naturalWidth
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-
-            //draw a box over the top
-            // ctx.fillStyle = "rgba(200, 0, 0, 0.5)";
-            // ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            function draw(txt) {
-                ctx.font="20px Arial";
-                var txtHeight = 25;
-                var offset = 5;
-                var w = Math.ceil(ctx.measureText(txt).width);
-                var txt = new Array(w * 2).join(txt + ' ');
-                for(var i = 0; i < Math.ceil(canvas.height/txtHeight); i++) {
+            function draw(text, size, offset) {
+                ctx.font = `${size}px Arial`;
+                const txtHeight = 0.9 * size;
+                const w = Math.ceil(ctx.measureText(text).width);
+                var txt = new Array(w * 2).join(text + '');
+                for (var i = 0; i < Math.ceil(canvas.height/txtHeight); i++) {
+                    const p = ctx.getImageData(10 * i, 20 * i, 1, 1).data;
+                    console.log(p)
+                    ctx.fillStyle = `rgba(${p[0]}, ${p[1]}, ${p[2]}, ${p[3] / 255})`;
                     ctx.fillText(txt, - (i * offset), i * txtHeight);
                 }
             }
-            draw('1234567');
-
+            draw('1234567', 20, 5);
         };
 
+        img.crossOrigin = "Anonymous";
         img.src = './image.jpg';
         document.body.appendChild(canvas);
     }
