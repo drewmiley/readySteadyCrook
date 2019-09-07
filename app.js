@@ -13,7 +13,7 @@ function app() {
         imageCanvas.height = img.naturalHeight;
         imageCanvas.width = img.naturalWidth;
 
-        function draw(text, size, offset, spacing, backgroundImage = true, rectRand = false, letterRand = true, colorRect = true) {
+        function draw(text, size, offset, spacing, font, backgroundImage = false, colorRect = false, letterRand = false, rectRand = false) {
             if (backgroundImage) {
                 ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
             } else {
@@ -24,7 +24,7 @@ function app() {
 
             const imageDataCtx = backgroundImage ? ctx : imageCtx;
 
-            ctx.font = `bold ${size}px Arial`;
+            ctx.font = `bold ${size}px ${font}`;
             const textWidthPerLetter = ctx.measureText(text).width / text.length;
             const columns = Math.ceil(textWidthPerLetter * canvas.width);
             const columnsRequiredWithOffset = Math.ceil((columns * size) / (size - offset));
@@ -34,10 +34,6 @@ function app() {
             for (var i = 0; i < rows; i++) {
                 console.log(`Percentage Complete: ${100 * i / rows}%`);
                 for (var j = 0; j < columnsRequiredWithOffset; j++) {
-                    // Word-based random (may bring it back)
-                    // const color = imageCtx.getImageData(-(i * offset) + (j * text.length + 0.5 * text.length) * textWidthPerLetter, rowSpacing * i + 0.5 * rowSpacing, 1, 1).data;
-                    // ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`;
-                    // ctx.fillRect(-(i * offset) + j * text.length * textWidthPerLetter, i * rowSpacing, -(i * offset) + (j * text.length + text.length) * textWidthPerLetter, i * rowSpacing + rowSpacing);
                     for (var k = 0; k < text.length; k++) {
                         if (!backgroundImage && colorRect) {
                             const rectColor = imageDataCtx.getImageData(
@@ -62,13 +58,13 @@ function app() {
                         ctx.fillText(
                             text[k],
                             -(i * offset) + (j * text.length + k) * textWidthPerLetter,
-                            i * rowSpacing
+                            i * rowSpacing - spacing
                         );
                     }
                 }
             }
         }
-        draw('TEXT', 15, 5, 10);
+        draw('DREW', 10, 2, -3, 'Arial');
     };
 
     img.crossOrigin = "Anonymous";
