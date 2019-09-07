@@ -1,4 +1,4 @@
-const getFillRect = (ctx, imageCtx, text, offset, cachedTextWidths, rectRand, rowSpacing) => (i, j, k) => {
+const getFillRect = (ctx, imageCtx, text, offset, cachedTextWidths, rectRand, rowSpacing) => i => j => k => {
     const totalOffset = i * offset;
     const startHeight = i * rowSpacing;
     const startWidth = j * cachedTextWidths[cachedTextWidths.length - 1].sum + cachedTextWidths[k].sum;
@@ -16,7 +16,7 @@ const getFillRect = (ctx, imageCtx, text, offset, cachedTextWidths, rectRand, ro
     );
 }
 
-const getFillText = (ctx, imageCtx, text, offset, spacing, cachedTextWidths, letterRand, rowSpacing) => (i, j, k) => {
+const getFillText = (ctx, imageCtx, text, offset, spacing, cachedTextWidths, letterRand, rowSpacing) => i => j => k => {
     const totalOffset = i * offset;
     const startHeight = i * rowSpacing;
     const startWidth = j * cachedTextWidths[cachedTextWidths.length - 1].sum + cachedTextWidths[k].sum;
@@ -71,19 +71,23 @@ function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, bac
 
     console.log(`Drawing Rows Total ${rows}`);
 
-    const fillRect = getFillRect(ctx, imageCtx, text, offset, cachedTextWidths, rectRand, rowSpacing);
-    const fillText = getFillText(ctx, imageCtx, text, offset, spacing, cachedTextWidths, letterRand, rowSpacing);
+    const fillRectIJK = getFillRect(ctx, imageCtx, text, offset, cachedTextWidths, rectRand, rowSpacing);
+    const fillTextIJK = getFillText(ctx, imageCtx, text, offset, spacing, cachedTextWidths, letterRand, rowSpacing);
 
     for (let i = 0; i < rows; i++) {
         console.log(`Percentage Complete: ${100 * i / rows}%`);
+        const fillRectJK = fillRectIJK(i);
+        const fillTextJK = fillTextIJK(i);
         for (let j = 0; j < columnsRequiredWithOffset; j++) {
+            const fillRectK = fillRectJK(j);
+            const fillTextK = fillTextJK(j);
             for (let k = 0; k < text.length; k++) {
                 // Fill small rect
                 if (!backgroundImage && colorRect) {
-                    fillRect(i, j, k);
+                    fillRectK(k);
                 }
                 // Write letters
-                fillText(i, j, k);
+                fillTextK(k);
             }
         }
     }
