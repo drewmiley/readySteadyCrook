@@ -61,7 +61,7 @@ function app() {
                             );
                         }
                         // Write letters
-                        const color = imageDataCtx.getImageData(
+                        const color = imageCtx.getImageData(
                             -(i * offset) + (j * text.length + k) * textWidthPerLetter + (letterRand ? Math.random() : 0.5) * textWidthPerLetter,
                             rowSpacing * i + (letterRand ? Math.random() : 0.5) * rowSpacing,
                             1, 1
@@ -77,7 +77,7 @@ function app() {
             }
         }
 
-        draw('DREW', 10, 2, -3, 'Arial');
+        draw('DREW', 10, 2, -3, 'Helvetica');
     };
 
     img.crossOrigin = "Anonymous";
