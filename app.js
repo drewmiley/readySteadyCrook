@@ -1,4 +1,12 @@
 function app() {
+    const options = {
+        text: 'Drew',
+        size: 10,
+        offset: 2,
+        spacing: -3,
+        font: 'Helvetica'
+    };
+
     var imageCanvas = document.createElement('canvas');
     var canvas = document.createElement('canvas');
 
@@ -14,7 +22,7 @@ function app() {
         imageCanvas.width = img.naturalWidth;
 
         // TODO: Could move function and pass in the two contexts
-        function draw(text, size, offset, spacing, font, backgroundImage = false, colorRect = false, letterRand = false, rectRand = false) {
+        function draw({ text, size, offset, spacing, font, backgroundImage, colorRect, letterRand, rectRand }) {
             imageCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
             // Fill context depending on displaying background image
             if (backgroundImage) {
@@ -77,7 +85,7 @@ function app() {
             }
         }
 
-        draw('DREW', 10, 2, -3, 'Helvetica');
+        draw(options);
     };
 
     img.crossOrigin = "Anonymous";
