@@ -1,9 +1,9 @@
-const getFillRect = (ctx, imageCtx, text, offset, { textWidths, totalTextWidth }, rectRand, rowSpacing) => (i, j, k) => {
+const getFillRect = (ctx, imageCtx, text, offset, cachedTextWidths, rectRand, rowSpacing) => (i, j, k) => {
     const totalOffset = i * offset;
     const startHeight = i * rowSpacing;
-    const startWidth = j * totalTextWidth + textWidths.slice(0, k).reduce((acc, d) => acc + d, 0);
+    const startWidth = j * cachedTextWidths[cachedTextWidths.length - 1].sum + cachedTextWidths[k].sum;
     const rectColor = imageCtx.getImageData(
-        startWidth - totalOffset + (rectRand ? Math.random() : 0.5) * textWidths[k],
+        startWidth - totalOffset + (rectRand ? Math.random() : 0.5) * cachedTextWidths[k].value,
         startHeight + (rectRand ? Math.random() : 0.5) * rowSpacing,
         1, 1
     ).data;
@@ -11,17 +11,17 @@ const getFillRect = (ctx, imageCtx, text, offset, { textWidths, totalTextWidth }
     ctx.fillRect(
         startWidth - totalOffset,
         startHeight,
-        startWidth - totalOffset + textWidths[k],
+        startWidth - totalOffset + cachedTextWidths[k].value,
         startHeight + rowSpacing
     );
 }
 
-const getFillText = (ctx, imageCtx, text, offset, spacing, { textWidths, totalTextWidth }, letterRand, rowSpacing) => (i, j, k) => {
+const getFillText = (ctx, imageCtx, text, offset, spacing, cachedTextWidths, letterRand, rowSpacing) => (i, j, k) => {
     const totalOffset = i * offset;
     const startHeight = i * rowSpacing;
-    const startWidth = j * totalTextWidth + textWidths.slice(0, k).reduce((acc, d) => acc + d, 0);
+    const startWidth = j * cachedTextWidths[cachedTextWidths.length - 1].sum + cachedTextWidths[k].sum;
     const color = imageCtx.getImageData(
-        startWidth - totalOffset + (letterRand ? Math.random() : 0.5) * textWidths[k],
+        startWidth - totalOffset + (letterRand ? Math.random() : 0.5) * cachedTextWidths[k].value,
         startHeight + (letterRand ? Math.random() : 0.5) * rowSpacing,
         1, 1
     ).data;
@@ -56,17 +56,13 @@ function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, bac
     ctx.font = `bold ${size}px ${font}`;
 
     const textWidths = text.split('').map(d => ctx.measureText(d).width);
-
-    const cachedTextWidths = textWidths.map((d, i) => {
-        return {
-            value: d,
-            sum: textWidths.reduce((acc, d) => acc + d, 0)
-        }
-    })
-    const totalTextWidth = textWidths.reduce((acc, d) => acc + d, 0);
+    const cachedTextWidths = textWidths.map((d, i) => ({
+        value: d,
+        sum: textWidths.slice(0, i).reduce((acc, d) => acc + d, 0)
+    })).concat([{ sum: textWidths.reduce((acc, d) => acc + d, 0) }]);
 
     // Calculate columns required
-    const columns = Math.ceil(totalTextWidth * canvas.width / text.length);
+    const columns = Math.ceil(cachedTextWidths[cachedTextWidths.length - 1].sum * canvas.width / text.length);
     const columnsRequiredWithOffset = Math.ceil((columns * size) / (size - offset));
 
     // Calculate rows required
@@ -75,8 +71,8 @@ function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, bac
 
     console.log(`Drawing Rows Total ${rows}`);
 
-    const fillRect = getFillRect(ctx, imageCtx, text, offset, { textWidths, totalTextWidth }, rectRand, rowSpacing);
-    const fillText = getFillText(ctx, imageCtx, text, offset, spacing, { textWidths, totalTextWidth }, letterRand, rowSpacing);
+    const fillRect = getFillRect(ctx, imageCtx, text, offset, cachedTextWidths, rectRand, rowSpacing);
+    const fillText = getFillText(ctx, imageCtx, text, offset, spacing, cachedTextWidths, letterRand, rowSpacing);
 
     for (let i = 0; i < rows; i++) {
         console.log(`Percentage Complete: ${100 * i / rows}%`);
