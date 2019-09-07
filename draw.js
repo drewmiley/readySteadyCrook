@@ -1,3 +1,37 @@
+const getFillRect = (ctx, imageCtx, text, offset, textWidthPerLetter, rectRand, rowSpacing) => (i, j, k) => {
+    const totalOffset = i * offset;
+    const startHeight = i * rowSpacing;
+    const rectColor = imageCtx.getImageData(
+        (j * text.length + k + (rectRand ? Math.random() : 0.5)) * textWidthPerLetter - totalOffset,
+        startHeight + (rectRand ? Math.random() : 0.5) * rowSpacing,
+        1, 1
+    ).data;
+    ctx.fillStyle = `rgba(${rectColor[0]}, ${rectColor[1]}, ${rectColor[2]}, ${rectColor[3] / 255})`;
+    ctx.fillRect(
+        (j * text.length + k) * textWidthPerLetter - totalOffset,
+        startHeight,
+        (j * text.length + k + 1) * textWidthPerLetter - totalOffset,
+        startHeight + rowSpacing
+    );
+}
+
+const getFillText = (ctx, imageCtx, text, offset, spacing, textWidthPerLetter, letterRand, rowSpacing) => (i, j, k) => {
+    const totalOffset = i * offset;
+    const startHeight = i * rowSpacing;
+    const color = imageCtx.getImageData(
+        (j * text.length + k + (letterRand ? Math.random() : 0.5)) * textWidthPerLetter - totalOffset,
+        startHeight + (letterRand ? Math.random() : 0.5) * rowSpacing,
+        1, 1
+    ).data;
+    // Revisit 255 / 255 after testing
+    ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${255 / 255})`;
+    ctx.fillText(
+        text[k],
+        (j * text.length + k) * textWidthPerLetter - totalOffset,
+        startHeight - spacing
+    );
+}
+
 function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, backgroundImage, colorRect, letterRand, rectRand }) {
     canvas.height = img.naturalHeight;
     canvas.width = img.naturalWidth;
@@ -31,39 +65,19 @@ function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, bac
 
     console.log(`Drawing Rows Total ${rows}`);
 
+    const fillRect = getFillRect(ctx, imageCtx, text, offset, textWidthPerLetter, rectRand, rowSpacing);
+    const fillText = getFillText(ctx, imageCtx, text, offset, spacing, textWidthPerLetter, letterRand, rowSpacing);
+
     for (let i = 0; i < rows; i++) {
-
         console.log(`Percentage Complete: ${100 * i / rows}%`);
-
         for (let j = 0; j < columnsRequiredWithOffset; j++) {
             for (let k = 0; k < text.length; k++) {
                 // Fill small rect
                 if (!backgroundImage && colorRect) {
-                    const rectColor = imageCtx.getImageData(
-                        -(i * offset) + (j * text.length + k) * textWidthPerLetter + (rectRand ? Math.random() : 0.5) * textWidthPerLetter,
-                        rowSpacing * i + (rectRand ? Math.random() : 0.5) * rowSpacing,
-                        1, 1
-                    ).data;
-                    ctx.fillStyle = `rgba(${rectColor[0]}, ${rectColor[1]}, ${rectColor[2]}, ${rectColor[3] / 255})`;
-                    ctx.fillRect(
-                        -(i * offset) + (j * text.length + k) * textWidthPerLetter,
-                        i * rowSpacing,
-                        -(i * offset) + (j * text.length + k + 1) * textWidthPerLetter,
-                        i * rowSpacing + rowSpacing
-                    );
+                    fillRect(i, j, k);
                 }
                 // Write letters
-                const color = imageCtx.getImageData(
-                    -(i * offset) + (j * text.length + k) * textWidthPerLetter + (letterRand ? Math.random() : 0.5) * textWidthPerLetter,
-                    rowSpacing * i + (letterRand ? Math.random() : 0.5) * rowSpacing,
-                    1, 1
-                ).data;
-                ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${255 / 255})`;
-                ctx.fillText(
-                    text[k],
-                    -(i * offset) + (j * text.length + k) * textWidthPerLetter,
-                    i * rowSpacing - spacing
-                );
+                fillText(i, j, k);
             }
         }
     }
