@@ -13,7 +13,10 @@ function app() {
         imageCanvas.height = img.naturalHeight;
         imageCanvas.width = img.naturalWidth;
 
+        // TODO: Could move function and pass in the two contexts
         function draw(text, size, offset, spacing, font, backgroundImage = false, colorRect = false, letterRand = false, rectRand = false) {
+            imageCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+            // Fill context depending on displaying background image
             if (backgroundImage) {
                 ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
             } else {
@@ -22,21 +25,29 @@ function app() {
                 imageCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
             }
 
-            const imageDataCtx = backgroundImage ? ctx : imageCtx;
-
             ctx.font = `bold ${size}px ${font}`;
+
             const textWidthPerLetter = ctx.measureText(text).width / text.length;
+
+            // Calculate columns required
             const columns = Math.ceil(textWidthPerLetter * canvas.width);
             const columnsRequiredWithOffset = Math.ceil((columns * size) / (size - offset));
+
+            // Calculate rows required
             const rowSpacing = size + spacing;
             const rows = Math.ceil(canvas.height / rowSpacing);
+
             console.log(`Drawing Rows Total ${rows}`);
-            for (var i = 0; i < rows; i++) {
+
+            for (let i = 0; i < rows; i++) {
+
                 console.log(`Percentage Complete: ${100 * i / rows}%`);
-                for (var j = 0; j < columnsRequiredWithOffset; j++) {
-                    for (var k = 0; k < text.length; k++) {
+
+                for (let j = 0; j < columnsRequiredWithOffset; j++) {
+                    for (let k = 0; k < text.length; k++) {
+                        // Fill small rect
                         if (!backgroundImage && colorRect) {
-                            const rectColor = imageDataCtx.getImageData(
+                            const rectColor = imageCtx.getImageData(
                                 -(i * offset) + (j * text.length + k) * textWidthPerLetter + (rectRand ? Math.random() : 0.5) * textWidthPerLetter,
                                 rowSpacing * i + (rectRand ? Math.random() : 0.5) * rowSpacing,
                                 1, 1
@@ -49,6 +60,7 @@ function app() {
                                 i * rowSpacing + rowSpacing
                             );
                         }
+                        // Write letters
                         const color = imageDataCtx.getImageData(
                             -(i * offset) + (j * text.length + k) * textWidthPerLetter + (letterRand ? Math.random() : 0.5) * textWidthPerLetter,
                             rowSpacing * i + (letterRand ? Math.random() : 0.5) * rowSpacing,
@@ -64,6 +76,7 @@ function app() {
                 }
             }
         }
+
         draw('DREW', 10, 2, -3, 'Arial');
     };
 
