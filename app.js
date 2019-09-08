@@ -1,9 +1,9 @@
 function app() {
     const options = {
-        text: 'Drew',
-        size: 10,
+        text: ['ONE', 'TWO', 'THREE'],
+        size: 12,
         offset: 2,
-        spacing: -3,
+        spacing: 5,
         font: 'Helvetica'
     };
 
