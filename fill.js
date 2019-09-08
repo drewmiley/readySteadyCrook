@@ -1,9 +1,10 @@
-const getFillRect = (ctx, imageCtx, { text, offset, cachedTextWidths, rectRand, rowSpacing }) => i => j => k => {
+const getFillRect = (ctx, imageCtx, { offset, cachedTextWidths, rectRand, rowSpacing }) => i => j => k => {
+    const cachedTextWidthsForRow = cachedTextWidths[i % textArray.length];
     const totalOffset = i * offset;
     const startHeight = i * rowSpacing;
-    const startWidth = j * cachedTextWidths[cachedTextWidths.length - 1].sum + cachedTextWidths[k].sum;
+    const startWidth = j * cachedTextWidthsForRow[cachedTextWidthsForRow.length - 1].sum + cachedTextWidthsForRow[k].sum;
     const rectColor = imageCtx.getImageData(
-        startWidth - totalOffset + (rectRand ? Math.random() : 0.5) * cachedTextWidths[k].value,
+        startWidth - totalOffset + (rectRand ? Math.random() : 0.5) * cachedTextWidthsForRow[k].value,
         startHeight + (rectRand ? Math.random() : 0.5) * rowSpacing,
         1, 1
     ).data;
@@ -11,24 +12,25 @@ const getFillRect = (ctx, imageCtx, { text, offset, cachedTextWidths, rectRand, 
     ctx.fillRect(
         startWidth - totalOffset,
         startHeight,
-        startWidth - totalOffset + cachedTextWidths[k].value,
+        startWidth - totalOffset + cachedTextWidthsForRow[k].value,
         startHeight + rowSpacing
     );
 }
 
-const getFillText = (ctx, imageCtx, { text, offset, spacing, cachedTextWidths, letterRand, rowSpacing }) => i => j => k => {
+const getFillText = (ctx, imageCtx, { textArray, offset, spacing, cachedTextWidths, letterRand, rowSpacing }) => i => j => k => {
+    const cachedTextWidthsForRow = cachedTextWidths[i % textArray.length];
     const totalOffset = i * offset;
     const startHeight = i * rowSpacing;
-    const startWidth = j * cachedTextWidths[cachedTextWidths.length - 1].sum + cachedTextWidths[k].sum;
+    const startWidth = j * cachedTextWidthsForRow[cachedTextWidthsForRow.length - 1].sum + cachedTextWidthsForRow[k].sum;
     const color = imageCtx.getImageData(
-        startWidth - totalOffset + (letterRand ? Math.random() : 0.5) * cachedTextWidths[k].value,
+        startWidth - totalOffset + (letterRand ? Math.random() : 0.5) * cachedTextWidthsForRow[k].value,
         startHeight + (letterRand ? Math.random() : 0.5) * rowSpacing,
         1, 1
     ).data;
     // Revisit 255 / 255 after testing
     ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${255 / 255})`;
     ctx.fillText(
-        text[k],
+        textArray[i % textArray.length][k],
         startWidth - totalOffset,
         startHeight - spacing
     );

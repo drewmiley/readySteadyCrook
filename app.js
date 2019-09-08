@@ -3,7 +3,7 @@ function app() {
         text: ['ONE', 'TWO', 'THREE'],
         size: 12,
         offset: 2,
-        spacing: 5,
+        spacing: -3,
         font: 'Helvetica'
     };
 
