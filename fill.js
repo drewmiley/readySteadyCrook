@@ -20,11 +20,11 @@ const getFillRect = (ctx, imageCtx, { offset, cachedTextWidths, rectRand, rowSpa
 const getFillText = (ctx, imageCtx, { textArray, offset, spacing, cachedTextWidths, letterRand, rowSpacing }) => i => j => k => {
     const cachedTextWidthsForRow = cachedTextWidths[i % textArray.length];
     const totalOffset = i * offset;
-    const startHeight = i * rowSpacing;
+    const startHeight = (i + 1) * rowSpacing;
     const startWidth = j * cachedTextWidthsForRow[cachedTextWidthsForRow.length - 1].sum + cachedTextWidthsForRow[k].sum;
     const color = imageCtx.getImageData(
         startWidth - totalOffset + (letterRand ? Math.random() : 0.5) * cachedTextWidthsForRow[k].value,
-        startHeight + (letterRand ? Math.random() : 0.5) * rowSpacing,
+        startHeight - (letterRand ? Math.random() : 0.5) * rowSpacing,
         1, 1
     ).data;
     // Revisit 255 / 255 after testing

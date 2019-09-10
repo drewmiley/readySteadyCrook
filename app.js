@@ -4,7 +4,8 @@ function app() {
         size: 12,
         offset: 2,
         spacing: -3,
-        font: 'Helvetica'
+        font: 'Helvetica',
+        backgroundColor: 'white'
     };
 
     var imageCanvas = document.createElement('canvas');

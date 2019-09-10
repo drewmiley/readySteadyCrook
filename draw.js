@@ -1,4 +1,4 @@
-function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, backgroundImage, colorRect, letterRand, rectRand }) {
+function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, backgroundImage, colorRect, letterRand, rectRand, backgroundColor }) {
     canvas.height = img.naturalHeight;
     canvas.width = img.naturalWidth;
     imageCanvas.height = img.naturalHeight;
@@ -12,7 +12,7 @@ function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, bac
     if (backgroundImage) {
         ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
     } else {
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = backgroundColor;
         ctx.fillRect(0, 0, img.naturalWidth, img.naturalHeight);
         imageCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
     }
