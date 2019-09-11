@@ -1,4 +1,4 @@
-function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, backgroundImage, colorRect, letterRand, rectRand, backgroundColor }) {
+function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, backgroundImage, colorRect, letterRand, rectRand, backgroundColor, preview }) {
     canvas.height = img.naturalHeight;
     canvas.width = img.naturalWidth;
     imageCanvas.height = img.naturalHeight;
@@ -35,7 +35,7 @@ function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, bac
 
     // Calculate rows required
     const rowSpacing = size + spacing;
-    const rows = Math.ceil(canvas.height / rowSpacing);
+    const rows = preview ? Math.ceil(0.1 * canvas.height / rowSpacing) + 1 : Math.ceil(canvas.height / rowSpacing);
 
     console.log(`Drawing Rows Total ${rows}`);
 
