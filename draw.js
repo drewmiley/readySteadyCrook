@@ -39,7 +39,7 @@ function draw(canvas, imageCanvas, img, { text, size, offset, offsetRows, spacin
 
     console.log(`Drawing Rows Total ${rows}`);
 
-    const fillRectIJK = getFillRect(ctx, imageCtx, { offset, offsetRows, cachedTextWidths, rectRand, rowSpacing });
+    const fillRectIJK = getFillRect(ctx, imageCtx, { textArray, offset, offsetRows, cachedTextWidths, rectRand, rowSpacing });
     const fillTextIJK = getFillText(ctx, imageCtx, { textArray, offset, offsetRows, spacing, cachedTextWidths, letterRand, rowSpacing });
 
     for (let i = 0; i < rows; i++) {
