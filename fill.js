@@ -1,6 +1,7 @@
-const getFillRect = (ctx, imageCtx, { offset, cachedTextWidths, rectRand, rowSpacing }) => i => j => k => {
+const getFillRect = (ctx, imageCtx, { offset, offsetRows, cachedTextWidths, rectRand, rowSpacing }) => i => j => k => {
     const cachedTextWidthsForRow = cachedTextWidths[i % textArray.length];
-    const totalOffset = i * offset;
+    const offsetMultiplier = offsetRows ? (Math.floor(i / offsetRows) % 2 - 0.5) : null;
+    const totalOffset = offsetRows ? (i % offsetRows) * offset : i * offsetRows;
     const startHeight = i * rowSpacing;
     const startWidth = j * cachedTextWidthsForRow[cachedTextWidthsForRow.length - 1].sum + cachedTextWidthsForRow[k].sum;
     const rectColor = imageCtx.getImageData(
@@ -10,16 +11,17 @@ const getFillRect = (ctx, imageCtx, { offset, cachedTextWidths, rectRand, rowSpa
     ).data;
     ctx.fillStyle = `rgba(${rectColor[0]}, ${rectColor[1]}, ${rectColor[2]}, ${rectColor[3] / 255})`;
     ctx.fillRect(
-        startWidth - totalOffset,
+        startWidth - (offsetMultiplier || 1) * totalOffset,
         startHeight,
-        startWidth - totalOffset + cachedTextWidthsForRow[k].value,
+        startWidth - (offsetMultiplier || 1) * totalOffset + cachedTextWidthsForRow[k].value,
         startHeight + rowSpacing
     );
 }
 
-const getFillText = (ctx, imageCtx, { textArray, offset, spacing, cachedTextWidths, letterRand, rowSpacing }) => i => j => k => {
+const getFillText = (ctx, imageCtx, { textArray, offset, offsetRows, spacing, cachedTextWidths, letterRand, rowSpacing }) => i => j => k => {
     const cachedTextWidthsForRow = cachedTextWidths[i % textArray.length];
-    const totalOffset = i * offset;
+    const offsetMultiplier = offsetRows ? (Math.floor(i / offsetRows) % 2 - 0.5) : null;
+    const totalOffset = offsetRows ? (i % offsetRows) * offset : i * offsetRows;
     const startHeight = (i + 1) * rowSpacing;
     const startWidth = j * cachedTextWidthsForRow[cachedTextWidthsForRow.length - 1].sum + cachedTextWidthsForRow[k].sum;
     const color = imageCtx.getImageData(
@@ -31,7 +33,7 @@ const getFillText = (ctx, imageCtx, { textArray, offset, spacing, cachedTextWidt
     ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${255 / 255})`;
     ctx.fillText(
         textArray[i % textArray.length][k],
-        startWidth - totalOffset,
+        startWidth - (offsetMultiplier || 1) * totalOffset,
         startHeight - spacing
     );
 }

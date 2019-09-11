@@ -1,5 +1,5 @@
-function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, backgroundImage, colorRect, letterRand, rectRand, backgroundColor, preview }) {
-    canvas.height = img.naturalHeight;
+function draw(canvas, imageCanvas, img, { text, size, offset, offsetRows, spacing, font, backgroundImage, colorRect, letterRand, rectRand, backgroundColor, preview }) {
+    canvas.height = preview ? 0.2 * img.naturalHeight : img.naturalHeight;
     canvas.width = img.naturalWidth;
     imageCanvas.height = img.naturalHeight;
     imageCanvas.width = img.naturalWidth;
@@ -35,12 +35,12 @@ function draw(canvas, imageCanvas, img, { text, size, offset, spacing, font, bac
 
     // Calculate rows required
     const rowSpacing = size + spacing;
-    const rows = preview ? Math.ceil(0.1 * canvas.height / rowSpacing) + 1 : Math.ceil(canvas.height / rowSpacing);
+    const rows = Math.ceil(canvas.height / rowSpacing);
 
     console.log(`Drawing Rows Total ${rows}`);
 
-    const fillRectIJK = getFillRect(ctx, imageCtx, { offset, cachedTextWidths, rectRand, rowSpacing });
-    const fillTextIJK = getFillText(ctx, imageCtx, { textArray, offset, spacing, cachedTextWidths, letterRand, rowSpacing });
+    const fillRectIJK = getFillRect(ctx, imageCtx, { offset, offsetRows, cachedTextWidths, rectRand, rowSpacing });
+    const fillTextIJK = getFillText(ctx, imageCtx, { textArray, offset, offsetRows, spacing, cachedTextWidths, letterRand, rowSpacing });
 
     for (let i = 0; i < rows; i++) {
         console.log(`Percentage Complete: ${100 * i / rows}%`);
