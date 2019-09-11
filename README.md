@@ -2,10 +2,9 @@
 
 ## To use
 
-1) Put your image in the root directory entitled 'image.jpg'
-2) Modify the values passed into the draw function in app.js
-3) Run http-server in the root directory
-4) Open dev tools
-5) Head to outputted localhost port
-6) Enjoy the console updates
-7) Your textified image is there
+1) Run http-server in the root directory
+2) Open dev tools
+3) Head to outputted localhost port
+4) Enter desired inputs
+5) Enjoy the console updates
+6) Your textified image is there
