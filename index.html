@@ -7,5 +7,33 @@
     <script src="./draw.js"></script>
     <script src="./app.js"></script>
   </head>
-  <body onload="app();"></body>
+  <body>
+    <div>
+      Text: <input id="text" type="text" value="['ONE', 'TWO', 'THREE']" />
+    </div>
+    <div>
+      Size: <input id="size" type="number" value="12" />
+    </div>
+    <div>
+      Offset: <input id="offset" type="number" value="2" />
+    </div>
+    <div>
+      Spacing: <input id="spacing" type="number" value="-3" />
+    </div>
+    <div>
+      Font: <input id="font" type="text" value="Helvetica" />
+    </div>
+    <div>
+      Background Color: <input id="backgroundColor" type="text" value="white" />
+    </div>
+    <div>
+      Image name: <input id="imageName" type="text" value="image" />
+    </div>
+    <div>
+      Preview:
+      True <input type="radio" id="previewTrue" name="preview" />
+      False <input type="radio" id="previewFalse" name="preview" checked />
+    </div>
+    <button onclick="app()">Run</button>
+  </body>
 </html>
