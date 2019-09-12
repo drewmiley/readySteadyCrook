@@ -36,14 +36,18 @@ function draw(canvas, imageCanvas, img, { text, size, offset, offsetRows, spacin
     // Calculate rows required
     const rowSpacing = size + spacing;
     const rows = Math.ceil(canvas.height / rowSpacing);
-
-    console.log(`Drawing Rows Total ${rows}`);
-
+    
     const fillRectIJK = getFillRect(ctx, imageCtx, { textArray, offset, offsetRows, cachedTextWidths, rectRand, rowSpacing });
-    const fillTextIJK = getFillText(ctx, imageCtx, { textArray, offset, offsetRows, spacing, cachedTextWidths, letterRand, rowSpacing });
+    const fillTextIJK = getFillText(ctx, imageCtx, { textArray, offset, offsetRows, spacing, cachedTextWidths, letterRand, rowSpacing });  
+  
+    console.log(`Drawing Rows Total ${rows}`);
+    const start = Date.now();
 
     for (let i = 0; i < rows; i++) {
-        console.log(`Percentage Complete: ${100 * i / rows}%`);
+        if (i > 0) {
+          const timeLeft = (rows - i) * (Date.now() - start) / i;
+          console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
+        }
         const fillRectJK = fillRectIJK(i);
         const fillTextJK = fillTextIJK(i);
         for (let j = 0; j < columnsRequiredWithOffset[i % textArray.length]; j++) {
