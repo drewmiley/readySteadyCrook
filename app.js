@@ -13,6 +13,7 @@ function app() {
             spacing: parseInt(document.getElementById('spacing').value),
             font: document.getElementById('font').value,
             backgroundColor: document.getElementById('backgroundColor').value,
+            backgroundImage: document.getElementById('backgroundImageTrue').checked,
             preview: document.getElementById('previewTrue').checked
         }
         console.log('Running');
