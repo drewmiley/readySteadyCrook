@@ -2,16 +2,14 @@ const imageLoader = document.getElementById('imageLoader');
 imageLoader.addEventListener('change', handleImage, false);
 
 function handleImage(e) {
-  var reader = new FileReader();
-  reader.onload = e => {
-      var img = new Image();
-      img.onload = function() {
-          document.getElementById('run').onclick = () => run(img);
-      }
-      img.crossOrigin = "Anonymous";
-      img.src = event.target.result;
-  }
-  reader.readAsDataURL(e.target.files[0]);     
+    let reader = new FileReader();
+    reader.onload = e => {
+        let img = new Image();
+        img.onload = () => document.getElementById('run').onclick = () => run(img);
+        img.crossOrigin = "Anonymous";
+        img.src = event.target.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);     
 }
 
 const run = image => {
