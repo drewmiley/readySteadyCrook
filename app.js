@@ -1,22 +1,12 @@
-var imageLoader = document.getElementById('imageLoader');
+const imageLoader = document.getElementById('imageLoader');
 imageLoader.addEventListener('change', handleImage, false);
-var runButton = document.getElementById('run');
-var canvas = document.getElementById('canvas');
-var imageCanvas = document.createElement('canvas');
 
 function handleImage(e) {
   var reader = new FileReader();
   reader.onload = e => {
       var img = new Image();
       img.onload = function() {
-          imageCanvas.height = img.naturalHeight;
-          imageCanvas.width = img.naturalWidth;
-          var imageCtx = imageCanvas.getContext('2d');
-          imageCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-          function app() {
-            return run(img);
-          }
-          runButton.onclick = app;
+          document.getElementById('run').onclick = () => run(img);
       }
       img.crossOrigin = "Anonymous";
       img.src = event.target.result;
@@ -25,6 +15,8 @@ function handleImage(e) {
 }
 
 const run = image => {
+    const canvas = document.getElementById('canvas');
+    const imageCanvas = document.createElement('canvas');
     const options = {
         text: document.getElementById('text').value.split(','),
         size: parseInt(document.getElementById('size').value),
