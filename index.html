@@ -3,9 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>Ready Steady Crook</title>
-    <script src="./fill.js"></script>
-    <script src="./draw.js"></script>
-    <script src="./app.js"></script>
   </head>
   <body>
     <div>
@@ -31,6 +28,7 @@
     </div>
     <div>
       Image name: <input id="imageName" type="text" value="image" />
+      <input type="file" id="imageLoader" name="imageLoader"/>
     </div>
     <div>
       Background Image:
@@ -42,6 +40,10 @@
       True <input type="radio" id="previewTrue" name="preview" />
       False <input type="radio" id="previewFalse" name="preview" checked />
     </div>
-    <button onclick="app()">Run</button>
+    <button id="run">Run</button>
+    <canvas id="canvas" />
+    <script src="./fill.js"></script>
+    <script src="./draw.js"></script>
+    <script src="./app.js"></script>
   </body>
 </html>
