@@ -2,7 +2,7 @@ const settings = (imageCtx, { textArray, offset, offsetRows, cachedTextWidths, r
     const cachedTextWidthsForRow = cachedTextWidths[i % textArray.length];
     const totalOffset = offsetRows ?
         (Math.floor(i / offsetRows) % 2 ?
-            (offsetRows - i % offsetRows) * offset) :
+            (offsetRows - i % offsetRows) * offset :
             (i % offsetRows) * offset) :
         i * offset;
     const startHeight = i * rowSpacing;
