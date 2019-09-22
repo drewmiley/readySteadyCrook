@@ -21,7 +21,10 @@ function draw(canvas, imageCanvas, img, { text, size, offset, offsetRows, spacin
 
     const textArray = Array.isArray(text) ? text : [text];
 
-    const textWidths = textArray.map(text => text.split('').map(d => ctx.measureText(d).width));
+    const textWidths = textArray.map(text => text
+        .split('')
+        .map(d => ctx.measureText(d).width)
+    );
     const cachedTextWidths = textWidths.map(widths =>
         widths.map((d, i) => ({
             value: d,
@@ -36,13 +39,14 @@ function draw(canvas, imageCanvas, img, { text, size, offset, offsetRows, spacin
     // Calculate rows required
     const rowSpacing = size + spacing;
     const rows = Math.ceil(canvas.height / rowSpacing);
-    
+
     const fillRectIJK = getFillRect(ctx, imageCtx, { textArray, offset, offsetRows, cachedTextWidths, rectRand, rowSpacing });
-    const fillTextIJK = getFillText(ctx, imageCtx, { textArray, offset, offsetRows, spacing, cachedTextWidths, letterRand, rowSpacing });  
-  
+    const fillTextIJK = getFillText(ctx, imageCtx, { textArray, offset, offsetRows, spacing, cachedTextWidths, letterRand, rowSpacing });
+
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();
 
+    // TODO: Rewrite as map
     for (let i = 0; i < rows; i++) {
         if (i > 0) {
           const timeLeft = (rows - i) * (Date.now() - start) / i;
