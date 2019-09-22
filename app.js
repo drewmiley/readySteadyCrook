@@ -9,7 +9,7 @@ function handleImage(e) {
         img.crossOrigin = "Anonymous";
         img.src = event.target.result;
     }
-    reader.readAsDataURL(e.target.files[0]);     
+    reader.readAsDataURL(e.target.files[0]);
 }
 
 const run = image => {
