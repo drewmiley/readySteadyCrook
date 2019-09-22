@@ -46,7 +46,6 @@ function draw(canvas, imageCanvas, img, { text, size, offset, offsetRows, spacin
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();
 
-    // TODO: Rewrite as map
     for (let i = 0; i < rows; i++) {
         if (i > 0) {
           const timeLeft = (rows - i) * (Date.now() - start) / i;
