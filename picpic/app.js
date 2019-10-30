@@ -4,11 +4,15 @@ imageLoaderSmall.addEventListener('change', handleImageSmall, false);
 const imageLoaderLarge = document.getElementById('imageLoaderLarge');
 imageLoaderLarge.addEventListener('change', handleImageLarge, false);
 
+let setRun = () => console.log('Set small image first')
+
 function handleImageSmall(e) {
     let reader = new FileReader();
     reader.onload = e => {
         let img = new Image();
-        img.onload = () => document.getElementById('run').onclick = () => run(img);
+        img.onload = () => {
+            setRun = run(img);
+        }
         img.crossOrigin = "Anonymous";
         img.src = event.target.result;
     }
@@ -19,14 +23,14 @@ function handleImageLarge(e) {
     let reader = new FileReader();
     reader.onload = e => {
         let img = new Image();
-        img.onload = () => document.getElementById('run').onclick = () => run(img);
+        img.onload = () => document.getElementById('run').onclick = () => setRun(img);
         img.crossOrigin = "Anonymous";
         img.src = event.target.result;
     }
     reader.readAsDataURL(e.target.files[0]);
 }
 
-const run = smallImage => {
+const run = smallImage => largeImage => {
     const canvas = document.getElementById('canvas');
     const smallImageCanvas = document.createElement('canvas');
     const largeImageCanvas = document.createElement('canvas');
@@ -34,7 +38,6 @@ const run = smallImage => {
         size: parseInt(document.getElementById('size').value),
         offset: parseInt(document.getElementById('offset').value),
         offsetRows: parseInt(document.getElementById('offsetRows').value),
-        spacing: parseInt(document.getElementById('spacing').value),
         preview: document.getElementById('previewTrue').checked
     }
     console.log('Running');

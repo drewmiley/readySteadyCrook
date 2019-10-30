@@ -1,5 +1,5 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage,
-    { size, offset, offsetRows, spacing, colorRect, letterRand, rectRand, preview }
+    { size, offset, offsetRows, colorRect, letterRand, rectRand, preview }
 ) {
     console.log('Something')
 }
