@@ -1,26 +1,24 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage,
     { size, offset, offsetRows, colorRect, letterRand, rectRand, preview }
 ) {
-    console.log('Something')
+    console.log('Start')
+    canvas.height = preview ? 0.2 * largeImage.naturalHeight : largeImage.naturalHeight;
+    canvas.width = largeImage.naturalWidth;
+    // TODO: Resize small canvas
+    smallImageCanvas.height = smallImage.naturalHeight;
+    smallImageCanvas.width = smallImage.naturalWidth;
+    largeImageCanvas.height = largeImage.naturalHeight;
+    largeImageCanvas.width = largeImage.naturalWidth;
+
+    var ctx = canvas.getContext('2d');
+    var smallImageCtx = smallImageCanvas.getContext('2d');
+    var largeImageCtx = largeImageCanvas.getContext('2d');
+
+    smallImageCtx.drawImage(smallImage, 0, 0, smallImage.naturalWidth, smallImage.naturalHeight);
+    largeImageCtx.drawImage(largeImage, 0, 0, largeImage.naturalWidth, largeImage.naturalHeight);
+    console.log('End')
 }
 // function draw(canvas, imageCanvas, img, { text, size, offset, offsetRows, spacing, font, backgroundImage, colorRect, letterRand, rectRand, backgroundColor, preview }) {
-//     canvas.height = preview ? 0.2 * img.naturalHeight : img.naturalHeight;
-//     canvas.width = img.naturalWidth;
-//     imageCanvas.height = img.naturalHeight;
-//     imageCanvas.width = img.naturalWidth;
-//
-//     var ctx = canvas.getContext('2d');
-//     var imageCtx = imageCanvas.getContext('2d');
-//
-//     imageCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-//     // Fill context depending on displaying background image
-//     if (backgroundImage) {
-//         ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-//     } else {
-//         ctx.fillStyle = backgroundColor;
-//         ctx.fillRect(0, 0, img.naturalWidth, img.naturalHeight);
-//         imageCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-//     }
 //
 //     ctx.font = `bold ${size}px ${font}`;
 //
