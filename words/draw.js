@@ -66,4 +66,5 @@ function draw(canvas, imageCanvas, img, { text, size, offset, offsetRows, spacin
             }
         }
     }
+    console.log('Done');
 }

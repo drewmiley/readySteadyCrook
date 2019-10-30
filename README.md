@@ -1,5 +1,10 @@
 # readySteadyCrook
 
+## On web
+
+drewmiley.github.io/readySteadyCrook/words
+drewmiley.github.io/readySteadyCrook/pictures
+
 ## To use
 
 1) Run http-server in the root directory
