@@ -11,6 +11,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
     var ctx = canvas.getContext('2d');
     var smallImageCtx = smallImageCanvas.getContext('2d');
     var largeImageCtx = largeImageCanvas.getContext('2d');
+    // TODO: Use ctx.imageSmoothingQuality = "low" || "medium" || "high"
 
     smallImageCtx.drawImage(smallImage, 0, 0, smallCanvasWidth, smallCanvasHeight);
     largeImageCtx.drawImage(largeImage, 0, 0, largeImage.naturalWidth, largeImage.naturalHeight);
@@ -36,6 +37,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
             ).data;
             for (let x = 0; x < smallCanvasWidth; x++) {
                 for (let y = 0; y < smallCanvasHeight; y++) {
+                    // TODO: Optimise this
                     const smallColor = smallImageCtx.getImageData(
                         x,
                         y,
