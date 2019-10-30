@@ -36,8 +36,6 @@ const run = smallImage => largeImage => {
     const largeImageCanvas = document.createElement('canvas');
     const options = {
         size: parseInt(document.getElementById('size').value),
-        offset: parseInt(document.getElementById('offset').value),
-        offsetRows: parseInt(document.getElementById('offsetRows').value),
         preview: document.getElementById('previewTrue').checked
     }
     console.log('Running');
