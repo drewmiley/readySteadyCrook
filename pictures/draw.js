@@ -66,7 +66,6 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
                     const b = Math.round((smallColor[2] + largeColor[2]))
                     const a = Math.round((smallColor[3] + largeColor[3]))
                     ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
-                    // TODO: Optimise this
                     ctx.fillRect(
                         startWidth + x,
                         startHeight + y,
