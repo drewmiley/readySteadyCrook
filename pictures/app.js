@@ -23,14 +23,17 @@ function handleImageLarge(e) {
     let reader = new FileReader();
     reader.onload = e => {
         let img = new Image();
-        img.onload = () => document.getElementById('run').onclick = () => setRun(img);
+        img.onload = () => {
+            setRun = setRun(img);
+            document.getElementById('run').onclick = () => setRun(0)
+        }
         img.crossOrigin = "Anonymous";
         img.src = event.target.result;
     }
     reader.readAsDataURL(e.target.files[0]);
 }
 
-const run = smallImage => largeImage => {
+const run = smallImage => largeImage => i => {
     const canvas = document.getElementById('canvas');
     const smallImageCanvas = document.createElement('canvas');
     const largeImageCanvas = document.createElement('canvas');
@@ -41,5 +44,6 @@ const run = smallImage => largeImage => {
         preview: document.getElementById('previewTrue').checked,
     }
     console.log('Running');
-    draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage, options);
+    draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage, options, i);
+    document.getElementById('run').onclick = () => setRun(i + 1);
 }

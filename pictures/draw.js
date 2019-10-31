@@ -1,4 +1,4 @@
-function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage, { size, ratio, rectRand, sample, preview }) {
+function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage, { size, ratio, rectRand, sample, preview }, i) {
     canvas.height = preview ? 0.2 * largeImage.naturalHeight : largeImage.naturalHeight;
     canvas.width = largeImage.naturalWidth;
     const smallCanvasHeight = size;
@@ -39,11 +39,11 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();
 
-    for (let i = 0; i < rows; i++) {
-        if (i > 0) {
-          const timeLeft = (rows - i) * (Date.now() - start) / i;
-          console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
-        }
+    // for (let i = 0; i < rows; i++) {
+    //     if (i > 0) {
+    //       const timeLeft = (rows - i) * (Date.now() - start) / i;
+    //       console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
+    //     }
         for (let j = 0; j < columns; j++) {
             const startWidth = j * smallCanvasWidth;
             const startHeight = i * smallCanvasHeight;
@@ -76,7 +76,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
                 }
             }
         }
-    }
+    // }
     smallCanvasData = null;
     console.log('Done');
 }
