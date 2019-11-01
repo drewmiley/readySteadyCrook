@@ -1,4 +1,5 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage, { size, ratio, rectRand, sample, preview }, i) {
+    // REMOVE DUPLICATION OF VARIABLES
     canvas.height = preview ? 0.2 * largeImage.naturalHeight : largeImage.naturalHeight;
     canvas.width = largeImage.naturalWidth;
     const smallCanvasHeight = size;
@@ -69,8 +70,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
                     ctx.fillRect(
                         startWidth + x,
                         startHeight + y,
-                        startWidth + x + 1,
-                        startHeight + y + 1
+                        1, 1
                     );
                 }
             }
