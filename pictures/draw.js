@@ -1,7 +1,5 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage, { size, ratio, rectRand, sample, preview }, i) {
     // REMOVE DUPLICATION OF VARIABLES
-    canvas.height = preview ? 0.2 * largeImage.naturalHeight : largeImage.naturalHeight;
-    canvas.width = largeImage.naturalWidth;
     const smallCanvasHeight = size;
     const smallCanvasWidth = Math.floor(size * smallImage.naturalWidth / smallImage.naturalHeight);
     smallImageCanvas.height = smallCanvasHeight;
