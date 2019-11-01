@@ -34,6 +34,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
                 ).data.map(d => d * smallRatioProp);
         }
     }
+    // TO HERE
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();
