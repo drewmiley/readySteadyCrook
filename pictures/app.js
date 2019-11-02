@@ -23,9 +23,7 @@ function handleImageLarge(e) {
     let reader = new FileReader();
     reader.onload = e => {
         let img = new Image();
-        img.onload = () => {
-            document.getElementById('run').onclick = () => setRun(img)
-        }
+        img.onload = () => document.getElementById('run').onclick = () => setRun(img);
         img.crossOrigin = "Anonymous";
         img.src = event.target.result;
     }

@@ -2,7 +2,6 @@
 
 ## On web
 
-drewmiley.github.io/readySteadyCrook/bleed
 drewmiley.github.io/readySteadyCrook/words
 drewmiley.github.io/readySteadyCrook/pictures
 
