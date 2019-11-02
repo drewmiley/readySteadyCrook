@@ -1,6 +1,7 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage,
     { size, ratio, rectRand, sample, preview, distortion, distortionStrength, distortionChance, bleed, bleedStart, bleedEnd }
 ) {
+    const bleedLength = bleedEnd - bleedStart;
     canvas.height = preview ? 0.2 * largeImage.naturalHeight : largeImage.naturalHeight;
     canvas.width = largeImage.naturalWidth;
     const smallCanvasHeight = size;
@@ -56,10 +57,13 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
             ).data.map(d => d * largeRatioProp);
             for (let x = 0; x < smallCanvasWidth; x++) {
                 for (let y = 0; y < smallCanvasHeight; y++) {
+                    const inBleed = bleed && (startHeight + y > bleedStart) && (startHeight + y <= bleedEnd);
+                    const pastBleed = bleed && (startHeight + y > bleedEnd);
+                    const largeColorHeight = inBleed ? bleedStart : (pastBleed ? startHeight + y + bleedLength : startHeight + y);
                     const largeColor = sample ? largeColorSample :
                         largeImageCtx.getImageData(
                             startWidth + x,
-                            startHeight + y,
+                            largeColorHeight,
                             1, 1
                         ).data.map(d => d * largeRatioProp);
                     const smallColor = smallCanvasData[x][y];

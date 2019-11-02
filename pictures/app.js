@@ -38,7 +38,7 @@ const run = smallImage => largeImage => {
         size: parseInt(document.getElementById('size').value),
         ratio: parseFloat(document.getElementById('ratio').value),
         sample: document.getElementById('sampleTrue').checked,
-        preview: document.getElementById('previewTrue').checked
+        preview: document.getElementById('previewTrue').checked,
         distortion: document.getElementById('distortionTrue').checked,
         distortionStrength: parseInt(document.getElementById('distortionStrength').value),
         distortionChance: parseFloat(document.getElementById('distortionChance').value),
