@@ -58,14 +58,11 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
             for (let x = 0; x < smallCanvasWidth; x++) {
                 for (let y = 0; y < smallCanvasHeight; y++) {
                     // TODO: Implement distortion
-                    // TODO: Sort Bleed out
                     const inBleed = bleed && (startHeight + y > bleedStart) && (startHeight + y <= bleedEnd);
-                    const pastBleed = bleed && (startHeight + y > bleedEnd);
-                    const largeColorHeight = inBleed ? bleedStart : (pastBleed ? startHeight + y + bleedLength : startHeight + y);
                     const largeColor = sample ? largeColorSample :
                         largeImageCtx.getImageData(
                             startWidth + x,
-                            largeColorHeight,
+                            inBleed ? bleedStart : startHeight + y,
                             1, 1
                         ).data.map(d => d * largeRatioProp);
                     const smallColor = smallCanvasData[x][y];
