@@ -75,6 +75,14 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
                         if (!distortion || 100 * Math.random() > distortionChance) {
                             return 1;
                         }
+                        const color = ctx.getImageData(
+                            startWidth + x,
+                            startHeight + y,
+                            1, 1
+                        ).data;
+                        if (r !== 255 || g !== 255 || b !== 255) {
+                            return 0;
+                        }
                         return Math.floor((1 + distortionStrength) * Math.random());
                     }
                     const xFill = getDistortionPixel();
