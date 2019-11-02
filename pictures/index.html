@@ -14,6 +14,25 @@
       True <input type="radio" id="sampleTrue" name="sample" />
       False <input type="radio" id="sampleFalse" name="sample" checked />
     </div>
+    <div>
+      Distortion:
+      True <input type="radio" id="distortionTrue" name="distortion" />
+      False <input type="radio" id="distortionFalse" name="distortion" checked />
+    </div>
+    <div>Distortion Strength (pixels): <input id="distortionStrength" type="number" value="0" /></div>
+    <div>Distortion Chance (%): <input id="distortionChance" type="number" value="0" /></div>
+    <div>
+      Bleed:
+      True <input type="radio" id="bleedTrue" name="bleed" />
+      False <input type="radio" id="bleedFalse" name="bleed" checked />
+    </div>
+    <div>Bleed Start (pixels): <input id="bleedStart" type="number" value="0" /></div>
+    <div>Bleed End (pixels): <input id="bleedEnd" type="number" value="0" /></div>
+    <div>
+      Preview:
+      True <input type="radio" id="previewTrue" name="preview" />
+      False <input type="radio" id="previewFalse" name="preview" checked />
+    </div>
     <button id="run">Run</button>
     <canvas id="canvas" />
     <script src="./draw.js"></script>
