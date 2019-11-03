@@ -70,7 +70,6 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
                     const b = Math.round((smallColor[2] + largeColor[2]))
                     const a = Math.round((smallColor[3] + largeColor[3]))
                     ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
-                    // TODO: Distortion is not distorting
                     const getDistortionPixel = () => {
                         if (!distortion || 100 * Math.random() > distortionChance) {
                             return 1;
@@ -80,10 +79,8 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
                             startHeight + y,
                             1, 1
                         ).data;
-                        if (r !== 255 || g !== 255 || b !== 255) {
-                            return 0;
-                        }
-                        return Math.floor((1 + distortionStrength) * Math.random());
+                        return (color[0] || color[1] || color[2]) ? 0 :
+                            Math.floor((1 + distortionStrength) * Math.random());
                     }
                     const xFill = getDistortionPixel();
                     const yFill = getDistortionPixel();
