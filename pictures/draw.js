@@ -1,4 +1,7 @@
-function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage, { size, ratio, rectRand, sample, preview }) {
+function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage,
+    { size, ratio, rectRand, sample, preview, distortion, distortionStrength, distortionChance, bleed, bleedStart, bleedEnd }
+) {
+    const bleedLength = bleedEnd - bleedStart;
     canvas.height = preview ? 0.2 * largeImage.naturalHeight : largeImage.naturalHeight;
     canvas.width = largeImage.naturalWidth;
     const smallCanvasHeight = size;
@@ -54,10 +57,11 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
             ).data.map(d => d * largeRatioProp);
             for (let x = 0; x < smallCanvasWidth; x++) {
                 for (let y = 0; y < smallCanvasHeight; y++) {
+                    const inBleed = bleed && (startHeight + y > bleedStart) && (startHeight + y <= bleedEnd);
                     const largeColor = sample ? largeColorSample :
                         largeImageCtx.getImageData(
                             startWidth + x,
-                            startHeight + y,
+                            inBleed ? bleedStart : startHeight + y,
                             1, 1
                         ).data.map(d => d * largeRatioProp);
                     const smallColor = smallCanvasData[x][y];
@@ -66,13 +70,27 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
                     const b = Math.round((smallColor[2] + largeColor[2]))
                     const a = Math.round((smallColor[3] + largeColor[3]))
                     ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
-                    // TODO: Optimise this
-                    ctx.fillRect(
-                        startWidth + x,
-                        startHeight + y,
-                        startWidth + x + 1,
-                        startHeight + y + 1
-                    );
+                    const getDistortionPixel = () => {
+                        if (!distortion || 100 * Math.random() > distortionChance) {
+                            return 1;
+                        }
+                        const color = ctx.getImageData(
+                            startWidth + x,
+                            startHeight + y,
+                            1, 1
+                        ).data;
+                        return (color[0] || color[1] || color[2]) ? 0 :
+                            Math.floor((1 + distortionStrength) * Math.random());
+                    }
+                    const xFill = getDistortionPixel();
+                    const yFill = getDistortionPixel();
+                    if (xFill && yFill) {
+                        ctx.fillRect(
+                            startWidth + x,
+                            startHeight + y,
+                            xFill, yFill
+                        );
+                    }
                 }
             }
         }

@@ -39,6 +39,12 @@ const run = smallImage => largeImage => {
         ratio: parseFloat(document.getElementById('ratio').value),
         sample: document.getElementById('sampleTrue').checked,
         preview: document.getElementById('previewTrue').checked,
+        distortion: document.getElementById('distortionTrue').checked,
+        distortionStrength: parseInt(document.getElementById('distortionStrength').value),
+        distortionChance: parseFloat(document.getElementById('distortionChance').value),
+        bleed: document.getElementById('bleedTrue').checked,
+        bleedStart: parseInt(document.getElementById('bleedStart').value),
+        bleedEnd: parseInt(document.getElementById('bleedEnd').value)
     }
     console.log('Running');
     draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage, options);
