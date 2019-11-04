@@ -28,20 +28,6 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
 
     const smallCanvasData = getSmallCanvasData(smallImageCtx, smallCanvasWidth, smallCanvasHeight, ratio);
     const getLargeCanvasDataIJ = getLargeCanvasDataInit(largeImageCtx, smallCanvasWidth, smallCanvasHeight, sample, bleed, bleedStart, bleedEnd, ratio, rectRand);
-    const getDistortionPixelInit = (ctx, smallCanvasWidth, smallCanvasHeight, distortion, distortionChance, distortionStrength) => i => j => (x, y) => {
-        const startWidth = j * smallCanvasWidth;
-        const startHeight = i * smallCanvasHeight;
-        if (!distortion || 100 * Math.random() > distortionChance) {
-            return 1;
-        }
-        const color = ctx.getImageData(
-            startWidth + x,
-            startHeight + y,
-            1, 1
-        ).data;
-        return (color[0] || color[1] || color[2]) ? 0 :
-            Math.floor((1 + distortionStrength) * Math.random());
-    }
     const getDistortionPixelIJ = getDistortionPixelInit(ctx, smallCanvasWidth, smallCanvasHeight, distortion, distortionChance, distortionStrength);
 
     console.log(`Drawing Rows Total ${rows}`);
@@ -56,7 +42,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
         const getDistortionPixelJ = getDistortionPixelIJ(i);
         for (let j = 0; j < columns; j++) {
             const getLargeCanvasData = getLargeCanvasDataJ(j);
-            const getDistortionPixel = getDistortionPixelJ(i);
+            const getDistortionPixel = getDistortionPixelJ(j);
             for (let x = 0; x < smallCanvasWidth; x++) {
                 for (let y = 0; y < smallCanvasHeight; y++) {
                     const largeColor = getLargeCanvasData(x, y);
@@ -67,21 +53,10 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
                     const a = Math.round((smallColor[3] + largeColor[3]));
                     ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
 
+                    // TODO: Remove need for this
                     const startWidth = j * smallCanvasWidth;
                     const startHeight = i * smallCanvasHeight;
 
-                    // const getDistortionPixel = () => {
-                    //     if (!distortion || 100 * Math.random() > distortionChance) {
-                    //         return 1;
-                    //     }
-                    //     const color = ctx.getImageData(
-                    //         startWidth + x,
-                    //         startHeight + y,
-                    //         1, 1
-                    //     ).data;
-                    //     return (color[0] || color[1] || color[2]) ? 0 :
-                    //         Math.floor((1 + distortionStrength) * Math.random());
-                    // }
                     const xFill = getDistortionPixel(x, y);
                     const yFill = getDistortionPixel(x, y);
                     if (xFill && yFill) {

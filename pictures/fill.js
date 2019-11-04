@@ -33,3 +33,18 @@ const getLargeCanvasDataInit = (largeImageCtx, smallCanvasWidth, smallCanvasHeig
         ).data.map(d => d * largeRatioProp);
     return largeColor;
 }
+
+const getDistortionPixelInit = (ctx, smallCanvasWidth, smallCanvasHeight, distortion, distortionChance, distortionStrength) => i => j => (x, y) => {
+    const startWidth = j * smallCanvasWidth;
+    const startHeight = i * smallCanvasHeight;
+    if (!distortion || 100 * Math.random() > distortionChance) {
+        return 1;
+    }
+    const color = ctx.getImageData(
+        startWidth + x,
+        startHeight + y,
+        1, 1
+    ).data;
+    return (color[0] || color[1] || color[2]) ? 0 :
+        Math.floor((1 + distortionStrength) * Math.random());
+}
