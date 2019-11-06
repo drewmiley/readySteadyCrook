@@ -24,6 +24,7 @@ const getLargeCanvasDataInit = (largeImageCtx, smallCanvas, sample, ratio, rectR
         startHeight + (rectRand ? Math.random() : 0.5) * smallCanvas.height,
         1, 1
     ).data.map(d => d * largeRatioProp);
+    // TODO: Take account of bleedOptions.horizontal here
     const inBleed = bleedOptions.isBleeding && (startHeight + y > bleedOptions.start) && (startHeight + y <= bleedOptions.end);
     const largeColor = sample ? largeColorSample :
         largeImageCtx.getImageData(
@@ -37,6 +38,7 @@ const getLargeCanvasDataInit = (largeImageCtx, smallCanvas, sample, ratio, rectR
 const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j => (x, y) => {
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
+    // TODO: Take account of distortionOptions.horizontal here
     const inDistortion = distortionOptions.isDistorted &&
         (startHeight + y > distortionOptions.start) && (startHeight + y <= distortionOptions.end);
     if (!inDistortion || 100 * Math.random() > distortionOptions.chance) {

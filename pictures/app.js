@@ -37,14 +37,16 @@ const run = smallImage => largeImage => {
     const bleedOptions = {
         isBleeding: document.getElementById('bleedTrue').checked,
         start: parseInt(document.getElementById('bleedStart').value),
-        end: parseInt(document.getElementById('bleedEnd').value)
+        end: parseInt(document.getElementById('bleedEnd').value),
+        horizontal: document.getElementById('bleedHorizontal').checked
     };
     const distortionOptions = {
         isDistorted: document.getElementById('distortionTrue').checked,
         chance: parseFloat(document.getElementById('distortionChance').value),
         strength: parseInt(document.getElementById('distortionStrength').value),
         start: parseInt(document.getElementById('distortionStart').value),
-        end: parseInt(document.getElementById('distortionEnd').value)
+        end: parseInt(document.getElementById('distortionEnd').value),
+        horizontal: document.getElementById('distortionHorizontal').checked
     };
     const options = {
         size: parseInt(document.getElementById('size').value),
