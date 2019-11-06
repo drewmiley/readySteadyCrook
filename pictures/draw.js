@@ -1,7 +1,6 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage,
-    { size, ratio, rectRand, sample, preview, distortion, distortionStrength, distortionChance, bleed, bleedStart, bleedEnd }
+    { size, ratio, rectRand, sample, preview, bleedOptions, distortionOptions }
 ) {
-    const bleedLength = bleedEnd - bleedStart;
     canvas.height = preview ? 0.2 * largeImage.naturalHeight : largeImage.naturalHeight;
     canvas.width = largeImage.naturalWidth;
     const smallCanvasHeight = size;
@@ -31,18 +30,6 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
         data: smallCanvasData,
         width: smallCanvasWidth,
         height: smallCanvasHeight
-    };
-
-    const bleedOptions = {
-        isBleeding: bleed,
-        start: bleedStart,
-        end: bleedEnd
-    };
-
-    const distortionOptions = {
-        isDistorted: distortion,
-        chance: distortionChance,
-        strength: distortionStrength
     };
 
     const getFillRectIJ = getFillRect(ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions);

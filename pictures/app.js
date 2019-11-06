@@ -34,17 +34,25 @@ const run = smallImage => largeImage => {
     const canvas = document.getElementById('canvas');
     const smallImageCanvas = document.createElement('canvas');
     const largeImageCanvas = document.createElement('canvas');
+    const bleedOptions = {
+        isBleeding: document.getElementById('bleedTrue').checked,
+        start: parseInt(document.getElementById('bleedStart').value),
+        end: parseInt(document.getElementById('bleedEnd').value)
+    };
+    const distortionOptions = {
+        isDistorted: document.getElementById('distortionTrue').checked,
+        chance: parseFloat(document.getElementById('distortionChance').value),
+        strength: parseInt(document.getElementById('distortionStrength').value),
+        start: parseInt(document.getElementById('distortionStart').value),
+        end: parseInt(document.getElementById('distortionEnd').value)
+    };
     const options = {
         size: parseInt(document.getElementById('size').value),
         ratio: parseFloat(document.getElementById('ratio').value),
         sample: document.getElementById('sampleTrue').checked,
         preview: document.getElementById('previewTrue').checked,
-        distortion: document.getElementById('distortionTrue').checked,
-        distortionStrength: parseInt(document.getElementById('distortionStrength').value),
-        distortionChance: parseFloat(document.getElementById('distortionChance').value),
-        bleed: document.getElementById('bleedTrue').checked,
-        bleedStart: parseInt(document.getElementById('bleedStart').value),
-        bleedEnd: parseInt(document.getElementById('bleedEnd').value)
+        bleedOptions,
+        distortionOptions
     }
     console.log('Running');
     draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage, options);

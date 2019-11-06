@@ -37,7 +37,9 @@ const getLargeCanvasDataInit = (largeImageCtx, smallCanvas, sample, ratio, rectR
 const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j => (x, y) => {
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
-    if (!distortionOptions.isDistorted || 100 * Math.random() > distortionOptions.chance) {
+    const inDistortion = distortionOptions.isDistorted &&
+        (startHeight + y > distortionOptions.start) && (startHeight + y <= distortionOptions.end);
+    if (!inDistortion || 100 * Math.random() > distortionOptions.chance) {
         return 1;
     }
     const color = ctx.getImageData(
