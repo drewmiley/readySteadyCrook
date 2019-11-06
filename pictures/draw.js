@@ -27,8 +27,13 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
     const columns = Math.ceil(canvas.width / smallCanvasWidth);
 
     const smallCanvasData = getSmallCanvasData(smallImageCtx, smallCanvasWidth, smallCanvasHeight, ratio);
-    const getLargeCanvasDataIJ = getLargeCanvasDataInit(largeImageCtx, smallCanvasWidth, smallCanvasHeight, sample, bleed, bleedStart, bleedEnd, ratio, rectRand);
-    const getDistortionPixelIJ = getDistortionPixelInit(ctx, smallCanvasWidth, smallCanvasHeight, distortion, distortionChance, distortionStrength);
+    const smallCanvas = {
+        data: smallCanvasData,
+        width: smallCanvasWidth,
+        height: smallCanvasHeight
+    };
+    const getLargeCanvasDataIJ = getLargeCanvasDataInit(largeImageCtx, smallCanvas, sample, bleed, bleedStart, bleedEnd, ratio, rectRand);
+    const getDistortionPixelIJ = getDistortionPixelInit(ctx, smallCanvas, distortion, distortionChance, distortionStrength);
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();
@@ -46,7 +51,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
             for (let x = 0; x < smallCanvasWidth; x++) {
                 for (let y = 0; y < smallCanvasHeight; y++) {
                     const largeColor = getLargeCanvasData(x, y);
-                    const smallColor = smallCanvasData[x][y];
+                    const smallColor = smallCanvas.data[x][y];
                     const r = Math.round((smallColor[0] + largeColor[0]));
                     const g = Math.round((smallColor[1] + largeColor[1]));
                     const b = Math.round((smallColor[2] + largeColor[2]));
