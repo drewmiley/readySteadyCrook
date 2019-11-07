@@ -24,12 +24,13 @@ const getLargeCanvasDataInit = (largeImageCtx, smallCanvas, sample, ratio, rectR
         startHeight + (rectRand ? Math.random() : 0.5) * smallCanvas.height,
         1, 1
     ).data.map(d => d * largeRatioProp);
-    // TODO: Take account of bleedOptions.horizontal here
-    const inBleed = bleedOptions.isBleeding && (startHeight + y > bleedOptions.start) && (startHeight + y <= bleedOptions.end);
+
+    const pixelValueToCheck = bleedOptions.horizontal ? startHeight + y : startWidth + x;
+    const inBleed = bleedOptions.isBleeding && (pixelValueToCheck > bleedOptions.start) && (pixelValueToCheck <= bleedOptions.end);
     const largeColor = sample ? largeColorSample :
         largeImageCtx.getImageData(
-            startWidth + x,
-            inBleed ? bleedOptions.start : startHeight + y,
+            inBleed && !bleedOptions.horizontal ? bleedOptions.start : startWidth + x,
+            inBleed && bleedOptions.horizontal ? bleedOptions.start : startHeight + y,
             1, 1
         ).data.map(d => d * largeRatioProp);
     return largeColor;
@@ -38,9 +39,10 @@ const getLargeCanvasDataInit = (largeImageCtx, smallCanvas, sample, ratio, rectR
 const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j => (x, y) => {
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
-    // TODO: Take account of distortionOptions.horizontal here
+
+    const pixelValueToCheck = distortionOptions.horizontal ? startHeight + y : startWidth + x;
     const inDistortion = distortionOptions.isDistorted &&
-        (startHeight + y > distortionOptions.start) && (startHeight + y <= distortionOptions.end);
+        (pixelValueToCheck > distortionOptions.start) && (pixelValueToCheck <= distortionOptions.end);
     if (!inDistortion || 100 * Math.random() > distortionOptions.chance) {
         return 1;
     }
