@@ -1,8 +1,12 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage,
-    { size, ratio, rectRand, sample, preview, bleedOptions, distortionOptions }
+    { size, ratio, rectRand, sample, preview, persist, bleedOptions, distortionOptions }
 ) {
-    canvas.height = preview ? 0.2 * largeImage.naturalHeight : largeImage.naturalHeight;
-    canvas.width = largeImage.naturalWidth;
+
+    const largeImageToDraw = persist ? canvas : largeImage;
+    if (!persist) {
+        canvas.height = preview ? 0.2 * largeImage.naturalHeight : largeImage.naturalHeight;
+        canvas.width = largeImage.naturalWidth;
+    }
     const smallCanvasHeight = size;
     const smallCanvasWidth = Math.floor(size * smallImage.naturalWidth / smallImage.naturalHeight);
     smallImageCanvas.height = smallCanvasHeight;
@@ -20,7 +24,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
     largeImageCtx.imageSmoothingQuality = 'high';
 
     smallImageCtx.drawImage(smallImage, 0, 0, smallCanvasWidth, smallCanvasHeight);
-    largeImageCtx.drawImage(largeImage, 0, 0, largeImage.naturalWidth, largeImage.naturalHeight);
+    largeImageCtx.drawImage(largeImageToDraw, 0, 0, largeImage.naturalWidth, largeImage.naturalHeight);
 
     const rows = Math.ceil(canvas.height / smallCanvasHeight);
     const columns = Math.ceil(canvas.width / smallCanvasWidth);
