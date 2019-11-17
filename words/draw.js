@@ -1,4 +1,6 @@
-function draw(canvas, imageCanvas, img, { text, size, offset, offsetRows, spacing, font, backgroundImage, colorRect, letterRand, rectRand, backgroundColor, preview }) {
+function draw(canvas, imageCanvas, img,
+    { text, size, offset, offsetRows, spacing, font, backgroundImage, colorRect, letterRand, rectRand, backgroundColor, textColor, preview }
+) {
     canvas.height = preview ? 0.2 * img.naturalHeight : img.naturalHeight;
     canvas.width = img.naturalWidth;
     imageCanvas.height = img.naturalHeight;
@@ -41,7 +43,7 @@ function draw(canvas, imageCanvas, img, { text, size, offset, offsetRows, spacin
     const rows = Math.ceil(canvas.height / rowSpacing);
 
     const fillRectIJK = getFillRect(ctx, imageCtx, { textArray, offset, offsetRows, cachedTextWidths, rectRand, rowSpacing });
-    const fillTextIJK = getFillText(ctx, imageCtx, { textArray, offset, offsetRows, spacing, cachedTextWidths, letterRand, rowSpacing });
+    const fillTextIJK = getFillText(ctx, imageCtx, { textArray, textColor, offset, offsetRows, spacing, cachedTextWidths, letterRand, rowSpacing });
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();

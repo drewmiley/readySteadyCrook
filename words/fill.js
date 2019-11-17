@@ -27,11 +27,11 @@ const getFillRect = (ctx, imageCtx, { textArray, offset, offsetRows, cachedTextW
     );
 }
 
-const getFillText = (ctx, imageCtx, { textArray, offset, offsetRows, spacing, cachedTextWidths, letterRand, rowSpacing }) => i => j => k => {
+const getFillText = (ctx, imageCtx, { textArray, textColor, offset, offsetRows, spacing, cachedTextWidths, letterRand, rowSpacing }) => i => j => k => {
     const { startHeight, startWidth, color } =
         settings(imageCtx, { textArray, offset, offsetRows, cachedTextWidths, rand: letterRand, rowSpacing }, i, j, k);
     // Revisit 255 / 255 after testing
-    ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${255 / 255})`;
+    ctx.fillStyle = textColor || `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${255 / 255})`;
     ctx.fillText(
         textArray[i % textArray.length][k],
         startWidth,
