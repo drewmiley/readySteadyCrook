@@ -70,8 +70,8 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
     const a = Math.round((smallColor[3] + largeColor[3]));
     ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
 
-    const xFill = getDistortionPixel(x, y);
-    const yFill = getDistortionPixel(x, y);
+    const xFill = distortionOptions.direction === 'V' ?  1 : getDistortionPixel(x, y);
+    const yFill = distortionOptions.direction === 'H' ?  1 : getDistortionPixel(x, y);
     if (xFill && yFill) {
         ctx.fillRect(
             startWidth + x,

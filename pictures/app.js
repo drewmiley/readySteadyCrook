@@ -46,7 +46,8 @@ const run = smallImage => largeImage => {
         strength: parseInt(document.getElementById('distortionStrength').value),
         start: parseInt(document.getElementById('distortionStart').value),
         end: parseInt(document.getElementById('distortionEnd').value),
-        horizontal: document.getElementById('distortionHorizontal').checked
+        horizontal: document.getElementById('distortionHorizontal').checked,
+        direction: document.getElementById('distortionDirection').value
     };
     const options = {
         size: parseInt(document.getElementById('size').value),
