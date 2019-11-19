@@ -23,6 +23,7 @@ const run = image => {
         spacing: parseInt(document.getElementById('spacing').value),
         font: document.getElementById('font').value,
         backgroundColor: document.getElementById('backgroundColor').value,
+        textColor: document.getElementById('textColor').value,
         backgroundImage: document.getElementById('backgroundImageTrue').checked,
         preview: document.getElementById('previewTrue').checked
     }
