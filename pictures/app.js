@@ -53,6 +53,7 @@ const run = smallImage => largeImage => {
         ratio: parseFloat(document.getElementById('ratio').value),
         sample: document.getElementById('sampleTrue').checked,
         preview: document.getElementById('previewTrue').checked,
+        persist: document.getElementById('persistTrue').checked,
         bleedOptions,
         distortionOptions
     }
