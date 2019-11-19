@@ -87,6 +87,17 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
                     xFill, 1
                 );
             }
+        } else if (distortionOptions.direction === 'L') {
+            ctx.fillRect(
+                startWidth + x,
+                startHeight + y,
+                1, yFill
+            );
+            ctx.fillRect(
+                startWidth + x,
+                startHeight + y,
+                xFill, 1
+            );
         } else {
             ctx.fillRect(
                 startWidth + x,
