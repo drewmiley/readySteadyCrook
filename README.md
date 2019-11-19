@@ -12,4 +12,4 @@ drewmiley.github.io/readySteadyCrook/pictures
 3) Head to outputted localhost port
 4) Enter desired inputs
 5) Enjoy the console updates
-6) Your textified image is there
+6) Your modified image is there
