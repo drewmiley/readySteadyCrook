@@ -73,6 +73,7 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
     const xFill = distortionOptions.direction === 'V' ?  1 : getDistortionPixel(x, y);
     const yFill = distortionOptions.direction === 'H' ?  1 : getDistortionPixel(x, y);
 
+    // TODO: Refactor this
     if (distortionOptions.direction === 'R') {
         if (Math.random() > 0.5) {
             ctx.fillRect(
@@ -99,10 +100,12 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
             xFill, 1
         );
     } else {
+        const xRand = getDistortionPixel(x, y);
+        const yRand = getDistortionPixel(x, y);
         ctx.fillRect(
-            startWidth + x,
-            startHeight + y,
-            xFill, yFill
+            startWidth + x - Math.min(xRand, xFill),
+            startHeight + y - Math.min(yRand, yFill),
+            Math.max(xRand, xFill), Math.max(yRand, yFill)
         );
     }
 }
