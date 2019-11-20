@@ -72,38 +72,37 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
 
     const xFill = distortionOptions.direction === 'V' ?  1 : getDistortionPixel(x, y);
     const yFill = distortionOptions.direction === 'H' ?  1 : getDistortionPixel(x, y);
-    if (xFill && yFill) {
-        if (distortionOptions.direction === 'R') {
-            if (Math.random() > 0.5) {
-                ctx.fillRect(
-                    startWidth + x,
-                    startHeight + y,
-                    1, yFill
-                );
-            } else {
-                ctx.fillRect(
-                    startWidth + x,
-                    startHeight + y,
-                    xFill, 1
-                );
-            }
-        } else if (distortionOptions.direction === 'L') {
+
+    if (distortionOptions.direction === 'R') {
+        if (Math.random() > 0.5) {
             ctx.fillRect(
                 startWidth + x,
                 startHeight + y,
                 1, yFill
             );
+        } else {
             ctx.fillRect(
                 startWidth + x,
                 startHeight + y,
                 xFill, 1
             );
-        } else {
-            ctx.fillRect(
-                startWidth + x,
-                startHeight + y,
-                xFill, yFill
-            );
         }
+    } else if (distortionOptions.direction === 'L') {
+        ctx.fillRect(
+            startWidth + x,
+            startHeight + y,
+            1, yFill
+        );
+        ctx.fillRect(
+            startWidth + x,
+            startHeight + y,
+            xFill, 1
+        );
+    } else {
+        ctx.fillRect(
+            startWidth + x,
+            startHeight + y,
+            xFill, yFill
+        );
     }
 }
