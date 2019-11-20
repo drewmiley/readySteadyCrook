@@ -70,13 +70,42 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
     const a = Math.round((smallColor[3] + largeColor[3]));
     ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
 
-    const xFill = getDistortionPixel(x, y);
-    const yFill = getDistortionPixel(x, y);
-    if (xFill && yFill) {
+    const xFill = distortionOptions.direction === 'V' ?  1 : getDistortionPixel(x, y);
+    const yFill = distortionOptions.direction === 'H' ?  1 : getDistortionPixel(x, y);
+
+    // TODO: Refactor this
+    if (distortionOptions.direction === 'R') {
+        if (Math.random() > 0.5) {
+            ctx.fillRect(
+                startWidth + x,
+                startHeight + y,
+                1, yFill
+            );
+        } else {
+            ctx.fillRect(
+                startWidth + x,
+                startHeight + y,
+                xFill, 1
+            );
+        }
+    } else if (distortionOptions.direction === 'L') {
         ctx.fillRect(
             startWidth + x,
             startHeight + y,
-            xFill, yFill
+            1, yFill
+        );
+        ctx.fillRect(
+            startWidth + x,
+            startHeight + y,
+            xFill, 1
+        );
+    } else {
+        const xRand = getDistortionPixel(x, y);
+        const yRand = getDistortionPixel(x, y);
+        ctx.fillRect(
+            startWidth + x - Math.min(xRand, xFill),
+            startHeight + y - Math.min(yRand, yFill),
+            Math.max(xRand, xFill), Math.max(yRand, yFill)
         );
     }
 }
