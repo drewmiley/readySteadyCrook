@@ -42,7 +42,7 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
 
     const pixelValueToCheck = distortionOptions.horizontal ? startHeight + y : startWidth + x;
     const inDistortion = distortionOptions.isDistorted &&
-        (pixelValueToCheck > distortionOptions.start) && (pixelValueToCheck <= distortionOptions.end);
+        (pixelValueToCheck > distortionOptions.start) && (pixelValueToCheck <= distortionOptions.end || !distortionOptions.end);
     if (!inDistortion || 100 * Math.random() > distortionOptions.chance) {
         return 1;
     }
