@@ -10,13 +10,13 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
     }
 
     const smallCanvasHeight = size;
-    const smallCanvasWidth = Math.floor(size * smallImage.naturalWidth / smallImage.naturalHeight);
+    const smallCanvasWidth = smallImage ? Math.floor(size * smallImage.naturalWidth / smallImage.naturalHeight) : size;
     smallImageCanvas.height = smallCanvasHeight;
     smallImageCanvas.width = smallCanvasWidth;
     largeImageCanvas.height = largeImageToDraw.naturalHeight;
     largeImageCanvas.width = largeImageToDraw.naturalWidth;
 
-    const smallRatioProp = 1 / (ratio + 1);
+    const smallRatioProp = smallImage ? 1 / (ratio + 1) : 0;
     const largeRatioProp = 1 - smallRatioProp;
 
     var ctx = canvas.getContext('2d');
@@ -25,15 +25,14 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
     smallImageCtx.imageSmoothingQuality = 'high';
     largeImageCtx.imageSmoothingQuality = 'high';
 
-    smallImageCtx.drawImage(smallImage, 0, 0, smallCanvasWidth, smallCanvasHeight);
+    if (smallImage) smallImageCtx.drawImage(smallImage, 0, 0, smallCanvasWidth, smallCanvasHeight);
     largeImageCtx.drawImage(largeImageToDraw, 0, 0, largeImageToDraw.naturalWidth, largeImageToDraw.naturalHeight);
 
     const rows = Math.ceil(canvas.height / smallCanvasHeight);
     const columns = Math.ceil(canvas.width / smallCanvasWidth);
 
-    const smallCanvasData = getSmallCanvasData(smallImageCtx, smallCanvasWidth, smallCanvasHeight, ratio);
     const smallCanvas = {
-        data: smallCanvasData,
+        data: smallImage ? getSmallCanvasData(smallImageCtx, smallCanvasWidth, smallCanvasHeight, ratio) : null,
         width: smallCanvasWidth,
         height: smallCanvasHeight
     };

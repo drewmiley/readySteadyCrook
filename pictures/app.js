@@ -12,6 +12,7 @@ function handleImageLarge(e) {
         let img = new Image();
         img.onload = () => {
             setRun = run(img);
+            document.getElementById('run').onclick = () => setRun();
         }
         img.crossOrigin = "Anonymous";
         img.src = event.target.result;

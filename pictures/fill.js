@@ -63,7 +63,7 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
     const getDistortionPixel = getDistortionPixelInit(ctx, smallCanvas, distortionOptions)(i)(j);
 
     const largeColor = getLargeCanvasData(x, y);
-    const smallColor = smallCanvas.data[x][y];
+    const smallColor = smallCanvas.data ? smallCanvas.data[x][y] : [0, 0, 0, 0];
     const r = Math.round((smallColor[0] + largeColor[0]));
     const g = Math.round((smallColor[1] + largeColor[1]));
     const b = Math.round((smallColor[2] + largeColor[2]));
