@@ -31,26 +31,16 @@ function handleImageSmall(e) {
     reader.readAsDataURL(e.target.files[0]);
 }
 
-const getDistortionType = () => {
-    const options = document.getElementById('distortionType').children;
+// TODO: Avoid for loop
+const getCheckedValue = (checkedValue) => {
+    const options = document.getElementById(checkedValue).children;
     let index;
     for (let i = 0; i < options.length; i++) {
         if (options[i].checked) {
             index = i;
         }
     }
-    return options[index].id.replace('distortionType', '');
-}
-
-const getDistortionCorner = () => {
-    const options = document.getElementById('distortionCorner').children;
-    let index;
-    for (let i = 0; i < options.length; i++) {
-        if (options[i].checked) {
-            index = i;
-        }
-    }
-    return options[index].id.replace('distortionCorner', '');
+    return options[index].id.replace(checkedValue, '');
 }
 
 const run = largeImage => smallImage => {
@@ -70,8 +60,8 @@ const run = largeImage => smallImage => {
         start: parseInt(document.getElementById('distortionStart').value),
         end: parseInt(document.getElementById('distortionEnd').value),
         horizontal: document.getElementById('distortionHorizontal').checked,
-        type: getDistortionType(),
-        corner: getDistortionCorner()
+        type: getCheckedValue('distortionType'),
+        corner: getCheckedValue('distortionCorner')
     };
     const options = {
         size: parseInt(document.getElementById('size').value),
