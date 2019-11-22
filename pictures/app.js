@@ -31,6 +31,14 @@ function handleImageSmall(e) {
     reader.readAsDataURL(e.target.files[0]);
 }
 
+const getDistortionDirection = () => {
+    return "B"
+}
+
+const getDistortionCorner = () => {
+    return "Offset"
+}
+
 const run = largeImage => smallImage => {
     const canvas = document.getElementById('canvas');
     const smallImageCanvas = document.createElement('canvas');
@@ -48,7 +56,8 @@ const run = largeImage => smallImage => {
         start: parseInt(document.getElementById('distortionStart').value),
         end: parseInt(document.getElementById('distortionEnd').value),
         horizontal: document.getElementById('distortionHorizontal').checked,
-        direction: document.getElementById('distortionDirection').value
+        direction: getDistortionDirection(),
+        corner: getDistortionCorner()
     };
     const options = {
         size: parseInt(document.getElementById('size').value),

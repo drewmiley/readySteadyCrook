@@ -19,7 +19,22 @@
       True <input type="radio" id="distortionTrue" name="distortion" />
       False <input type="radio" id="distortionFalse" name="distortion" checked />
     </div>
-    <div>Distortion Direction (H/V/R/L/B): <input id="distortionDirection" type="text" value="B" /></div>
+    <div id="distortionCorner">
+      Distortion Corner:
+      Offset in all directions <input type="radio" id="distortionCornerOffset" name="distortionCorner" checked />
+      NW <input type="radio" id="distortionCornerNW" name="distortionCorner" />
+      NE <input type="radio" id="distortionCornerNE" name="distortionCorner" />
+      SW <input type="radio" id="distortionCornerSW" name="distortionCorner" />
+      SE <input type="radio" id="distortionCornerSE" name="distortionCorner" />
+    </div>
+    <div id="distortionType">
+      Distortion Type:
+      Horizontal <input type="radio" id="distortionTypeH" name="distortionType" />
+      Vertical <input type="radio" id="distortionTypeV" name="distortionType" />
+      Random Line <input type="radio" id="distortionTypeR" name="distortionType" />
+      L-Shaped <input type="radio" id="distortionTypeL" name="distortionType" />
+      Both dimensions <input type="radio" id="distortionTypeB" name="distortionType" checked />
+    </div>
     <div>
       Distortion Orientation:
       Vertical <input type="radio" id="distortionVertical" name="distortionOrientation" />
