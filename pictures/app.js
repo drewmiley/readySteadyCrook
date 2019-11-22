@@ -31,12 +31,26 @@ function handleImageSmall(e) {
     reader.readAsDataURL(e.target.files[0]);
 }
 
-const getDistortionDirection = () => {
-    return "B"
+const getDistortionType = () => {
+    const options = document.getElementById('distortionType').children;
+    let index;
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].checked) {
+            index = i;
+        }
+    }
+    return options[index].id.replace('distortionType', '');
 }
 
 const getDistortionCorner = () => {
-    return "Offset"
+    const options = document.getElementById('distortionCorner').children;
+    let index;
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].checked) {
+            index = i;
+        }
+    }
+    return options[index].id.replace('distortionCorner', '');
 }
 
 const run = largeImage => smallImage => {
@@ -56,7 +70,7 @@ const run = largeImage => smallImage => {
         start: parseInt(document.getElementById('distortionStart').value),
         end: parseInt(document.getElementById('distortionEnd').value),
         horizontal: document.getElementById('distortionHorizontal').checked,
-        direction: getDistortionDirection(),
+        type: getDistortionType(),
         corner: getDistortionCorner()
     };
     const options = {

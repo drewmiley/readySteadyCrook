@@ -44,6 +44,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
         height: smallCanvasHeight
     };
 
+    console.log(distortionOptions)
     const getFillRectIJ = getFillRect(ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions);
 
     console.log(`Drawing Rows Total ${rows}`);
