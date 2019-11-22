@@ -4,14 +4,15 @@ imageLoaderSmall.addEventListener('change', handleImageSmall, false);
 const imageLoaderLarge = document.getElementById('imageLoaderLarge');
 imageLoaderLarge.addEventListener('change', handleImageLarge, false);
 
-let setRun = () => console.log('Set small image first')
+let setRun = () => console.log('You have to set large image')
 
-function handleImageSmall(e) {
+function handleImageLarge(e) {
     let reader = new FileReader();
     reader.onload = e => {
         let img = new Image();
         img.onload = () => {
             setRun = run(img);
+            document.getElementById('run').onclick = () => setRun();
         }
         img.crossOrigin = "Anonymous";
         img.src = event.target.result;
@@ -19,7 +20,7 @@ function handleImageSmall(e) {
     reader.readAsDataURL(e.target.files[0]);
 }
 
-function handleImageLarge(e) {
+function handleImageSmall(e) {
     let reader = new FileReader();
     reader.onload = e => {
         let img = new Image();
@@ -30,7 +31,7 @@ function handleImageLarge(e) {
     reader.readAsDataURL(e.target.files[0]);
 }
 
-const run = smallImage => largeImage => {
+const run = largeImage => smallImage => {
     const canvas = document.getElementById('canvas');
     const smallImageCanvas = document.createElement('canvas');
     const largeImageCanvas = document.createElement('canvas');
