@@ -70,11 +70,11 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
     const a = Math.round((smallColor[3] + largeColor[3]));
     ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
 
-    const xFill = distortionOptions.direction === 'V' ?  1 : getDistortionPixel(x, y);
-    const yFill = distortionOptions.direction === 'H' ?  1 : getDistortionPixel(x, y);
+    const xFill = distortionOptions.type === 'V' ?  1 : getDistortionPixel(x, y);
+    const yFill = distortionOptions.type === 'H' ?  1 : getDistortionPixel(x, y);
 
     // TODO: Refactor this
-    if (distortionOptions.direction === 'R') {
+    if (distortionOptions.type === 'R') {
         if (Math.random() > 0.5) {
             ctx.fillRect(
                 startWidth + x,
@@ -88,7 +88,7 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
                 xFill, 1
             );
         }
-    } else if (distortionOptions.direction === 'L') {
+    } else if (distortionOptions.type === 'L') {
         ctx.fillRect(
             startWidth + x,
             startHeight + y,
