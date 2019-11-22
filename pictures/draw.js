@@ -1,7 +1,12 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage,
     { size, ratio, rectRand, sample, preview, persist, bleedOptions, distortionOptions }
 ) {
-    const shouldPersist = persist && !(canvas.height === 150 && canvas.width === 300);
+    const DEFAULT_CANVAS_DIMENSIONS = {
+        HEIGHT: 150,
+        WIDTH: 300
+    }
+    const shouldPersist = persist &&
+        !(canvas.height === DEFAULT_CANVAS_DIMENSIONS.HEIGHT && canvas.width === DEFAULT_CANVAS_DIMENSIONS.WIDTH);
 
     const largeImageToDraw = shouldPersist ? canvas : largeImage;
     if (!shouldPersist) {
@@ -9,8 +14,10 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
         canvas.width = largeImage.naturalWidth;
     }
 
-    const smallCanvasHeight = size;
-    const smallCanvasWidth = smallImage ? Math.floor(size * smallImage.naturalWidth / smallImage.naturalHeight) : size;
+    const smallCanvasHeight = smallImage ?
+        size : DEFAULT_CANVAS_DIMENSIONS.HEIGHT;
+    const smallCanvasWidth = smallImage ?
+        Math.floor(size * smallImage.naturalWidth / smallImage.naturalHeight) : DEFAULT_CANVAS_DIMENSIONS.WIDTH;
     smallImageCanvas.height = smallCanvasHeight;
     smallImageCanvas.width = smallCanvasWidth;
     largeImageCanvas.height = largeImageToDraw.naturalHeight;
@@ -32,7 +39,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
     const columns = Math.ceil(canvas.width / smallCanvasWidth);
 
     const smallCanvas = {
-        data: smallImage ? getSmallCanvasData(smallImageCtx, smallCanvasWidth, smallCanvasHeight, ratio) : null,
+        data: getSmallCanvasData(smallImageCtx, smallCanvasWidth, smallCanvasHeight, ratio),
         width: smallCanvasWidth,
         height: smallCanvasHeight
     };
