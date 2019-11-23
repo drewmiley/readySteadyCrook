@@ -73,48 +73,28 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
     const xFill = distortionOptions.type === 'V' ?  1 : getDistortionPixel(x, y);
     const yFill = distortionOptions.type === 'H' ?  1 : getDistortionPixel(x, y);
 
-    const [xRandomOffset, yRandomOffset] = distortionOptions.corner === 'Offset' ?
+    const [xRandomOffset, yRandomOffset] = distortionOptions.corner === 'Offset' && distortionOptions.isDistorted ?
         [getDistortionPixel(x, y), getDistortionPixel(x, y)] : [0, 0];
 
-    const xOffsetMultiplier = distortionOptions.corner.includes('E') ? 0 : 0;
-    const yOffsetMultiplier = distortionOptions.corner.includes('S') ? 0 : 0;
+    // TODO: Investigate this - corner not quite working as expected
+    const xOffsetMultiplier = distortionOptions.corner.includes('E') ? -1 : 0;
+    const yOffsetMultiplier = distortionOptions.corner.includes('S') ? -1 : 0;
 
-    // TODO: Refactor this
-    if (distortionOptions.type === 'R') {
-        if (Math.random() > 0.5) {
-            ctx.fillRect(
-                startWidth + x,
-                startHeight + y + yOffsetMultiplier * yFill,
-                1, yFill
-            );
-        } else {
-            ctx.fillRect(
-                startWidth + x + xOffsetMultiplier * xFill,
-                startHeight + y,
-                xFill, 1
-            );
-        }
-    } else if (distortionOptions.type === 'L') {
+    if (distortionOptions.type === 'L') {
         ctx.fillRect(
-            startWidth + x,
-            startHeight + y + yOffsetMultiplier * yFill,
+            startWidth + x - xRandomOffset,
+            startHeight + y + yOffsetMultiplier * yFill - yRandomOffset,
             1, yFill
         );
         ctx.fillRect(
-            startWidth + x + xOffsetMultiplier * xFill,
-            startHeight + y,
-            xFill, 1
-        );
-    } else if (distortionOptions.isDistorted) {
-        ctx.fillRect(
-            startWidth + x - xRandomOffset,
+            startWidth + x + xOffsetMultiplier * xFill - xRandomOffset,
             startHeight + y - yRandomOffset,
-            xFill, yFill
+            xFill, 1
         );
     } else {
         ctx.fillRect(
-            startWidth + x,
-            startHeight + y,
+            startWidth + x + xOffsetMultiplier * xFill - xRandomOffset,
+            startHeight + y + yOffsetMultiplier * yFill - yRandomOffset,
             xFill, yFill
         );
     }

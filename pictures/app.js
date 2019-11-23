@@ -31,17 +31,11 @@ function handleImageSmall(e) {
     reader.readAsDataURL(e.target.files[0]);
 }
 
-// TODO: Avoid for loop
-const getCheckedValue = (checkedValue) => {
-    const options = document.getElementById(checkedValue).children;
-    let index;
-    for (let i = 0; i < options.length; i++) {
-        if (options[i].checked) {
-            index = i;
-        }
-    }
-    return options[index].id.replace(checkedValue, '');
-}
+const getCheckedValue = (checkedValue) =>
+    [...document.getElementById(checkedValue).children]
+        .find(d => d.checked)
+        .id
+        .replace(checkedValue, '');
 
 const run = largeImage => smallImage => {
     const canvas = document.getElementById('canvas');
