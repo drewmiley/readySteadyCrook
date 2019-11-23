@@ -80,7 +80,6 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
     const yOffsetMultiplier = distortionOptions.corner.includes('S') ? -1 : 0;
 
     // TODO: Refactor this
-    // TODO: Dont distort on !isDistorted
     if (distortionOptions.type === 'R') {
         if (Math.random() > 0.5) {
             ctx.fillRect(
@@ -106,10 +105,16 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
             startHeight + y,
             xFill, 1
         );
-    } else {
+    } else if (distortionOptions.isDistorted) {
         ctx.fillRect(
             startWidth + x - xRandomOffset,
             startHeight + y - yRandomOffset,
+            xFill, yFill
+        );
+    } else {
+        ctx.fillRect(
+            startWidth + x,
+            startHeight + y,
             xFill, yFill
         );
     }
