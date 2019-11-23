@@ -76,8 +76,8 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
     const [xRandomOffset, yRandomOffset] = distortionOptions.corner === 'Offset' ?
         [getDistortionPixel(x, y), getDistortionPixel(x, y)] : [0, 0];
 
-    const xOffsetMultiplier = distortionOptions.corner.includes('E') ? -1 : 0;
-    const yOffsetMultiplier = distortionOptions.corner.includes('S') ? -1 : 0;
+    const xOffsetMultiplier = distortionOptions.corner.includes('E') ? 0 : 0;
+    const yOffsetMultiplier = distortionOptions.corner.includes('S') ? 0 : 0;
 
     // TODO: Refactor this
     if (distortionOptions.type === 'R') {
