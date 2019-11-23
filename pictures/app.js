@@ -31,6 +31,12 @@ function handleImageSmall(e) {
     reader.readAsDataURL(e.target.files[0]);
 }
 
+const getCheckedValue = (checkedValue) =>
+    [...document.getElementById(checkedValue).children]
+        .find(d => d.checked)
+        .id
+        .replace(checkedValue, '');
+
 const run = largeImage => smallImage => {
     const canvas = document.getElementById('canvas');
     const smallImageCanvas = document.createElement('canvas');
@@ -48,7 +54,8 @@ const run = largeImage => smallImage => {
         start: parseInt(document.getElementById('distortionStart').value),
         end: parseInt(document.getElementById('distortionEnd').value),
         horizontal: document.getElementById('distortionHorizontal').checked,
-        direction: document.getElementById('distortionDirection').value
+        type: getCheckedValue('distortionType'),
+        corner: getCheckedValue('distortionCorner')
     };
     const options = {
         size: parseInt(document.getElementById('size').value),
