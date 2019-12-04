@@ -2,70 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Ready Steady Crook Pictures</title>
+    <title>Ready Steady Crook Bleed Explorer</title>
   </head>
   <body>
-    <div>Size: <input id="size" type="number" value="30" /></div>
-    <div>Large to Small Color ratio: <input id="ratio" type="number" value="3" /></div>
-    <div>Small Image: <input type="file" id="imageLoaderSmall" name="imageLoaderSmall"/></div>
-    <div>Large Image: <input type="file" id="imageLoaderLarge" name="imageLoaderLarge"/></div>
-    <div>
-      Sample:
-      True <input type="radio" id="sampleTrue" name="sample" />
-      False <input type="radio" id="sampleFalse" name="sample" checked />
-    </div>
-    <div>
-      Distortion:
-      True <input type="radio" id="distortionTrue" name="distortion" />
-      False <input type="radio" id="distortionFalse" name="distortion" checked />
-    </div>
-    <div id="distortionCorner">
-      Distortion Corner:
-      Offset in all directions <input type="radio" id="distortionCornerOffset" name="distortionCorner" checked />
-      NW <input type="radio" id="distortionCornerNW" name="distortionCorner" />
-      NE <input type="radio" id="distortionCornerNE" name="distortionCorner" />
-      SW <input type="radio" id="distortionCornerSW" name="distortionCorner" />
-      SE <input type="radio" id="distortionCornerSE" name="distortionCorner" />
-    </div>
-    <div id="distortionType">
-      Distortion Type:
-      Horizontal <input type="radio" id="distortionTypeH" name="distortionType" />
-      Vertical <input type="radio" id="distortionTypeV" name="distortionType" />
-      L-Shaped <input type="radio" id="distortionTypeL" name="distortionType" />
-      Both dimensions <input type="radio" id="distortionTypeB" name="distortionType" checked />
-    </div>
-    <div>
-      Distortion Orientation:
-      Vertical <input type="radio" id="distortionVertical" name="distortionOrientation" />
-      Horizontal <input type="radio" id="distortionHorizontal" name="distortionOrientation" checked />
-    </div>
-    <div>Distortion Strength (pixels): <input id="distortionStrength" type="number" value="0" /></div>
-    <div>Distortion Chance (%): <input id="distortionChance" type="number" value="0" /></div>
-    <div>Distortion Start (pixels): <input id="distortionStart" type="number" value="0" /></div>
-    <div>Distortion End (pixels): <input id="distortionEnd" type="number" value="0" /></div>
-    <div>
-      Bleed:
-      True <input type="radio" id="bleedTrue" name="bleed" />
-      False <input type="radio" id="bleedFalse" name="bleed" checked />
-    </div>
+    <div>Image: <input type="file" id="imageLoader" name="imageLoader"/></div>
     <div>
       Bleed Orientation:
       Vertical <input type="radio" id="bleedVertical" name="bleedOrientation" />
       Horizontal <input type="radio" id="bleedHorizontal" name="bleedOrientation" checked />
     </div>
-    <div>Bleed Start (pixels): <input id="bleedStart" type="number" value="0" /></div>
-    <div>Bleed End (pixels): <input id="bleedEnd" type="number" value="0" /></div>
-    <div>
-      Preview:
-      True <input type="radio" id="previewTrue" name="preview" />
-      False <input type="radio" id="previewFalse" name="preview" checked />
-    </div>
-    <div>
-      Persist:
-      True <input type="radio" id="persistTrue" name="persist" />
-      False <input type="radio" id="persistFalse" name="persist" checked />
-    </div>
-    <button id="run">Run</button>
+    <div>Bleed Pixel: <input id="bleedPixel" type="number" value="0" /></div>
+    <button id="load">Load</button>
     <canvas id="canvas" />
     <script src="./fill.js"></script>
     <script src="./draw.js"></script>
