@@ -59,6 +59,7 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
 
+    // TODO: May have to move into higher level for concentrate
     const getLargeCanvasData = getLargeCanvasDataInit(largeImageCtx, smallCanvas, sample, ratio, rectRand, bleedOptions)(i)(j);
     const getDistortionPixel = getDistortionPixelInit(ctx, smallCanvas, distortionOptions)(i)(j);
 
@@ -80,12 +81,10 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
     const xOffsetMultiplier = distortionOptions.corner.includes('E') ? -1 : 0;
     const yOffsetMultiplier = distortionOptions.corner.includes('S') ? -1 : 0;
 
-    console.log(concentrationOptions)
-
     ctx.fillRect(
-        startWidth + x + xOffsetMultiplier * xFill - xRandomOffset,
-        startHeight + y + yOffsetMultiplier * yFill - yRandomOffset,
-        0.5, 0.5
+        (startWidth + x + xOffsetMultiplier * xFill - xRandomOffset) / 10,
+        (startHeight + y + yOffsetMultiplier * yFill - yRandomOffset) / 10,
+        0.1, 0.1
     );
 
     // if (distortionOptions.type === 'L') {
