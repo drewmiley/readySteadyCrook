@@ -55,7 +55,7 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
         Math.floor((1 + distortionOptions.strength) * Math.random());
 }
 
-const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions) => i => j => (x, y) => {
+const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions) => i => j => (x, y) => {
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
 
@@ -80,22 +80,30 @@ const getFillRect = (ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, b
     const xOffsetMultiplier = distortionOptions.corner.includes('E') ? -1 : 0;
     const yOffsetMultiplier = distortionOptions.corner.includes('S') ? -1 : 0;
 
-    if (distortionOptions.type === 'L') {
-        ctx.fillRect(
-            startWidth + x - xRandomOffset,
-            startHeight + y + yOffsetMultiplier * yFill - yRandomOffset,
-            1, yFill
-        );
-        ctx.fillRect(
-            startWidth + x + xOffsetMultiplier * xFill - xRandomOffset,
-            startHeight + y - yRandomOffset,
-            xFill, 1
-        );
-    } else {
-        ctx.fillRect(
-            startWidth + x + xOffsetMultiplier * xFill - xRandomOffset,
-            startHeight + y + yOffsetMultiplier * yFill - yRandomOffset,
-            xFill, yFill
-        );
-    }
+    console.log(concentrationOptions)
+
+    ctx.fillRect(
+        startWidth + x + xOffsetMultiplier * xFill - xRandomOffset,
+        startHeight + y + yOffsetMultiplier * yFill - yRandomOffset,
+        0.5, 0.5
+    );
+
+    // if (distortionOptions.type === 'L') {
+    //     ctx.fillRect(
+    //         startWidth + x - xRandomOffset,
+    //         startHeight + y + yOffsetMultiplier * yFill - yRandomOffset,
+    //         1, yFill
+    //     );
+    //     ctx.fillRect(
+    //         startWidth + x + xOffsetMultiplier * xFill - xRandomOffset,
+    //         startHeight + y - yRandomOffset,
+    //         xFill, 1
+    //     );
+    // } else {
+    //     ctx.fillRect(
+    //         startWidth + x + xOffsetMultiplier * xFill - xRandomOffset,
+    //         startHeight + y + yOffsetMultiplier * yFill - yRandomOffset,
+    //         xFill, yFill
+    //     );
+    // }
 }
