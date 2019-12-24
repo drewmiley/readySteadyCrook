@@ -52,7 +52,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
 
     if (smallImage) console.log('Small image data loaded')
 
-    const getFillRectIJ = getFillRect(ctx, largeCanvas, largeImageCtx, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions);
+    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions);
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();

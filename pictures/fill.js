@@ -14,26 +14,20 @@ const getCanvasData = (imageCtx, width, height, ratioProp) => {
     return canvasData;
 }
 
-const getLargeCanvasDataInit = (largeCanvas, largeImageCtx, smallCanvas, sample, ratio, rectRand, bleedOptions) => i => j => (x, y) => {
+const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions) => i => j => (x, y) => {
     const largeRatioProp = 1 - 1 / (ratio + 1);
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
-    const largeColorSample = largeImageCtx.getImageData(
-        startWidth + (rectRand ? Math.random() : 0.5) * smallCanvas.width,
-        startHeight + (rectRand ? Math.random() : 0.5) * smallCanvas.height,
-        1, 1
-    ).data.map(d => d * largeRatioProp);
-    // TODO: Use largeCanvas rather than largeImageCtx
+    const largeColorSample = largeCanvas.data
+        [startWidth + (rectRand ? Math.random() : 0.5) * smallCanvas.width]
+        [startHeight + (rectRand ? Math.random() : 0.5) * smallCanvas.height];
 
     const pixelValueToCheck = bleedOptions.horizontal ? startHeight + y : startWidth + x;
     const inBleed = bleedOptions.isBleeding && (pixelValueToCheck > bleedOptions.start) && (pixelValueToCheck <= bleedOptions.end);
     const largeColor = sample ? largeColorSample :
-        largeImageCtx.getImageData(
-            inBleed && !bleedOptions.horizontal ? bleedOptions.start : startWidth + x,
-            inBleed && bleedOptions.horizontal ? bleedOptions.start : startHeight + y,
-            1, 1
-        ).data.map(d => d * largeRatioProp);
-        // TODO: Use largeCanvas rather than largeImageCtx
+        largeCanvas.data
+            [inBleed && !bleedOptions.horizontal ? bleedOptions.start : startWidth + x]
+            [inBleed && bleedOptions.horizontal ? bleedOptions.start : startHeight + y]
     return largeColor;
 }
 
@@ -56,12 +50,11 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
         Math.floor((1 + distortionOptions.strength) * Math.random());
 }
 
-const getFillRect = (ctx, largeCanvas, largeImageCtx, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions) => i => j => (x, y) => {
+const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions) => i => j => (x, y) => {
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
 
-    // TODO: Remove dependency on largeImageCtx
-    const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, largeImageCtx, smallCanvas, sample, ratio, rectRand, bleedOptions)(i)(j);
+    const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions)(i)(j);
     const getDistortionPixel = getDistortionPixelInit(ctx, smallCanvas, distortionOptions)(i)(j);
 
     const largeColor = getLargeCanvasData(x, y);
