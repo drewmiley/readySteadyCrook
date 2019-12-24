@@ -39,14 +39,20 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
     const columns = Math.ceil(canvas.width / smallCanvasWidth);
 
     const smallCanvas = {
-        data: getSmallCanvasData(smallImageCtx, smallCanvasWidth, smallCanvasHeight, ratio),
+        data: getCanvasData(smallImageCtx, smallCanvasWidth, smallCanvasHeight, smallRatioProp),
         width: smallCanvasWidth,
         height: smallCanvasHeight
     };
 
+    const largeCanvas = {
+        data: getCanvasData(largeImageCtx, largeImageCanvas.width, largeImageCanvas.height, largeRatioProp),
+        width: largeImageCanvas.width,
+        height: largeImageCanvas.height
+    };
+
     if (smallImage) console.log('Small image data loaded')
 
-    const getFillRectIJ = getFillRect(ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions);
+    const getFillRectIJ = getFillRect(ctx, largeCanvas, largeImageCtx, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions);
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();
