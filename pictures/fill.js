@@ -15,20 +15,19 @@ const getCanvasData = (imageCtx, width, height, ratioProp) => {
 }
 
 const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions) => (startWidth, startHeight, x, y) => {
-    // TODO: Fix for values outside of canvas data array
-    // const largeColorSample = largeCanvas.data
-    //     [startWidth + Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width)]
-    //     [startHeight + Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height)];
-
+    const xMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width) : parseInt(x, 10);
+    const yMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) : parseInt(y, 10);
+    const valid = (startWidth + xMod) > 0 && (startWidth + xMod) < largeCanvas.width && (startHeight + yMod) > 0 && (startHeight + yMod) < largeCanvas.height;
+    if (!valid) return [0, 0, 0, 0];
     const pixelValueToCheck = bleedOptions.horizontal ? startHeight + y : startWidth + x;
     const inBleed = bleedOptions.isBleeding && (pixelValueToCheck > bleedOptions.start) && (pixelValueToCheck <= bleedOptions.end);
-    // const largeColor = sample ? largeColorSample :
-    const largeColor = sample ? null :
-        largeCanvas.data
-        // TODO: Why out of index
-            [inBleed && !bleedOptions.horizontal ? bleedOptions.start : startWidth + x]
-            [inBleed && bleedOptions.horizontal ? bleedOptions.start : startHeight + y]
-    return largeColor;
+    const width = sample ?
+        startWidth + Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width) :
+        inBleed && !bleedOptions.horizontal ? bleedOptions.start : startWidth + x;
+    const height = sample ?
+        startHeight + Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) :
+        inBleed && bleedOptions.horizontal ? bleedOptions.start : startHeight + y;
+    return largeCanvas.data[width][height];
 }
 
 const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j => (x, y) => {
