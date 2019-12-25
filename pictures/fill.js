@@ -50,6 +50,9 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
 }
 
 const getConcentrationFill = (getLargeCanvasData, startWidth, startHeight, x, y, concentrateOptions) => {
+    const concentrateWidth = concentrateOptions.x;
+    const concentrateHeight = concentrateOptions.y;
+    const concentrateDecay = concentrateOptions.decay;
     const largeColor = getLargeCanvasData(startWidth, startHeight, x, y);
     const r = Math.round(largeColor[0]);
     const g = Math.round(largeColor[1]);
