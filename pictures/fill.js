@@ -63,7 +63,6 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
     const startHeight = i * smallCanvas.height;
 
     const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions);
-    const getDistortionPixel = getDistortionPixelInit(ctx, smallCanvas, distortionOptions)(i)(j);
 
     if (concentrateOptions.isConcentrated) {
         ctx.fillStyle = getConcentrationFill(getLargeCanvasData, startWidth, startHeight, x, y, concentrateOptions);
@@ -73,6 +72,7 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
             1, 1
         );
     } else {
+        const getDistortionPixel = getDistortionPixelInit(ctx, smallCanvas, distortionOptions)(i)(j);
         const largeColor = getLargeCanvasData(startWidth, startHeight, x, y);
         const smallColor = smallCanvas.data[x][y];
         const r = Math.round((smallColor[0] + largeColor[0]));
