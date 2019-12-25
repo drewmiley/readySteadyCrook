@@ -44,13 +44,15 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
         height: smallCanvasHeight
     };
 
+    if (smallImage) console.log('Small image data loaded')
+
     const largeCanvas = {
         data: getCanvasData(largeImageCtx, largeImageCanvas.width, largeImageCanvas.height, largeRatioProp),
         width: largeImageCanvas.width,
         height: largeImageCanvas.height
     };
 
-    if (smallImage) console.log('Small image data loaded')
+    console.log('Large image data loaded')
 
     const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions);
 
