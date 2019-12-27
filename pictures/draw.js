@@ -1,5 +1,5 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage,
-    { size, ratio, rectRand, sample, preview, persist, bleedOptions, distortionOptions }
+    { size, ratio, rectRand, sample, preview, persist, bleedOptions, distortionOptions, concentrateOptions }
 ) {
     const DEFAULT_CANVAS_DIMENSIONS = {
         HEIGHT: 150,
@@ -39,14 +39,22 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
     const columns = Math.ceil(canvas.width / smallCanvasWidth);
 
     const smallCanvas = {
-        data: getSmallCanvasData(smallImageCtx, smallCanvasWidth, smallCanvasHeight, ratio),
+        data: getCanvasData(smallImageCtx, smallCanvasWidth, smallCanvasHeight, smallRatioProp),
         width: smallCanvasWidth,
         height: smallCanvasHeight
     };
 
     if (smallImage) console.log('Small image data loaded')
 
-    const getFillRectIJ = getFillRect(ctx, largeImageCtx, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions);
+    const largeCanvas = {
+        data: getCanvasData(largeImageCtx, largeImageCanvas.width, largeImageCanvas.height, largeRatioProp),
+        width: largeImageCanvas.width,
+        height: largeImageCanvas.height
+    };
+
+    console.log('Large image data loaded')
+
+    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions);
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();
