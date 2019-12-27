@@ -24,6 +24,7 @@ function handleImageSmall(e) {
     let reader = new FileReader();
     reader.onload = e => {
         let img = new Image();
+        console.log('Please set large image first')
         img.onload = () => document.getElementById('run').onclick = () => setRun(img);
         img.crossOrigin = "Anonymous";
         img.src = event.target.result;
