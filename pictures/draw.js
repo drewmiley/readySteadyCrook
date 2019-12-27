@@ -1,6 +1,7 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage,
     { size, ratio, rectRand, sample, preview, persist, bleedOptions, distortionOptions, concentrateOptions }
 ) {
+    console.log(concentrateOptions)
     const DEFAULT_CANVAS_DIMENSIONS = {
         HEIGHT: 150,
         WIDTH: 300
