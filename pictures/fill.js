@@ -68,6 +68,7 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
     const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions);
 
     if (concentrateOptions.isConcentrated) {
+        // TODO: Need to work out this!
         ctx.fillStyle = getConcentrationFill(getLargeCanvasData, startWidth, startHeight, x, y, concentrateOptions);
         ctx.fillRect(
             startWidth + x,
