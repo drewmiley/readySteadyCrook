@@ -51,7 +51,8 @@ const run = largeImage => smallImage => {
     const distortionOptions = {
         isDistorted: document.getElementById('distortionTrue').checked,
         chance: parseFloat(document.getElementById('distortionChance').value),
-        strength: parseInt(document.getElementById('distortionStrength').value),
+        min: parseInt(document.getElementById('distortionMin').value),
+        max: parseInt(document.getElementById('distortionMax').value),
         start: parseInt(document.getElementById('distortionStart').value),
         end: parseInt(document.getElementById('distortionEnd').value),
         horizontal: document.getElementById('distortionHorizontal').checked,
