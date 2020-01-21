@@ -46,7 +46,7 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
         1, 1
     ).data;
     return (color[0] || color[1] || color[2]) ? 0 :
-        Math.floor((1 + distortionOptions.strength) * Math.random());
+        distortionOptions.min + Math.floor((1 + distortionOptions.max - distortionOptions.min) * Math.random());
 }
 
 const getConcentrationFill = (getLargeCanvasData, startWidth, startHeight, x, y, concentrateOptions) => {
