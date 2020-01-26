@@ -4,6 +4,7 @@
 
 drewmiley.github.io/readySteadyCrook/words
 drewmiley.github.io/readySteadyCrook/pictures
+drewmiley.github.io/readySteadyCrook/fibonacci
 
 ## To use
 
