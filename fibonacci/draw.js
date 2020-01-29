@@ -1,43 +1,40 @@
 function draw(canvas, imageCanvas, img) {
-    canvas.height = img.naturalHeight;
-    canvas.width = img.naturalWidth;
-    imageCanvas.height = img.naturalHeight;
-    imageCanvas.width = img.naturalWidth;
+    const FIBONACCI_NUMBERS = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765];
+
+    const smallDim = Math.min(img.naturalHeight, img.naturalWidth);
+
+    const height = FIBONACCI_NUMBERS.filter(d => d > smallDim)[0];
+    const fibonacciNumbers = FIBONACCI_NUMBERS.filter(d => d < height).reverse();
+    const width = fibonacciNumbers[0];
+
+    canvas.height = height;
+    canvas.width = width;
+    imageCanvas.height = width;
+    imageCanvas.width = width;
 
     var ctx = canvas.getContext('2d');
     var imageCtx = imageCanvas.getContext('2d');
 
-    imageCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+    const hDiff = (img.naturalHeight - width) / 2;
+    const wDiff = (img.naturalWidth - width) / 2;
 
-    const largeCanvas = {
-        data: getCanvasData(largeImageCtx, largeImageCanvas.width, largeImageCanvas.height, largeRatioProp),
-        width: largeImageCanvas.width,
-        height: largeImageCanvas.height
-    };
+    // TODO: Figure out why not square
+    imageCtx.drawImage(img, hDiff, wDiff, img.naturalHeight - hDiff, img.naturalWidth - wDiff, 0, 0, imageCanvas.height, imageCanvas.width);
 
-    const fillRectIJK = getFillRect(ctx, imageCtx);
-    const fillTextIJK = getFillText(ctx, imageCtx);
-
-    const rows = 10;
-    const columns = 10;
-
-    console.log(`Drawing Rows Total ${rows}`);
+    console.log(`Drawing Rows Total ${fibonacciNumbers.length}`);
     const start = Date.now();
 
-    for (let i = 0; i < rows; i++) {
+    // for (let i = 0; i < fibonacciNumbers.length; i++) {
+    for (let i = 0; i < 1; i++) {
         if (i > 0) {
-          const timeLeft = (rows - i) * (Date.now() - start) / i;
+          const timeLeft = (fibonacciNumbers.length - i) * (Date.now() - start) / i;
           console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
         }
-        const getFillRectJ = getFillRectIJ(i);
-        for (let j = 0; j < columns; j++) {
-            const fillRect = getFillRectJ(j);
-            for (let x = 0; x < smallCanvasWidth; x++) {
-                for (let y = 0; y < smallCanvasHeight; y++) {
-                    fillRect(x, y);
-                }
-            }
-        }
+        // TODO: Figure out x and y
+        const x = 0;
+        const y = 0;
+        ctx.drawImage(imageCanvas, 0, 0, height, height, x, y, fibonacciNumbers[i], fibonacciNumbers[i]);
     }
+
     console.log('Done');
 }
