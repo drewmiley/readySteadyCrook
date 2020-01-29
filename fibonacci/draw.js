@@ -31,6 +31,7 @@ function draw(canvas, imageCanvas, img) {
           console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
         }
         // TODO: Figure out x and y
+        // TODO: Also https://www.w3schools.com/tags/canvas_rotate.asp
         const x = 0;
         const y = 0;
         ctx.drawImage(imageCanvas, 0, 0, height, height, x, y, fibonacciNumbers[i], fibonacciNumbers[i]);
