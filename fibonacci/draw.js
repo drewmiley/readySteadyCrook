@@ -18,9 +18,6 @@ function draw(canvas, imageCanvas, img) {
     const hDiff = (img.naturalHeight - width) / 2;
     const wDiff = (img.naturalWidth - width) / 2;
 
-    console.log(wDiff, hDiff, img.naturalWidth - wDiff, img.naturalHeight - hDiff, 0, 0, imageCanvas.width, imageCanvas.height);
-    console.log(img.naturalHeight - 2 * hDiff, img.naturalWidth - 2 * wDiff);
-
     imageCtx.drawImage(img, wDiff, hDiff, width, width, 0, 0, width, width);
 
     console.log(`Drawing Rows Total ${fibonacciNumbers.length}`);
