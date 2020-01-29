@@ -26,8 +26,7 @@ function draw(canvas, imageCanvas, img) {
     console.log(`Drawing Rows Total ${fibonacciNumbers.length}`);
     const start = Date.now();
 
-    // for (let i = 0; i < fibonacciNumbers.length; i++) {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < fibonacciNumbers.length; i++) {
         if (i > 0) {
           const timeLeft = (fibonacciNumbers.length - i) * (Date.now() - start) / i;
           console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
