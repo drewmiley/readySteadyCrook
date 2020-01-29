@@ -18,24 +18,27 @@ function draw(canvas, imageCanvas, img) {
     const hDiff = (img.naturalHeight - width) / 2;
     const wDiff = (img.naturalWidth - width) / 2;
 
+    console.log(hDiff, wDiff, img.naturalHeight - hDiff, img.naturalWidth - wDiff, imageCanvas.height, imageCanvas.width);
+    console.log(img.naturalHeight - 2 * hDiff, img.naturalWidth - 2 * wDiff);
+
     // TODO: Figure out why not square
-    imageCtx.drawImage(img, hDiff, wDiff, img.naturalHeight - hDiff, img.naturalWidth - wDiff, 0, 0, imageCanvas.height, imageCanvas.width);
+    ctx.drawImage(img, wDiff, hDiff, img.naturalWidth - wDiff, img.naturalHeight - hDiff, 0, 0, imageCanvas.width, imageCanvas.height);
 
     console.log(`Drawing Rows Total ${fibonacciNumbers.length}`);
     const start = Date.now();
-
-    // for (let i = 0; i < fibonacciNumbers.length; i++) {
-    for (let i = 0; i < 1; i++) {
-        if (i > 0) {
-          const timeLeft = (fibonacciNumbers.length - i) * (Date.now() - start) / i;
-          console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
-        }
-        // TODO: Figure out x and y
-        // TODO: Also https://www.w3schools.com/tags/canvas_rotate.asp
-        const x = 0;
-        const y = 0;
-        ctx.drawImage(imageCanvas, 0, 0, height, height, x, y, fibonacciNumbers[i], fibonacciNumbers[i]);
-    }
+    //
+    // // for (let i = 0; i < fibonacciNumbers.length; i++) {
+    // for (let i = 0; i < 1; i++) {
+    //     if (i > 0) {
+    //       const timeLeft = (fibonacciNumbers.length - i) * (Date.now() - start) / i;
+    //       console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
+    //     }
+    //     // TODO: Figure out x and y
+    //     // TODO: Also https://www.w3schools.com/tags/canvas_rotate.asp
+    //     const x = 0;
+    //     const y = 0;
+    //     ctx.drawImage(imageCanvas, 0, 0, height, height, x, y, fibonacciNumbers[i], fibonacciNumbers[i]);
+    // }
 
     console.log('Done');
 }
