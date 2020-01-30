@@ -3,37 +3,27 @@ function draw(canvas, imageCanvas, img) {
 
     const smallDim = Math.min(img.naturalHeight, img.naturalWidth);
 
-    const height = FIBONACCI_NUMBERS.filter(d => d > smallDim)[0];
-    const fibonacciNumbers = FIBONACCI_NUMBERS.filter(d => d < height).reverse();
-    const width = fibonacciNumbers[0];
+    const largeFib = FIBONACCI_NUMBERS.filter(d => d > smallDim)[0];
+    const fibonacciNumbers = FIBONACCI_NUMBERS.filter(d => d < largeFib).reverse();
+    const smallFib = fibonacciNumbers[0];
 
-    canvas.height = height;
-    canvas.width = width;
-    imageCanvas.height = width;
-    imageCanvas.width = width;
+    canvas.height = largeFib;
+    canvas.width = smallFib;
+    imageCanvas.height = smallFib;
+    imageCanvas.width = smallFib;
 
     var ctx = canvas.getContext('2d');
     var imageCtx = imageCanvas.getContext('2d');
 
-    const hDiff = (img.naturalHeight - width) / 2;
-    const wDiff = (img.naturalWidth - width) / 2;
+    const hDiff = (img.naturalHeight - smallFib) / 2;
+    const wDiff = (img.naturalWidth - smallFib) / 2;
 
-    imageCtx.drawImage(img, wDiff, hDiff, width, width, 0, 0, width, width);
-
-    console.log(`Drawing Rows Total ${fibonacciNumbers.length}`);
-    const start = Date.now();
+    imageCtx.drawImage(img, wDiff, hDiff, smallFib, smallFib, 0, 0, smallFib, smallFib);
 
     for (let i = 0; i < fibonacciNumbers.length; i++) {
-        if (i > 0) {
-          const timeLeft = (fibonacciNumbers.length - i) * (Date.now() - start) / i;
-          console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
-        }
-        // TODO: Figure out x and y
-        // TODO: Also https://www.w3schools.com/tags/canvas_rotate.asp
-        const x = 0;
-        const y = 0;
-        ctx.drawImage(imageCanvas, 0, 0, width, width, x, y, fibonacciNumbers[i], fibonacciNumbers[i]);
+        ctx.drawImage(imageCanvas, 0, 0, smallFib, smallFib, 0, 0, fibonacciNumbers[i], fibonacciNumbers[i]);
+        ctx.translate(fibonacciNumbers[i], fibonacciNumbers[i]);
+        ctx.rotate(Math.PI / 2);
     }
-
     console.log('Done');
 }
