@@ -1,4 +1,4 @@
-function draw(canvas, imageCanvas, img) {
+function draw(canvas, imageCanvas, img, { horizontal }) {
     const FIBONACCI_NUMBERS = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765];
 
     const smallDim = Math.min(img.naturalHeight, img.naturalWidth);
@@ -7,8 +7,8 @@ function draw(canvas, imageCanvas, img) {
     const fibonacciNumbers = FIBONACCI_NUMBERS.filter(d => d < largeFib).reverse();
     const smallFib = fibonacciNumbers[0];
 
-    canvas.height = largeFib;
-    canvas.width = smallFib;
+    canvas.height = horizontal ? smallFib : largeFib;
+    canvas.width = horizontal ? largeFib : smallFib;
     imageCanvas.height = smallFib;
     imageCanvas.width = smallFib;
 
@@ -22,7 +22,13 @@ function draw(canvas, imageCanvas, img) {
 
     for (let i = 0; i < fibonacciNumbers.length; i++) {
         ctx.drawImage(imageCanvas, 0, 0, smallFib, smallFib, 0, 0, fibonacciNumbers[i], fibonacciNumbers[i]);
-        ctx.translate(fibonacciNumbers[i], fibonacciNumbers[i]);
+        if (horizontal) {
+            const tranform = i === fibonacciNumbers.length - 1 ?
+                0 : fibonacciNumbers[i] + fibonacciNumbers[i + 1];
+            ctx.translate(tranform, 0);
+        } else {
+            ctx.translate(fibonacciNumbers[i], fibonacciNumbers[i]);
+        }
         ctx.rotate(Math.PI / 2);
     }
     console.log('Done');
