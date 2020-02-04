@@ -22,7 +22,13 @@ function draw(canvas, imageCanvas, img, { horizontal }) {
 
     for (let i = 0; i < fibonacciNumbers.length; i++) {
         ctx.drawImage(imageCanvas, 0, 0, smallFib, smallFib, 0, 0, fibonacciNumbers[i], fibonacciNumbers[i]);
-        ctx.translate(fibonacciNumbers[i], fibonacciNumbers[i]);
+        if (horizontal) {
+            const tranform = i === fibonacciNumbers.length - 1 ?
+                0 : fibonacciNumbers[i] + fibonacciNumbers[i + 1];
+            ctx.translate(tranform, 0);
+        } else {
+            ctx.translate(fibonacciNumbers[i], fibonacciNumbers[i]);
+        }
         ctx.rotate(Math.PI / 2);
     }
     console.log('Done');
