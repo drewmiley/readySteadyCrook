@@ -15,9 +15,7 @@ function handleImage(e) {
 const run = image => {
     const canvas = document.getElementById('canvas');
     const background = document.getElementById('background');
-    const options = {
-        horizontal: document.getElementById('horizontal').checked
-    }
+    const options = {};
     console.log('Running');
     draw(canvas, background, image, options);
 }
