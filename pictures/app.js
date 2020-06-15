@@ -59,12 +59,12 @@ const run = largeImage => smallImage => {
         type: getCheckedValue('distortionType'),
         corner: getCheckedValue('distortionCorner')
     };
-    const concentrateOptions = {
-        isConcentrated: document.getElementById('concentrateTrue').checked,
-        x: parseInt(document.getElementById('concentrateX').value),
-        y: parseInt(document.getElementById('concentrateY').value),
-        decay: parseInt(document.getElementById('concentrateDecay').value)
-    }
+    // const concentrateOptions = {
+    //     isConcentrated: document.getElementById('concentrateTrue').checked,
+    //     x: parseInt(document.getElementById('concentrateX').value),
+    //     y: parseInt(document.getElementById('concentrateY').value),
+    //     decay: parseInt(document.getElementById('concentrateDecay').value)
+    // }
     const options = {
         size: parseInt(document.getElementById('size').value),
         ratio: parseFloat(document.getElementById('ratio').value),
@@ -73,7 +73,8 @@ const run = largeImage => smallImage => {
         persist: document.getElementById('persistTrue').checked,
         bleedOptions,
         distortionOptions,
-        concentrateOptions
+        concentrateOptions: {}
+        // concentrateOptions
     }
     console.log('Running');
     draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage, options);
