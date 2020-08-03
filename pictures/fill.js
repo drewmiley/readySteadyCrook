@@ -31,9 +31,20 @@ const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRan
         startHeight + Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) :
         inBleed && bleedOptions.horizontal ? bleedOptions.start : startHeight + y;
     const largeCanvasData = largeCanvas.data[width][height];
-    if (colorMergeArray) {
+    if (colormergeArray) {
         // TODO: Merge rect in here
-        return largeCanvasData;
+        const xAcross = Math.floor(width * colormergeArray.length / largeCanvas.width);
+        const yDown = Math.floor(height * colormergeArray[0].length / largeCanvas.height);
+        const rgb = colormergeArray[xAcross][yDown];
+        const r = parseInt(rgb.slice(1, 3), 16);
+        const g = parseInt(rgb.slice(3, 5), 16);
+        const b = parseInt(rgb.slice(5, 7), 16);
+        return [
+            (r + largeCanvasData[0]) / 2,
+            (g + largeCanvasData[1]) / 2,
+            (b + largeCanvasData[2]) / 2,
+            largeCanvasData[3]
+        ];
     } else {
         return largeCanvasData;
     }
