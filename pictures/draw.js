@@ -54,7 +54,23 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
 
     console.log('Large image data loaded')
 
-    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeOptions, concentrateOptions);
+    const colormergeArray = (() => {
+        if (!colormergeOptions.isMerging) {
+            return null;
+        }
+        const colormergeArray = Array.from(Array(colormergeOptions.xAcross), () => new Array(colormergeOptions.yDown));
+        for (let i = 0; i < colormergeOptions.xAcross; i++) {
+            for (let j = 0; j < colormergeOptions.yDown; j++) {
+                const color = colormergeOptions.colors.length ?
+                    colormergeOptions.colors[(j * colormergeOptions.xAcross + i) % colormergeOptions.colors.length] :
+                    '#00ff00';
+                colormergeArray[i][j] = color;
+            }
+        }
+        return colormergeArray;
+    })();
+
+    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeArray, concentrateOptions);
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();
