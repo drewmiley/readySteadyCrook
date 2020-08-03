@@ -58,16 +58,13 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
         if (!colormergeOptions.isMerging) {
             return null;
         }
-        const colormergeArray = Array.from(Array(colormergeOptions.xAcross), () => new Array(colormergeOptions.yDown));
-        for (let i = 0; i < colormergeOptions.xAcross; i++) {
-            for (let j = 0; j < colormergeOptions.yDown; j++) {
-                const color = colormergeOptions.colors.length ?
+        return [...Array(colormergeOptions.xAcross)].map((_, i) => {
+            return [...Array(colormergeOptions.yDown)].map((_, j) => {
+                return colormergeOptions.colors.length && colormergeOptions.colors[0].length ?
                     colormergeOptions.colors[(j * colormergeOptions.xAcross + i) % colormergeOptions.colors.length] :
-                    '#00ff00';
-                colormergeArray[i][j] = color;
-            }
-        }
-        return colormergeArray;
+                    `#${[...Array(6)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')}`;
+            })
+        })
     })();
 
     const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeArray, concentrateOptions);
@@ -77,8 +74,8 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
 
     for (let i = 0; i < rows; i++) {
         if (i > 0) {
-          const timeLeft = (rows - i) * (Date.now() - start) / i;
-          console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
+            const timeLeft = (rows - i) * (Date.now() - start) / i;
+            console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
         }
         const getFillRectJ = getFillRectIJ(i);
         for (let j = 0; j < columns; j++) {
