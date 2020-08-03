@@ -19,9 +19,6 @@ const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRan
     const yMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) : parseInt(y, 10);
     const valid = (startWidth + xMod) > 0 && (startWidth + xMod) < largeCanvas.width && (startHeight + yMod) > 0 && (startHeight + yMod) < largeCanvas.height;
     if (!valid) return [0, 0, 0, 0];
-    if (colormergeArray) {
-        const closure = 2;
-    }
     const pixelValueToCheck = bleedOptions.horizontal ? startHeight + y : startWidth + x;
     const inBleed = bleedOptions.isBleeding && (pixelValueToCheck > bleedOptions.start) && (pixelValueToCheck <= bleedOptions.end);
     const width = sample ?
@@ -32,7 +29,6 @@ const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRan
         inBleed && bleedOptions.horizontal ? bleedOptions.start : startHeight + y;
     const largeCanvasData = largeCanvas.data[width][height];
     if (colormergeArray) {
-        // TODO: Merge rect in here
         const xAcross = Math.floor(width * colormergeArray.length / largeCanvas.width);
         const yDown = Math.floor(height * colormergeArray[0].length / largeCanvas.height);
         const rgb = colormergeArray[xAcross][yDown];
