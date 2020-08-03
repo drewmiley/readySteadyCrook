@@ -59,6 +59,12 @@ const run = largeImage => smallImage => {
         type: getCheckedValue('distortionType'),
         corner: getCheckedValue('distortionCorner')
     };
+    const colormergeOptions = {
+        isMerging: document.getElementById('colormergeTrue').checked,
+        colors: document.getElementById('colormergeColors').value.split(','),
+        xAcross: parseInt(document.getElementById('colormergeX').value),
+        yDown: parseInt(document.getElementById('colormergeY').value)
+    };
     // const concentrateOptions = {
     //     isConcentrated: document.getElementById('concentrateTrue').checked,
     //     x: parseInt(document.getElementById('concentrateX').value),
@@ -73,6 +79,7 @@ const run = largeImage => smallImage => {
         persist: document.getElementById('persistTrue').checked,
         bleedOptions,
         distortionOptions,
+        colormergeOptions,
         concentrateOptions: {}
         // concentrateOptions
     }
