@@ -67,7 +67,13 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
         })
     })();
 
-    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeArray, concentrateOptions);
+    const colormergeModifiedOptions = {
+        isMerging: colormergeOptions.isMerging,
+        array: colormergeArray,
+        ratio: colormergeOptions.ratio
+    };
+
+    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrateOptions);
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();

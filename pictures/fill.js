@@ -14,7 +14,7 @@ const getCanvasData = (imageCtx, width, height, ratioProp) => {
     return canvasData;
 }
 
-const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeArray) => (startWidth, startHeight, x, y) => {
+const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeModifiedOptions) => (startWidth, startHeight, x, y) => {
     const xMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width) : parseInt(x, 10);
     const yMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) : parseInt(y, 10);
     const valid = (startWidth + xMod) > 0 && (startWidth + xMod) < largeCanvas.width && (startHeight + yMod) > 0 && (startHeight + yMod) < largeCanvas.height;
@@ -28,17 +28,17 @@ const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRan
         startHeight + Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) :
         inBleed && bleedOptions.horizontal ? bleedOptions.start : startHeight + y;
     const largeCanvasData = largeCanvas.data[width][height];
-    if (colormergeArray) {
-        const xAcross = Math.floor(width * colormergeArray.length / largeCanvas.width);
-        const yDown = Math.floor(height * colormergeArray[0].length / largeCanvas.height);
-        const rgb = colormergeArray[xAcross][yDown];
+    if (colormergeModifiedOptions.isMerging) {
+        const xAcross = Math.floor(width * colormergeModifiedOptions.array.length / largeCanvas.width);
+        const yDown = Math.floor(height * colormergeModifiedOptions.array[0].length / largeCanvas.height);
+        const rgb = colormergeModifiedOptions.array[xAcross][yDown];
         const r = parseInt(rgb.slice(1, 3), 16);
         const g = parseInt(rgb.slice(3, 5), 16);
         const b = parseInt(rgb.slice(5, 7), 16);
         return [
-            (r + largeCanvasData[0]) / 2,
-            (g + largeCanvasData[1]) / 2,
-            (b + largeCanvasData[2]) / 2,
+            (r + colormergeModifiedOptions.ratio * largeCanvasData[0]) / (colormergeModifiedOptions.ratio + 1),
+            (g + colormergeModifiedOptions.ratio * largeCanvasData[1]) / (colormergeModifiedOptions.ratio + 1),
+            (b + colormergeModifiedOptions.ratio * largeCanvasData[2]) / (colormergeModifiedOptions.ratio + 1),
             largeCanvasData[3]
         ];
     } else {
@@ -77,11 +77,11 @@ const getConcentrationFill = (getLargeCanvasData, startWidth, startHeight, x, y,
     return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
 }
 
-const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeArray, concentrateOptions) => i => j => (x, y) => {
+const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrateOptions) => i => j => (x, y) => {
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
 
-    const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeArray);
+    const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeModifiedOptions);
 
     if (concentrateOptions.isConcentrated) {
         // TODO: Need to work out this!
