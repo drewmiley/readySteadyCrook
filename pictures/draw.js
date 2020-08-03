@@ -1,5 +1,5 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage,
-    { size, ratio, rectRand, sample, preview, persist, bleedOptions, distortionOptions, concentrateOptions }
+    { size, ratio, rectRand, sample, preview, persist, bleedOptions, distortionOptions, colormergeOptions, concentrateOptions }
 ) {
     const DEFAULT_CANVAS_DIMENSIONS = {
         HEIGHT: 150,
@@ -54,15 +54,27 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
 
     console.log('Large image data loaded')
 
-    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions);
+    const getColormergeArray = () => [...Array(colormergeOptions.xAcross)].map((_, i) => [...Array(colormergeOptions.yDown)].map((_, j) =>
+        colormergeOptions.colors.length && colormergeOptions.colors[0].length ?
+            colormergeOptions.colors[(j * colormergeOptions.xAcross + i) % colormergeOptions.colors.length] :
+            `#${[...Array(6)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')}`
+        ));
+
+    const colormergeModifiedOptions = {
+        isMerging: colormergeOptions.isMerging,
+        array: colormergeOptions.isMerging && getColormergeArray(),
+        ratio: colormergeOptions.ratio
+    };
+
+    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrateOptions);
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();
 
     for (let i = 0; i < rows; i++) {
         if (i > 0) {
-          const timeLeft = (rows - i) * (Date.now() - start) / i;
-          console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
+            const timeLeft = (rows - i) * (Date.now() - start) / i;
+            console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
         }
         const getFillRectJ = getFillRectIJ(i);
         for (let j = 0; j < columns; j++) {

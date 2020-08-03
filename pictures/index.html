@@ -19,11 +19,6 @@
       True <input type="radio" id="distortionTrue" name="distortion" />
       False <input type="radio" id="distortionFalse" name="distortion" checked />
     </div>
-    <div>
-      Concentrate:
-      True <input type="radio" id="concentrateTrue" name="concentrate" />
-      False <input type="radio" id="concentrateFalse" name="concentrate" checked />
-    </div>
     <div id="distortionCorner">
       Distortion Corner:
       Offset in all directions <input type="radio" id="distortionCornerOffset" name="distortionCorner" checked />
@@ -61,9 +56,23 @@
     </div>
     <div>Bleed Start (pixels): <input id="bleedStart" type="number" value="0" /></div>
     <div>Bleed End (pixels): <input id="bleedEnd" type="number" value="0" /></div>
+    <div>
+      Color Merge:
+      True <input type="radio" id="colormergeTrue" name="colormerge" />
+      False <input type="radio" id="colormergeFalse" name="colormerge" checked />
+    </div>
+    <div>Colors: <input id="colormergeColors" type="text" value="#ff0000,#00ff00,#0000ff" /></div>
+    <div>Ratio: <input id="colormergeRatio" type="number" value="3" /></div>
+    <div>X across: <input id="colormergeX" type="number" value="4" /></div>
+    <div>Y down: <input id="colormergeY" type="number" value="4" /></div>
+    <!-- <div>
+      Concentrate:
+      True <input type="radio" id="concentrateTrue" name="concentrate" />
+      False <input type="radio" id="concentrateFalse" name="concentrate" checked />
+    </div>
     <div>Concentrate X: <input id="concentrateX" type="number" value="0" /></div>
     <div>Concentrate Y: <input id="concentrateY" type="number" value="0" /></div>
-    <div>Concentrate Decay: <input id="concentrateDecay" type="number" value="1" /></div>
+    <div>Concentrate Decay: <input id="concentrateDecay" type="number" value="1" /></div> -->
     <div>
       Preview:
       True <input type="radio" id="previewTrue" name="preview" />
