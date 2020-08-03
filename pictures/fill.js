@@ -62,7 +62,7 @@ const getConcentrationFill = (getLargeCanvasData, startWidth, startHeight, x, y,
     return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
 }
 
-const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions) => i => j => (x, y) => {
+const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeOptions, concentrateOptions) => i => j => (x, y) => {
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
 
@@ -84,7 +84,9 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
         const g = Math.round((smallColor[1] + largeColor[1]));
         const b = Math.round((smallColor[2] + largeColor[2]));
         const a = Math.round((smallColor[3] + largeColor[3]));
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+        const fillStyle = colormergeOptions.isMerging ? (() => {
+            return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+        })() : `rgba(${r}, ${g}, ${b}, ${a / 255})`;
 
         const xFill = distortionOptions.type === 'V' ?  1 : getDistortionPixel(x, y);
         const yFill = distortionOptions.type === 'H' ?  1 : getDistortionPixel(x, y);
