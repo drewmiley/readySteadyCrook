@@ -29,16 +29,13 @@ const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRan
         inBleed && bleedOptions.horizontal ? bleedOptions.start : startHeight + y;
     const largeCanvasData = largeCanvas.data[width][height];
     if (colormergeModifiedOptions.isMerging) {
-        const xAcross = Math.floor(width * colormergeModifiedOptions.array.length / largeCanvas.width);
-        const yDown = Math.floor(height * colormergeModifiedOptions.array[0].length / largeCanvas.height);
-        const rgb = colormergeModifiedOptions.array[xAcross][yDown];
-        const r = parseInt(rgb.slice(1, 3), 16);
-        const g = parseInt(rgb.slice(3, 5), 16);
-        const b = parseInt(rgb.slice(5, 7), 16);
+        const rgb = colormergeModifiedOptions.array
+            [Math.floor(width * colormergeModifiedOptions.array.length / largeCanvas.width)]
+            [Math.floor(height * colormergeModifiedOptions.array[0].length / largeCanvas.height)];
         return [
-            (r + colormergeModifiedOptions.ratio * largeCanvasData[0]) / (colormergeModifiedOptions.ratio + 1),
-            (g + colormergeModifiedOptions.ratio * largeCanvasData[1]) / (colormergeModifiedOptions.ratio + 1),
-            (b + colormergeModifiedOptions.ratio * largeCanvasData[2]) / (colormergeModifiedOptions.ratio + 1),
+            (parseInt(rgb.slice(1, 3), 16) + colormergeModifiedOptions.ratio * largeCanvasData[0]) / (colormergeModifiedOptions.ratio + 1),
+            (parseInt(rgb.slice(3, 5), 16) + colormergeModifiedOptions.ratio * largeCanvasData[1]) / (colormergeModifiedOptions.ratio + 1),
+            (parseInt(rgb.slice(5, 7), 16) + colormergeModifiedOptions.ratio * largeCanvasData[2]) / (colormergeModifiedOptions.ratio + 1),
             largeCanvasData[3]
         ];
     } else {
