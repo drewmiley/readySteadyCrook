@@ -14,12 +14,15 @@ const getCanvasData = (imageCtx, width, height, ratioProp) => {
     return canvasData;
 }
 
-const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions) => (startWidth, startHeight, x, y) => {
+const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeOptions) => (startWidth, startHeight, x, y) => {
     // TODO: Merge rect in here
     const xMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width) : parseInt(x, 10);
     const yMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) : parseInt(y, 10);
     const valid = (startWidth + xMod) > 0 && (startWidth + xMod) < largeCanvas.width && (startHeight + yMod) > 0 && (startHeight + yMod) < largeCanvas.height;
     if (!valid) return [0, 0, 0, 0];
+    if (colormergeOptions) {
+        const closure = 2;
+    }
     const pixelValueToCheck = bleedOptions.horizontal ? startHeight + y : startWidth + x;
     const inBleed = bleedOptions.isBleeding && (pixelValueToCheck > bleedOptions.start) && (pixelValueToCheck <= bleedOptions.end);
     const width = sample ?
@@ -66,7 +69,7 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
 
-    const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions);
+    const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeOptions);
 
     if (concentrateOptions.isConcentrated) {
         // TODO: Need to work out this!
@@ -84,9 +87,7 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
         const g = Math.round((smallColor[1] + largeColor[1]));
         const b = Math.round((smallColor[2] + largeColor[2]));
         const a = Math.round((smallColor[3] + largeColor[3]));
-        const fillStyle = colormergeOptions.isMerging ? (() => {
-            return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
-        })() : `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+        const fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
 
         const xFill = distortionOptions.type === 'V' ?  1 : getDistortionPixel(x, y);
         const yFill = distortionOptions.type === 'H' ?  1 : getDistortionPixel(x, y);
