@@ -16,9 +16,18 @@ const getCanvasData = (imageCtx, width, height, ratioProp) => {
 
 const getColormergeArray = colormergeOptions => [...Array(colormergeOptions.xAcross)].map((_, i) => [...Array(colormergeOptions.yDown)].map((_, j) => {
     const hasColorArray = colormergeOptions.colors.length && colormergeOptions.colors[0].length;
-    if (!hasColorArray) return `#${[...Array(6)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')}`;
+    if (!hasColorArray) return [
+        Math.floor(Math.random() * 255),
+        Math.floor(Math.random() * 255),
+        Math.floor(Math.random() * 255)
+    ];
     const colorSelection = colormergeOptions.colors[(j * colormergeOptions.xAcross + i) % colormergeOptions.colors.length];
-    return colorSelection;
+    const rgb = [
+        parseInt(colorSelection.slice(1, 3), 16),
+        parseInt(colorSelection.slice(3, 5), 16),
+        parseInt(colorSelection.slice(5, 7), 16)
+    ];
+    return rgb;
 }))
 
 const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeModifiedOptions) => (startWidth, startHeight, x, y) => {
@@ -40,9 +49,9 @@ const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRan
             [Math.floor(width * colormergeModifiedOptions.xAcross / largeCanvas.width)]
             [Math.floor(height * colormergeModifiedOptions.yDown / largeCanvas.height)];
         return [
-            (parseInt(rgb.slice(1, 3), 16) + colormergeModifiedOptions.ratio * largeCanvasData[0]) / (colormergeModifiedOptions.ratio + 1),
-            (parseInt(rgb.slice(3, 5), 16) + colormergeModifiedOptions.ratio * largeCanvasData[1]) / (colormergeModifiedOptions.ratio + 1),
-            (parseInt(rgb.slice(5, 7), 16) + colormergeModifiedOptions.ratio * largeCanvasData[2]) / (colormergeModifiedOptions.ratio + 1),
+            (rgb[0] + colormergeModifiedOptions.ratio * largeCanvasData[0]) / (colormergeModifiedOptions.ratio + 1),
+            (rgb[1] + colormergeModifiedOptions.ratio * largeCanvasData[1]) / (colormergeModifiedOptions.ratio + 1),
+            (rgb[2] + colormergeModifiedOptions.ratio * largeCanvasData[2]) / (colormergeModifiedOptions.ratio + 1),
             largeCanvasData[3]
         ];
     } else {
