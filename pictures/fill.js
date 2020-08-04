@@ -14,6 +14,13 @@ const getCanvasData = (imageCtx, width, height, ratioProp) => {
     return canvasData;
 }
 
+const getPerturbationPixel = colormergeOptions => {
+    if (!colormergeOptions.isPerturbed) return 0;
+    const perturbationSize = colormergeOptions.perturbationMin +
+        Math.floor(Math.random() * (colormergeOptions.perturbationMax - colormergeOptions.perturbationMin));
+    return (Math.random() < 0.5 ? -1 : 1) * perturbationSize;
+}
+
 const getColormergeArray = colormergeOptions => [...Array(colormergeOptions.xAcross)].map((_, i) => [...Array(colormergeOptions.yDown)].map((_, j) => {
     const hasColorArray = colormergeOptions.colors.length && colormergeOptions.colors[0].length;
     if (!hasColorArray) return [
@@ -22,12 +29,11 @@ const getColormergeArray = colormergeOptions => [...Array(colormergeOptions.xAcr
         Math.floor(Math.random() * 255)
     ];
     const colorSelection = colormergeOptions.colors[(j * colormergeOptions.xAcross + i) % colormergeOptions.colors.length];
-    const rgb = [
-        parseInt(colorSelection.slice(1, 3), 16),
-        parseInt(colorSelection.slice(3, 5), 16),
-        parseInt(colorSelection.slice(5, 7), 16)
+    return [
+        parseInt(colorSelection.slice(1, 3), 16) + getPerturbationPixel(colormergeOptions),
+        parseInt(colorSelection.slice(3, 5), 16) + getPerturbationPixel(colormergeOptions),
+        parseInt(colorSelection.slice(5, 7), 16) + getPerturbationPixel(colormergeOptions)
     ];
-    return rgb;
 }))
 
 const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeModifiedOptions) => (startWidth, startHeight, x, y) => {
