@@ -14,6 +14,12 @@ const getCanvasData = (imageCtx, width, height, ratioProp) => {
     return canvasData;
 }
 
+const getColormergeArray = colormergeOptions => [...Array(colormergeOptions.xAcross)].map((_, i) => [...Array(colormergeOptions.yDown)].map((_, j) =>
+    colormergeOptions.colors.length && colormergeOptions.colors[0].length ?
+        colormergeOptions.colors[(j * colormergeOptions.xAcross + i) % colormergeOptions.colors.length] :
+        `#${[...Array(6)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')}`
+    ));
+
 const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeModifiedOptions) => (startWidth, startHeight, x, y) => {
     const xMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width) : parseInt(x, 10);
     const yMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) : parseInt(y, 10);
