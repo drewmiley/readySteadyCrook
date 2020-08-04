@@ -62,7 +62,11 @@ const run = largeImage => smallImage => {
     const colormergeOptions = {
         isMerging: document.getElementById('colormergeTrue').checked,
         colors: document.getElementById('colormergeColors').value.split(','),
+        isPerturbed: document.getElementById('colormergePerturbationTrue').checked,
+        perturbationMin: parseInt(document.getElementById('colormergePerturbationMin').value),
+        perturbationMax: parseInt(document.getElementById('colormergePerturbationMax').value),
         ratio: parseFloat(document.getElementById('colormergeRatio').value),
+        selection: getCheckedValue('colormergeSelection'),
         xAcross: parseInt(document.getElementById('colormergeX').value),
         yDown: parseInt(document.getElementById('colormergeY').value)
     };

@@ -54,18 +54,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
 
     console.log('Large image data loaded')
 
-    const getColormergeArray = () => [...Array(colormergeOptions.xAcross)].map((_, i) => [...Array(colormergeOptions.yDown)].map((_, j) =>
-        colormergeOptions.colors.length && colormergeOptions.colors[0].length ?
-            colormergeOptions.colors[(j * colormergeOptions.xAcross + i) % colormergeOptions.colors.length] :
-            `#${[...Array(6)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')}`
-        ));
-
-    const colormergeModifiedOptions = {
-        isMerging: colormergeOptions.isMerging,
-        array: colormergeOptions.isMerging && getColormergeArray(),
-        ratio: colormergeOptions.ratio
-    };
-
+    const colormergeModifiedOptions = {...colormergeOptions, array: colormergeOptions.isMerging && getColormergeArray(colormergeOptions)};
     const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrateOptions);
 
     console.log(`Drawing Rows Total ${rows}`);

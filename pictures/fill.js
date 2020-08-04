@@ -14,6 +14,34 @@ const getCanvasData = (imageCtx, width, height, ratioProp) => {
     return canvasData;
 }
 
+const getPerturbationPixel = colormergeOptions => {
+    if (!colormergeOptions.isPerturbed) return 0;
+    const perturbationSize = colormergeOptions.perturbationMin +
+        Math.floor(Math.random() * (colormergeOptions.perturbationMax - colormergeOptions.perturbationMin));
+    return (Math.random() < 0.5 ? -1 : 1) * perturbationSize;
+}
+
+const getColormergeArray = colormergeOptions => [...Array(colormergeOptions.xAcross)].map((_, i) => [...Array(colormergeOptions.yDown)].map((_, j) => {
+    const hasColorArray = colormergeOptions.colors.length && colormergeOptions.colors[0].length;
+    if (!hasColorArray) return [
+        Math.floor(Math.random() * 255),
+        Math.floor(Math.random() * 255),
+        Math.floor(Math.random() * 255)
+    ];
+    const colorSelectionIndexMap = {
+        'M': (j * colormergeOptions.xAcross + i) % colormergeOptions.colors.length,
+        'V': i % colormergeOptions.colors.length,
+        'H': j % colormergeOptions.colors.length,
+        'R': Math.floor(Math.random() * colormergeOptions.colors.length)
+    }
+    const color = colormergeOptions.colors[colorSelectionIndexMap[colormergeOptions.selection]];
+    return [
+        parseInt(color.slice(1, 3), 16) + getPerturbationPixel(colormergeOptions),
+        parseInt(color.slice(3, 5), 16) + getPerturbationPixel(colormergeOptions),
+        parseInt(color.slice(5, 7), 16) + getPerturbationPixel(colormergeOptions)
+    ];
+}))
+
 const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeModifiedOptions) => (startWidth, startHeight, x, y) => {
     const xMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width) : parseInt(x, 10);
     const yMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) : parseInt(y, 10);
@@ -30,12 +58,12 @@ const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRan
     const largeCanvasData = largeCanvas.data[width][height];
     if (colormergeModifiedOptions.isMerging) {
         const rgb = colormergeModifiedOptions.array
-            [Math.floor(width * colormergeModifiedOptions.array.length / largeCanvas.width)]
-            [Math.floor(height * colormergeModifiedOptions.array[0].length / largeCanvas.height)];
+            [Math.floor(width * colormergeModifiedOptions.xAcross / largeCanvas.width)]
+            [Math.floor(height * colormergeModifiedOptions.yDown / largeCanvas.height)];
         return [
-            (parseInt(rgb.slice(1, 3), 16) + colormergeModifiedOptions.ratio * largeCanvasData[0]) / (colormergeModifiedOptions.ratio + 1),
-            (parseInt(rgb.slice(3, 5), 16) + colormergeModifiedOptions.ratio * largeCanvasData[1]) / (colormergeModifiedOptions.ratio + 1),
-            (parseInt(rgb.slice(5, 7), 16) + colormergeModifiedOptions.ratio * largeCanvasData[2]) / (colormergeModifiedOptions.ratio + 1),
+            (rgb[0] + colormergeModifiedOptions.ratio * largeCanvasData[0]) / (colormergeModifiedOptions.ratio + 1),
+            (rgb[1] + colormergeModifiedOptions.ratio * largeCanvasData[1]) / (colormergeModifiedOptions.ratio + 1),
+            (rgb[2] + colormergeModifiedOptions.ratio * largeCanvasData[2]) / (colormergeModifiedOptions.ratio + 1),
             largeCanvasData[3]
         ];
     } else {
