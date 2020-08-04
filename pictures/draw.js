@@ -60,12 +60,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
             `#${[...Array(6)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')}`
         ));
 
-    const colormergeModifiedOptions = {
-        isMerging: colormergeOptions.isMerging,
-        array: colormergeOptions.isMerging && getColormergeArray(),
-        ratio: colormergeOptions.ratio
-    };
-
+    const colormergeModifiedOptions = {...colormergeOptions, array: colormergeOptions.isMerging && getColormergeArray()};
     const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrateOptions);
 
     console.log(`Drawing Rows Total ${rows}`);

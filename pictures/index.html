@@ -62,7 +62,21 @@
       False <input type="radio" id="colormergeFalse" name="colormerge" checked />
     </div>
     <div>Colors: <input id="colormergeColors" type="text" value="#ff0000,#00ff00,#0000ff" /></div>
+    <div>
+      Color Perturbation:
+      True <input type="radio" id="colormergePerturbationTrue" name="colormergePerturbation" />
+      False <input type="radio" id="colormergePerturbationFalse" name="colormergePerturbation" checked />
+    </div>
+    <div>Color Perturbation Max (<255): <input id="colormergePerturbationMax" type="number" value="0" /></div>
+    <div>Color Perturbation Min (>0): <input id="colormergePerturbationMin" type="number" value="0" /></div>
     <div>Ratio: <input id="colormergeRatio" type="number" value="3" /></div>
+    <div id="colormergeSelection">
+      Selection:
+      Vertical <input type="radio" id="colormergeSelectionVertical" name="colormergeSelection" />
+      Horizontal <input type="radio" id="colormergeSelectionHorizontal" name="colormergeSelection" />
+      Mod <input type="radio" id="colormergeSelectionMod" name="colormergeSelection" checked />
+      Random <input type="radio" id="colormergeSelectionRandom" name="colormergeSelection" />
+    </div>
     <div>X across: <input id="colormergeX" type="number" value="4" /></div>
     <div>Y down: <input id="colormergeY" type="number" value="4" /></div>
     <!-- <div>
