@@ -28,11 +28,17 @@ const getColormergeArray = colormergeOptions => [...Array(colormergeOptions.xAcr
         Math.floor(Math.random() * 255),
         Math.floor(Math.random() * 255)
     ];
-    const colorSelection = colormergeOptions.colors[(j * colormergeOptions.xAcross + i) % colormergeOptions.colors.length];
+    const colorSelectionIndexMap = {
+        'M': (j * colormergeOptions.xAcross + i) % colormergeOptions.colors.length,
+        'V': i % colormergeOptions.colors.length,
+        'H': j % colormergeOptions.colors.length,
+        'R': Math.floor(Math.random() * colormergeOptions.colors.length)
+    }
+    const color = colormergeOptions.colors[colorSelectionIndexMap[colormergeOptions.selection]];
     return [
-        parseInt(colorSelection.slice(1, 3), 16) + getPerturbationPixel(colormergeOptions),
-        parseInt(colorSelection.slice(3, 5), 16) + getPerturbationPixel(colormergeOptions),
-        parseInt(colorSelection.slice(5, 7), 16) + getPerturbationPixel(colormergeOptions)
+        parseInt(color.slice(1, 3), 16) + getPerturbationPixel(colormergeOptions),
+        parseInt(color.slice(3, 5), 16) + getPerturbationPixel(colormergeOptions),
+        parseInt(color.slice(5, 7), 16) + getPerturbationPixel(colormergeOptions)
     ];
 }))
 
