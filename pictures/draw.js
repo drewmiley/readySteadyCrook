@@ -55,7 +55,9 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
 
     console.log('Large image data loaded')
 
-    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions);
+    // Only do if concentrating as computationally intense
+    const concentrationValues = concentrateOptions.isConcentrated && getConcentrationValues(largeCanvas, concentrateOptions);
+    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrationValues);
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();

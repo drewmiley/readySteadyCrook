@@ -65,7 +65,7 @@ const calculateConcentrationPixels = (functionValues, size) => {
     }, []);
     const total = functionRunningTotals[functionRunningTotals.length - 1];
     const increment = total / size;
-
+    console.log('is it running');
     return [...Array(size).keys()].map(d => {
         const target = d * increment;
         const indexLargerThan = functionRunningTotals.findIndex(value => value >= target);
@@ -75,15 +75,13 @@ const calculateConcentrationPixels = (functionValues, size) => {
     });
 }
 
-const getConcentrationFill = (largeCanvas, concentrateOptions) => (startWidth, startHeight, x, y) => {
+const getConcentrationValues = (largeCanvas, concentrateOptions) => {
     // const concentrateWidth = concentrateOptions.x;
     // const concentrateHeight = concentrateOptions.y;
     // const concentrateDecay = concentrateOptions.decay;
     const concentrateWidth = Math.floor(0.75 * largeCanvas.width);
     const concentrateHeight = Math.floor(0.75 * largeCanvas.height);
     // IGNORE concentrateDecay for now
-    const width = startWidth + x;
-    const height = startHeight + y;
 
     const decayFunctionWidth = initConcentrateDecayFunction(concentrateWidth, largeCanvas.width);
     const decayFunctionHeight = initConcentrateDecayFunction(concentrateHeight, largeCanvas.height);
@@ -97,21 +95,19 @@ const getConcentrationFill = (largeCanvas, concentrateOptions) => (startWidth, s
     console.log(widthValues);
     console.log(heightValues);
 
-    const color = [0, 0, 0, 0];
-    const r = Math.round(color[0]);
-    const g = Math.round(color[1]);
-    const b = Math.round(color[2]);
-    const a = Math.round(color[3]);
-    return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+    return { widthValues, heightValues };
 }
 
-const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrateOptions) => i => j => (x, y) => {
+const getConcentrationPixel = (concentrationValues, startWidth, startHeight, x, y) => {
+    return [0, 0, 0, 0];
+}
+
+const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrationValues) => i => j => (x, y) => {
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
 
-    if (concentrateOptions.isConcentrated) {
-        const getConcentrationPixel = getConcentrationFill(largeCanvas, concentrateOptions);
-        ctx.fillStyle = getConcentrationPixel(startWidth, startHeight, x, y);
+    if (concentrationValues) {
+        ctx.fillStyle = getConcentrationPixel(concentrationValues, startWidth, startHeight, x, y);
         ctx.fillRect(
             startWidth + x,
             startHeight + y,
