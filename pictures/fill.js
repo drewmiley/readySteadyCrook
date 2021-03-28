@@ -60,12 +60,19 @@ const initConcentrateDecayFunction = (concentrationPoint, size) => value => {
 }
 
 const calculateConcentrationPixels = (functionValues, size) => {
-  const total = 0.1 * functionValues.reduce((acc, d) => acc + d, 0);
-  const increment = total / size;
+    const functionRunningTotals = functionValues.reduce((acc, d) => {
+        return acc.length ? acc.concat([acc[acc.length - 1] + d]) : [d];
+    }, []);
+    const total = functionRunningTotals[functionRunningTotals.length - 1];
+    const increment = total / size;
 
-  let result = [[...Array(size).keys()]];
-
-  return result;
+    return [...Array(size).keys()].map(d => {
+        const target = d * increment;
+        const indexLargerThan = functionRunningTotals.findIndex(value => value >= target);
+        const largerValue = functionRunningTotals[indexLargerThan];
+        const smallerValue = functionRunningTotals[indexLargerThan - 1];
+        return indexLargerThan - 1 + (target - smallerValue) / (largerValue - smallerValue);
+    });
 }
 
 const getConcentrationFill = (largeCanvas, concentrateOptions) => (startWidth, startHeight, x, y) => {
@@ -86,6 +93,9 @@ const getConcentrationFill = (largeCanvas, concentrateOptions) => (startWidth, s
 
     const widthValues = calculateConcentrationPixels(decayFunctionWidthValues, largeCanvas.width);
     const heightValues = calculateConcentrationPixels(decayFunctionHeightValues, largeCanvas.height);
+
+    console.log(widthValues);
+    console.log(heightValues);
 
     const color = [0, 0, 0, 0];
     const r = Math.round(color[0]);
