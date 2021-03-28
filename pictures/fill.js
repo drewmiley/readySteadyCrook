@@ -74,8 +74,10 @@ const getConcentrationFill = (largeCanvas, concentrateOptions) => (startWidth, s
 
     const decayFunctionWidthValues = [...Array(largeCanvas.width * 10 + 1).keys()].map(d => decayFunctionWidth(0.1 * d));
     const decayFunctionWidthTotal = 0.1 * decayFunctionWidthValues.reduce((acc, d) => acc + d, 0) - 0.05 * decayFunctionWidthValues[0] - 0.05 * decayFunctionWidthValues[decayFunctionWidthValues.length - 1];
+    const decayFunctionWidthIncrement = decayFunctionWidthTotal / largeCanvas.width;
     const decayFunctionHeightValues = [...Array(largeCanvas.height * 10 + 1).keys()].map(d => decayFunctionHeight(0.1 * d));
     const decayFunctionHeightTotal = 0.1 * decayFunctionHeightValues.reduce((acc, d) => acc + d, 0) - 0.05 * decayFunctionHeightValues[0] - 0.05 * decayFunctionHeightValues[decayFunctionHeightValues.length - 1];
+    const decayFunctionHeightIncrement = decayFunctionHeightTotal / largeCanvas.height;
 
     const color = [0, 0, 0, 0];
     const r = Math.round(color[0]);
