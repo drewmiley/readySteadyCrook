@@ -49,18 +49,39 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
         Math.floor((1 + distortionOptions.strength) * Math.random());
 }
 
-const getConcentrationFill = (getLargeCanvasData, startWidth, startHeight, x, y, concentrateOptions) => {
+const initConcentrateDecayFunction = (concentrationPoint, size) => value => {
+    if (value < concentrationPoint) {
+        return Math.exp((value - concentrationPoint) / size);
+    } else if (value > concentrationPoint) {
+        return Math.exp((concentrationPoint - value) / size);
+    } else {
+        return 1;
+    }
+}
+
+const getConcentrationFill = (largeCanvas, concentrateOptions) => (startWidth, startHeight, x, y) => {
     // const concentrateWidth = concentrateOptions.x;
     // const concentrateHeight = concentrateOptions.y;
     // const concentrateDecay = concentrateOptions.decay;
-    const concentrateWidth = 0;
-    const concentrateHeight = 0;
-    const concentrateDecay = 1;
-    const largeColor = getLargeCanvasData(startWidth, startHeight, x, y);
-    const r = Math.round(largeColor[0]);
-    const g = Math.round(largeColor[1]);
-    const b = Math.round(largeColor[2]);
-    const a = Math.round(largeColor[3]);
+    const concentrateWidth = Math.floor(0.75 * largeCanvas.width);
+    const concentrateHeight = Math.floor(0.75 * largeCanvas.height);
+    // IGNORE concentrateDecay for now
+    const width = startWidth + x;
+    const height = startHeight + y;
+
+    const decayFunctionWidth = initConcentrateDecayFunction(concentrateWidth, largeCanvas.width);
+    const decayFunctionHeight = initConcentrateDecayFunction(concentrateHeight, largeCanvas.height);
+
+    const decayFunctionWidthValues = [...Array(largeCanvas.width * 10 + 1).keys()].map(d => decayFunctionWidth(0.1 * d));
+    const decayFunctionWidthTotal = 0.1 * decayFunctionWidthValues.reduce((acc, d) => acc + d, 0) - 0.05 * decayFunctionWidthValues[0] - 0.05 * decayFunctionWidthValues[decayFunctionWidthValues.length - 1];
+    const decayFunctionHeightValues = [...Array(largeCanvas.height * 10 + 1).keys()].map(d => decayFunctionHeight(0.1 * d));
+    const decayFunctionHeightTotal = 0.1 * decayFunctionHeightValues.reduce((acc, d) => acc + d, 0) - 0.05 * decayFunctionHeightValues[0] - 0.05 * decayFunctionHeightValues[decayFunctionHeightValues.length - 1];
+
+    const color = [0, 0, 0, 0];
+    const r = Math.round(color[0]);
+    const g = Math.round(color[1]);
+    const b = Math.round(color[2]);
+    const a = Math.round(color[3]);
     return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
 }
 
@@ -68,16 +89,16 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
 
-    const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions);
-
     if (concentrateOptions.isConcentrated) {
-        ctx.fillStyle = getConcentrationFill(getLargeCanvasData, startWidth, startHeight, x, y, concentrateOptions);
+        const getContraction = getContractionFill(largeCanvas, concentrateOptions);
+        ctx.fillStyle = getContraction(startWidth, startHeight, x, y);
         ctx.fillRect(
             startWidth + x,
             startHeight + y,
             1, 1
         );
     } else {
+        const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions);
         const getDistortionPixel = getDistortionPixelInit(ctx, smallCanvas, distortionOptions)(i)(j);
         const largeColor = getLargeCanvasData(startWidth, startHeight, x, y);
         const smallColor = smallCanvas.data[x][y];
