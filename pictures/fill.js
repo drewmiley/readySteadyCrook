@@ -59,6 +59,15 @@ const initConcentrateDecayFunction = (concentrationPoint, size) => value => {
     }
 }
 
+const calculateConcentrationPixels = (functionValues, size) => {
+  const total = 0.1 * functionValues.reduce((acc, d) => acc + d, 0);
+  const increment = total / size;
+
+  let result = [[...Array(size).keys()]];
+
+  return result;
+}
+
 const getConcentrationFill = (largeCanvas, concentrateOptions) => (startWidth, startHeight, x, y) => {
     // const concentrateWidth = concentrateOptions.x;
     // const concentrateHeight = concentrateOptions.y;
@@ -73,11 +82,10 @@ const getConcentrationFill = (largeCanvas, concentrateOptions) => (startWidth, s
     const decayFunctionHeight = initConcentrateDecayFunction(concentrateHeight, largeCanvas.height);
 
     const decayFunctionWidthValues = [...Array(largeCanvas.width * 10 + 1).keys()].map(d => decayFunctionWidth(0.1 * d));
-    const decayFunctionWidthTotal = 0.1 * decayFunctionWidthValues.reduce((acc, d) => acc + d, 0);
-    const decayFunctionWidthIncrement = decayFunctionWidthTotal / largeCanvas.width;
     const decayFunctionHeightValues = [...Array(largeCanvas.height * 10 + 1).keys()].map(d => decayFunctionHeight(0.1 * d));
-    const decayFunctionHeightTotal = 0.1 * decayFunctionHeightValues.reduce((acc, d) => acc + d, 0);
-    const decayFunctionHeightIncrement = decayFunctionHeightTotal / largeCanvas.height;
+
+    const widthValues = calculateConcentrationPixels(decayFunctionWidthValues, largeCanvas.width);
+    const heightValues = calculateConcentrationPixels(decayFunctionHeightValues, largeCanvas.height);
 
     const color = [0, 0, 0, 0];
     const r = Math.round(color[0]);
@@ -92,8 +100,8 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
     const startHeight = i * smallCanvas.height;
 
     if (concentrateOptions.isConcentrated) {
-        const getContraction = getContractionFill(largeCanvas, concentrateOptions);
-        ctx.fillStyle = getContraction(startWidth, startHeight, x, y);
+        const getConcentrationPixel = getConcentrationFill(largeCanvas, concentrateOptions);
+        ctx.fillStyle = getConcentrationPixel(startWidth, startHeight, x, y);
         ctx.fillRect(
             startWidth + x,
             startHeight + y,
