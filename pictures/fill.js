@@ -59,20 +59,20 @@ const initConcentrateDecayFunction = (concentrationPoint, size) => value => {
     }
 }
 
-const calculateConcentrationPixels = (functionValues, size) => {
+const calculateConcentrationValues = (functionValues, size) => {
     const functionRunningTotals = functionValues.reduce((acc, d) => {
         return acc.length ? acc.concat([acc[acc.length - 1] + d]) : [d];
     }, []);
     const total = functionRunningTotals[functionRunningTotals.length - 1];
     const increment = total / size;
-    console.log('is it running');
+    // TODO: Magic at the end suggests this algorithm is not perfect;
     return [...Array(size).keys()].map(d => {
         const target = d * increment;
         const indexLargerThan = functionRunningTotals.findIndex(value => value >= target);
         const largerValue = functionRunningTotals[indexLargerThan];
         const smallerValue = functionRunningTotals[indexLargerThan - 1];
         return indexLargerThan - 1 + (target - smallerValue) / (largerValue - smallerValue);
-    });
+    }).splice(1).map(d => d / 10 - 1);
 }
 
 const getConcentrationValues = (largeCanvas, concentrateOptions) => {
@@ -89,8 +89,8 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
     const decayFunctionWidthValues = [...Array(largeCanvas.width * 10 + 1).keys()].map(d => decayFunctionWidth(0.1 * d));
     const decayFunctionHeightValues = [...Array(largeCanvas.height * 10 + 1).keys()].map(d => decayFunctionHeight(0.1 * d));
 
-    const widthValues = calculateConcentrationPixels(decayFunctionWidthValues, largeCanvas.width);
-    const heightValues = calculateConcentrationPixels(decayFunctionHeightValues, largeCanvas.height);
+    const widthValues = calculateConcentrationValues(decayFunctionWidthValues, largeCanvas.width);
+    const heightValues = calculateConcentrationValues(decayFunctionHeightValues, largeCanvas.height);
 
     console.log(widthValues);
     console.log(heightValues);
