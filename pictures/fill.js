@@ -98,7 +98,7 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
     return { widthValues, heightValues };
 }
 
-const getConcentrationPixel = (concentrationValues, startWidth, startHeight, x, y) => {
+const getConcentrationPixel = (concentrationValues, largeCanvasData, width, height) => {
     return [0, 0, 0, 0];
 }
 
@@ -107,7 +107,7 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
     const startHeight = i * smallCanvas.height;
 
     if (concentrationValues) {
-        ctx.fillStyle = getConcentrationPixel(concentrationValues, startWidth, startHeight, x, y);
+        ctx.fillStyle = getConcentrationPixel(concentrationValues, largeCanvas.data, startWidth + x, startHeight + y);
         ctx.fillRect(
             startWidth + x,
             startHeight + y,
