@@ -94,10 +94,6 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
     const widthValues = calculateConcentrationValues(decayFunctionWidthValues, largeCanvas.width);
     const heightValues = calculateConcentrationValues(decayFunctionHeightValues, largeCanvas.height);
 
-    // TODO: Remove
-    console.log(widthValues);
-    console.log(heightValues);
-
     return { widthValues, heightValues };
 }
 
