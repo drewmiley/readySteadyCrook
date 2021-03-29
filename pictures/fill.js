@@ -49,14 +49,18 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
         Math.floor((1 + distortionOptions.strength) * Math.random());
 }
 
-const initConcentrateDecayFunction = (concentrationPoint, size) => value => {
-    if (value < concentrationPoint) {
-        return Math.exp(4 * (value - concentrationPoint) / size);
-    } else if (value > concentrationPoint) {
-        return Math.exp(4 * (concentrationPoint - value) / size);
+const exponentialDecayFunction = (symPoint, size, value) => {
+    if (value < symPoint) {
+        return Math.exp(4 * (value - symPoint) / size);
+    } else if (value > symPoint) {
+        return Math.exp(4 * (symPoint - value) / size);
     } else {
         return 1;
     }
+}
+
+const initConcentrateDecayFunction = (concentrationPoint, size) => value => {
+    return exponentialDecayFunction(concentrationPoint, size, value);
 }
 
 const calculateConcentrationValues = (functionValues, size) => {
@@ -76,11 +80,9 @@ const calculateConcentrationValues = (functionValues, size) => {
 }
 
 const getConcentrationValues = (largeCanvas, concentrateOptions) => {
-    // const concentrateWidth = concentrateOptions.x;
-    // const concentrateHeight = concentrateOptions.y;
+    const concentrateWidth = Math.floor(parseFloat(concentrateOptions.x) * largeCanvas.width);
+    const concentrateHeight = Math.floor(parseFloat(concentrateOptions.y) * largeCanvas.height);
     // const concentrateDecay = concentrateOptions.decay;
-    const concentrateWidth = Math.floor(0.75 * largeCanvas.width);
-    const concentrateHeight = Math.floor(0.75 * largeCanvas.height);
     // IGNORE concentrateDecay for now
 
     const decayFunctionWidth = initConcentrateDecayFunction(concentrateWidth, largeCanvas.width);
@@ -92,6 +94,7 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
     const widthValues = calculateConcentrationValues(decayFunctionWidthValues, largeCanvas.width);
     const heightValues = calculateConcentrationValues(decayFunctionHeightValues, largeCanvas.height);
 
+    // TODO: Remove
     console.log(widthValues);
     console.log(heightValues);
 
@@ -123,9 +126,10 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
     const startHeight = i * smallCanvas.height;
 
     if (concentrationValues) {
+        // TODO: Move into function again
         const widthValue = concentrationValues.widthValues[startWidth + x];
         const heightValue = concentrationValues.heightValues[startHeight + y];
-        if (widthValue && heightValue) {
+        if (widthValue > 0 && heightValue > 0) {
             const nwColor = largeCanvas.data[Math.floor(widthValue)][Math.floor(heightValue)];
             const neColor = largeCanvas.data[Math.ceil(widthValue)][Math.floor(heightValue)];
             const swColor = largeCanvas.data[Math.floor(widthValue)][Math.ceil(heightValue)];
