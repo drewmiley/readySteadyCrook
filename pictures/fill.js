@@ -101,63 +101,39 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
     return { widthValues, heightValues };
 }
 
-// const getConcentrationPixel = ({ widthValues, heightValues }, largeCanvasData, startWidth, startHeight, x, y) => {
-//     const widthValue = widthValues[startWidth + x];
-//     const heightValue = heightValues[startHeight + y];
-//     const nwColor = largeCanvasData[Math.floor(widthValue)][Math.floor(heightValue)];
-//     const neColor = largeCanvasData[Math.ceil(widthValue)][Math.floor(heightValue)];
-//     const swColor = largeCanvasData[Math.floor(widthValue)][Math.ceil(heightValue)];
-//     const seColor = largeCanvasData[Math.ceil(widthValue)][Math.ceil(heightValue)];
-//     const widthRemainder = widthValue % Math.floor(widthValue);
-//     const heightRemainder = heightValue % Math.floor(heightValue);
-//     const propNW = nwColor.map(d => 0.5 * d * (widthRemainder + heightRemainder));
-//     const propNE = neColor.map(d => 0.5 * d * (widthRemainder + 1 - heightRemainder));
-//     const propSW = swColor.map(d => 0.5 * d * (heightRemainder + 1 - widthRemainder));
-//     const propSE = seColor.map(d => 0.5 * d * (1 - widthRemainder - heightRemainder));
-//     const r = propNW[0] + propNE[0] + propSW[0] + propSE[0];
-//     const g = propNW[1] + propNE[1] + propSW[1] + propSE[1];
-//     const b = propNW[2] + propNE[2] + propSW[2] + propSE[2];
-//     const a = propNW[3] + propNE[3] + propSW[3] + propSE[3];
-//     return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
-// }
+const getConcentrationPixel = (concentrationValues, largeCanvas, startWidth, startHeight, x, y) => {
+    const widthValue = concentrationValues.widthValues[startWidth + x];
+    const heightValue = concentrationValues.heightValues[startHeight + y];
+    if (widthValue > 0 && heightValue > 0) {
+          const nwColor = largeCanvas.data[Math.floor(widthValue)][Math.floor(heightValue)];
+          const neColor = largeCanvas.data[Math.ceil(widthValue)][Math.floor(heightValue)];
+          const swColor = largeCanvas.data[Math.floor(widthValue)][Math.ceil(heightValue)];
+          const seColor = largeCanvas.data[Math.ceil(widthValue)][Math.ceil(heightValue)];
+          const widthRemainder = widthValue % Math.floor(widthValue);
+          const heightRemainder = heightValue % Math.floor(heightValue);
+          const propNW = nwColor.map(d => 0.5 * d * (widthRemainder + heightRemainder));
+          const propNE = neColor.map(d => 0.5 * d * (widthRemainder + 1 - heightRemainder));
+          const propSW = swColor.map(d => 0.5 * d * (heightRemainder + 1 - widthRemainder));
+          const propSE = seColor.map(d => 0.5 * d * (1 - widthRemainder - heightRemainder));
+          const r = propNW[0] + propNE[0] + propSW[0] + propSE[0];
+          const g = propNW[1] + propNE[1] + propSW[1] + propSE[1];
+          const b = propNW[2] + propNE[2] + propSW[2] + propSE[2];
+          const a = propNW[3] + propNE[3] + propSW[3] + propSE[3];
+          return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+    }
+}
 
 const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrationValues) => i => j => (x, y) => {
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
 
     if (concentrationValues) {
-        // TODO: Move into function again
-        const widthValue = concentrationValues.widthValues[startWidth + x];
-        const heightValue = concentrationValues.heightValues[startHeight + y];
-        if (widthValue > 0 && heightValue > 0) {
-            const nwColor = largeCanvas.data[Math.floor(widthValue)][Math.floor(heightValue)];
-            const neColor = largeCanvas.data[Math.ceil(widthValue)][Math.floor(heightValue)];
-            const swColor = largeCanvas.data[Math.floor(widthValue)][Math.ceil(heightValue)];
-            const seColor = largeCanvas.data[Math.ceil(widthValue)][Math.ceil(heightValue)];
-            const widthRemainder = widthValue % Math.floor(widthValue);
-            const heightRemainder = heightValue % Math.floor(heightValue);
-            const propNW = nwColor.map(d => 0.5 * d * (widthRemainder + heightRemainder));
-            const propNE = neColor.map(d => 0.5 * d * (widthRemainder + 1 - heightRemainder));
-            const propSW = swColor.map(d => 0.5 * d * (heightRemainder + 1 - widthRemainder));
-            const propSE = seColor.map(d => 0.5 * d * (1 - widthRemainder - heightRemainder));
-            const r = propNW[0] + propNE[0] + propSW[0] + propSE[0];
-            const g = propNW[1] + propNE[1] + propSW[1] + propSE[1];
-            const b = propNW[2] + propNE[2] + propSW[2] + propSE[2];
-            const a = propNW[3] + propNE[3] + propSW[3] + propSE[3];
-            ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
-            // ctx.fillStyle = getConcentrationPixel(concentrationValues, largeCanvas.data, startWidth + x, startHeight + y);
-            ctx.fillRect(
-                startWidth + x,
-                startHeight + y,
-                1, 1
-            );
-        }
-        // ctx.fillStyle = getConcentrationPixel(concentrationValues, largeCanvas.data, startWidth + x, startHeight + y);
-        // ctx.fillRect(
-        //     startWidth + x,
-        //     startHeight + y,
-        //     1, 1
-        // );
+        ctx.fillStyle = getConcentrationPixel(concentrationValues, largeCanvas, startWidth, startHeight, x, y);
+        ctx.fillRect(
+            startWidth + x,
+            startHeight + y,
+            1, 1
+        );
     } else {
         const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions);
         const getDistortionPixel = getDistortionPixelInit(ctx, smallCanvas, distortionOptions)(i)(j);
