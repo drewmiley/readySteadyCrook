@@ -51,9 +51,9 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
 
 const initConcentrateDecayFunction = (concentrationPoint, size) => value => {
     if (value < concentrationPoint) {
-        return Math.exp((value - concentrationPoint) / size);
+        return Math.exp((value - concentrationPoint) / 100);
     } else if (value > concentrationPoint) {
-        return Math.exp((concentrationPoint - value) / size);
+        return Math.exp((concentrationPoint - value) / 100);
     } else {
         return 1;
     }
@@ -100,8 +100,22 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
 
 const getConcentrationPixel = ({ widthValues, heightValues }, largeCanvasData, width, height) => {
     const widthValue = widthValues[width];
-    const heightValues = heightValues[height];
-    return [0, 0, 0, 0];
+    const heightValue = heightValues[height];
+    const nwColor = largeCanvasData[Math.floor(widthValue)][Math.floor(heightValue)];
+    const neColor = largeCanvasData[Math.ceil(widthValue)][Math.floor(heightValue)];
+    const swColor = largeCanvasData[Math.floor(widthValue)][Math.ceil(heightValue)];
+    const seColor = largeCanvasData[Math.ceil(widthValue)][Math.ceil(heightValue)];
+    const widthRemainder = widthValue % Math.floor(widthValue);
+    const heightRemainder = heightValue % Math.floor(heightValue);
+    const propNW = nwColor.map(d => 0.5 * d * (widthRemainder + heightRemainder));
+    const propNE = neColor.map(d => 0.5 * d * (widthRemainder + 1 - heightRemainder));
+    const propSW = swColor.map(d => 0.5 * d * (heightRemainder + 1 - widthRemainder));
+    const propSE = seColor.map(d => 0.5 * d * (1 - widthRemainder - heightRemainder));
+    const r = propNW[0] + propNE[0] + propSW[0] + propSE[0];
+    const g = propNW[1] + propNE[1] + propSW[1] + propSE[1];
+    const b = propNW[2] + propNE[2] + propSW[2] + propSE[2];
+    const a = propNW[3] + propNE[3] + propSW[3] + propSE[3];
+    return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
 }
 
 const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrationValues) => i => j => (x, y) => {
