@@ -60,8 +60,8 @@ const run = largeImage => smallImage => {
     };
     const concentrateOptions = {
         isConcentrated: document.getElementById('concentrateTrue').checked,
-        x: parseInt(document.getElementById('concentrateX').value),
-        y: parseInt(document.getElementById('concentrateY').value),
+        x: parseFloat(document.getElementById('concentrateX').value),
+        y: parseFloat(document.getElementById('concentrateY').value),
         decay: parseInt(document.getElementById('concentrateDecay').value)
     }
     const options = {
