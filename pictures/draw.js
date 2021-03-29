@@ -54,8 +54,10 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
 
     console.log('Large image data loaded')
 
+    // Only do if concentrating as computationally intense
+    const concentrationValues = concentrateOptions.isConcentrated && getConcentrationValues(largeCanvas, concentrateOptions);
     const colormergeModifiedOptions = {...colormergeOptions, array: colormergeOptions.isMerging && getColormergeArray(colormergeOptions)};
-    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrateOptions);
+    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrationValues);
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();

@@ -79,14 +79,18 @@
     </div>
     <div>Color Merge X across: <input id="colormergeX" type="number" value="4" /></div>
     <div>Color Merge Y down: <input id="colormergeY" type="number" value="4" /></div>
-    <!-- <div>
+    <div>
       Concentrate:
       True <input type="radio" id="concentrateTrue" name="concentrate" />
       False <input type="radio" id="concentrateFalse" name="concentrate" checked />
     </div>
-    <div>Concentrate X: <input id="concentrateX" type="number" value="0" /></div>
-    <div>Concentrate Y: <input id="concentrateY" type="number" value="0" /></div>
-    <div>Concentrate Decay: <input id="concentrateDecay" type="number" value="1" /></div> -->
+    <div>Concentrate X: <input id="concentrateX" type="number" value="0.25" /></div>
+    <div>Concentrate Y: <input id="concentrateY" type="number" value="0.25" /></div>
+    <div>Concentrate Intensity Modifier: <input id="concentrateModifier" type="number" value="1" /></div>
+    <div id="concentrateAlgorithm">
+      Concentrate Algorithm Type:
+      Exp Decay <input type="radio" id="concentrateExp" name="concentrateAlgorithm" checked />
+    </div>
     <div>
       Preview:
       True <input type="radio" id="previewTrue" name="preview" />

@@ -59,6 +59,13 @@ const run = largeImage => smallImage => {
         type: getCheckedValue('distortionType'),
         corner: getCheckedValue('distortionCorner')
     };
+    const concentrateOptions = {
+        isConcentrated: document.getElementById('concentrateTrue').checked,
+        x: parseFloat(document.getElementById('concentrateX').value),
+        y: parseFloat(document.getElementById('concentrateY').value),
+        modifier: parseFloat(document.getElementById('concentrateModifier').value),
+        type: getCheckedValue('concentrateAlgorithm')
+    };
     const colormergeOptions = {
         isMerging: document.getElementById('colormergeTrue').checked,
         colors: document.getElementById('colormergeColors').value.split(','),
@@ -70,12 +77,6 @@ const run = largeImage => smallImage => {
         xAcross: parseInt(document.getElementById('colormergeX').value),
         yDown: parseInt(document.getElementById('colormergeY').value)
     };
-    // const concentrateOptions = {
-    //     isConcentrated: document.getElementById('concentrateTrue').checked,
-    //     x: parseInt(document.getElementById('concentrateX').value),
-    //     y: parseInt(document.getElementById('concentrateY').value),
-    //     decay: parseInt(document.getElementById('concentrateDecay').value)
-    // }
     const options = {
         size: parseInt(document.getElementById('size').value),
         ratio: parseFloat(document.getElementById('ratio').value),
@@ -85,8 +86,7 @@ const run = largeImage => smallImage => {
         bleedOptions,
         distortionOptions,
         colormergeOptions,
-        concentrateOptions: {}
-        // concentrateOptions
+        concentrateOptions
     }
     console.log('Running');
     draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage, options);
