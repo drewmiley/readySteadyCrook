@@ -39,7 +39,8 @@
       Vertical <input type="radio" id="distortionVertical" name="distortionOrientation" />
       Horizontal <input type="radio" id="distortionHorizontal" name="distortionOrientation" checked />
     </div>
-    <div>Distortion Strength (pixels): <input id="distortionStrength" type="number" value="0" /></div>
+    <div>Distortion Max (pixels): <input id="distortionMax" type="number" value="0" /></div>
+    <div>Distortion Min (pixels): <input id="distortionMin" type="number" value="0" /></div>
     <div>Distortion Chance (%): <input id="distortionChance" type="number" value="0" /></div>
     <div>Distortion Start (pixels): <input id="distortionStart" type="number" value="0" /></div>
     <div>Distortion End (pixels): <input id="distortionEnd" type="number" value="0" /></div>
@@ -55,6 +56,29 @@
     </div>
     <div>Bleed Start (pixels): <input id="bleedStart" type="number" value="0" /></div>
     <div>Bleed End (pixels): <input id="bleedEnd" type="number" value="0" /></div>
+    <div>
+      Color Merge:
+      True <input type="radio" id="colormergeTrue" name="colormerge" />
+      False <input type="radio" id="colormergeFalse" name="colormerge" checked />
+    </div>
+    <div>Color Merge Colors: <input id="colormergeColors" type="text" value="#ff0000,#00ff00,#0000ff" /></div>
+    <div>
+      Color Merge Perturbation:
+      True <input type="radio" id="colormergePerturbationTrue" name="colormergePerturbation" />
+      False <input type="radio" id="colormergePerturbationFalse" name="colormergePerturbation" checked />
+    </div>
+    <div>Color Merge Perturbation Max (<255): <input id="colormergePerturbationMax" type="number" value="0" /></div>
+    <div>Color Merge Perturbation Min (>0): <input id="colormergePerturbationMin" type="number" value="0" /></div>
+    <div>Color Merge Ratio: <input id="colormergeRatio" type="number" value="3" /></div>
+    <div id="colormergeSelection">
+      Color Merge Color Selection Method:
+      Horizontal <input type="radio" id="colormergeSelectionH" name="colormergeSelection" />
+      Vertical <input type="radio" id="colormergeSelectionV" name="colormergeSelection" />
+      Mod <input type="radio" id="colormergeSelectionM" name="colormergeSelection" checked />
+      Random <input type="radio" id="colormergeSelectionR" name="colormergeSelection" />
+    </div>
+    <div>Color Merge X across: <input id="colormergeX" type="number" value="4" /></div>
+    <div>Color Merge Y down: <input id="colormergeY" type="number" value="4" /></div>
     <div>
       Concentrate:
       True <input type="radio" id="concentrateTrue" name="concentrate" />

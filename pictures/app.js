@@ -51,7 +51,8 @@ const run = largeImage => smallImage => {
     const distortionOptions = {
         isDistorted: document.getElementById('distortionTrue').checked,
         chance: parseFloat(document.getElementById('distortionChance').value),
-        strength: parseInt(document.getElementById('distortionStrength').value),
+        min: parseInt(document.getElementById('distortionMin').value),
+        max: parseInt(document.getElementById('distortionMax').value),
         start: parseInt(document.getElementById('distortionStart').value),
         end: parseInt(document.getElementById('distortionEnd').value),
         horizontal: document.getElementById('distortionHorizontal').checked,
@@ -64,7 +65,18 @@ const run = largeImage => smallImage => {
         y: parseFloat(document.getElementById('concentrateY').value),
         modifier: parseFloat(document.getElementById('concentrateModifier').value),
         type: getCheckedValue('concentrateAlgorithm')
-    }
+    };
+    const colormergeOptions = {
+        isMerging: document.getElementById('colormergeTrue').checked,
+        colors: document.getElementById('colormergeColors').value.split(','),
+        isPerturbed: document.getElementById('colormergePerturbationTrue').checked,
+        perturbationMin: parseInt(document.getElementById('colormergePerturbationMin').value),
+        perturbationMax: parseInt(document.getElementById('colormergePerturbationMax').value),
+        ratio: parseFloat(document.getElementById('colormergeRatio').value),
+        selection: getCheckedValue('colormergeSelection'),
+        xAcross: parseInt(document.getElementById('colormergeX').value),
+        yDown: parseInt(document.getElementById('colormergeY').value)
+    };
     const options = {
         size: parseInt(document.getElementById('size').value),
         ratio: parseFloat(document.getElementById('ratio').value),
@@ -73,6 +85,7 @@ const run = largeImage => smallImage => {
         persist: document.getElementById('persistTrue').checked,
         bleedOptions,
         distortionOptions,
+        colormergeOptions,
         concentrateOptions
     }
     console.log('Running');

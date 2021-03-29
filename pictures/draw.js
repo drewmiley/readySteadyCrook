@@ -1,5 +1,5 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage,
-    { size, ratio, rectRand, sample, preview, persist, bleedOptions, distortionOptions, concentrateOptions }
+    { size, ratio, rectRand, sample, preview, persist, bleedOptions, distortionOptions, colormergeOptions, concentrateOptions }
 ) {
     const DEFAULT_CANVAS_DIMENSIONS = {
         HEIGHT: 150,
@@ -56,15 +56,16 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
 
     // Only do if concentrating as computationally intense
     const concentrationValues = concentrateOptions.isConcentrated && getConcentrationValues(largeCanvas, concentrateOptions);
-    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrationValues);
+    const colormergeModifiedOptions = {...colormergeOptions, array: colormergeOptions.isMerging && getColormergeArray(colormergeOptions)};
+    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrationValues);
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();
 
     for (let i = 0; i < rows; i++) {
         if (i > 0) {
-          const timeLeft = (rows - i) * (Date.now() - start) / i;
-          console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
+            const timeLeft = (rows - i) * (Date.now() - start) / i;
+            console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
         }
         const getFillRectJ = getFillRectIJ(i);
         for (let j = 0; j < columns; j++) {

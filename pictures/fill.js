@@ -14,7 +14,35 @@ const getCanvasData = (imageCtx, width, height, ratioProp) => {
     return canvasData;
 }
 
-const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions) => (startWidth, startHeight, x, y) => {
+const getPerturbationPixel = colormergeOptions => {
+    if (!colormergeOptions.isPerturbed) return 0;
+    const perturbationSize = colormergeOptions.perturbationMin +
+        Math.floor(Math.random() * (colormergeOptions.perturbationMax - colormergeOptions.perturbationMin));
+    return (Math.random() < 0.5 ? -1 : 1) * perturbationSize;
+}
+
+const getColormergeArray = colormergeOptions => [...Array(colormergeOptions.xAcross)].map((_, i) => [...Array(colormergeOptions.yDown)].map((_, j) => {
+    const hasColorArray = colormergeOptions.colors.length && colormergeOptions.colors[0].length;
+    if (!hasColorArray) return [
+        Math.floor(Math.random() * 255),
+        Math.floor(Math.random() * 255),
+        Math.floor(Math.random() * 255)
+    ];
+    const colorSelectionIndexMap = {
+        'M': (j * colormergeOptions.xAcross + i) % colormergeOptions.colors.length,
+        'V': i % colormergeOptions.colors.length,
+        'H': j % colormergeOptions.colors.length,
+        'R': Math.floor(Math.random() * colormergeOptions.colors.length)
+    }
+    const color = colormergeOptions.colors[colorSelectionIndexMap[colormergeOptions.selection]];
+    return [
+        parseInt(color.slice(1, 3), 16) + getPerturbationPixel(colormergeOptions),
+        parseInt(color.slice(3, 5), 16) + getPerturbationPixel(colormergeOptions),
+        parseInt(color.slice(5, 7), 16) + getPerturbationPixel(colormergeOptions)
+    ];
+}))
+
+const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeModifiedOptions) => (startWidth, startHeight, x, y) => {
     const xMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width) : parseInt(x, 10);
     const yMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) : parseInt(y, 10);
     const valid = (startWidth + xMod) > 0 && (startWidth + xMod) < largeCanvas.width && (startHeight + yMod) > 0 && (startHeight + yMod) < largeCanvas.height;
@@ -27,7 +55,20 @@ const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRan
     const height = sample ?
         startHeight + Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) :
         inBleed && bleedOptions.horizontal ? bleedOptions.start : startHeight + y;
-    return largeCanvas.data[width][height];
+    const largeCanvasData = largeCanvas.data[width][height];
+    if (colormergeModifiedOptions.isMerging) {
+        const rgb = colormergeModifiedOptions.array
+            [Math.floor(width * colormergeModifiedOptions.xAcross / largeCanvas.width)]
+            [Math.floor(height * colormergeModifiedOptions.yDown / largeCanvas.height)];
+        return [
+            (rgb[0] + colormergeModifiedOptions.ratio * largeCanvasData[0]) / (colormergeModifiedOptions.ratio + 1),
+            (rgb[1] + colormergeModifiedOptions.ratio * largeCanvasData[1]) / (colormergeModifiedOptions.ratio + 1),
+            (rgb[2] + colormergeModifiedOptions.ratio * largeCanvasData[2]) / (colormergeModifiedOptions.ratio + 1),
+            largeCanvasData[3]
+        ];
+    } else {
+        return largeCanvasData;
+    }
 }
 
 const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j => (x, y) => {
@@ -46,7 +87,7 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
         1, 1
     ).data;
     return (color[0] || color[1] || color[2]) ? 0 :
-        Math.floor((1 + distortionOptions.strength) * Math.random());
+        distortionOptions.min + Math.floor((1 + distortionOptions.max - distortionOptions.min) * Math.random());
 }
 
 const exponentialDecayFunction = (symPoint, size, modifier, value) => {
@@ -84,8 +125,6 @@ const calculateConcentrationValues = (functionValues, size) => {
 const getConcentrationValues = (largeCanvas, concentrateOptions) => {
     const concentrateWidth = Math.floor(concentrateOptions.x * largeCanvas.width);
     const concentrateHeight = Math.floor(concentrateOptions.y * largeCanvas.height);
-    // const concentrateDecay = concentrateOptions.decay;
-    // IGNORE concentrateDecay for now
 
     const decayFunctionWidth = initConcentrateDecayFunction(concentrateOptions, concentrateWidth, largeCanvas.width);
     const decayFunctionHeight = initConcentrateDecayFunction(concentrateOptions, concentrateHeight, largeCanvas.height);
@@ -121,7 +160,7 @@ const getConcentrationPixel = (concentrationValues, largeCanvas, startWidth, sta
     }
 }
 
-const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, concentrationValues) => i => j => (x, y) => {
+const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrationValues) => i => j => (x, y) => {
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
 
@@ -133,7 +172,7 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
             1, 1
         );
     } else {
-        const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions);
+        const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeModifiedOptions);
         const getDistortionPixel = getDistortionPixelInit(ctx, smallCanvas, distortionOptions)(i)(j);
         const largeColor = getLargeCanvasData(startWidth, startHeight, x, y);
         const smallColor = smallCanvas.data[x][y];
