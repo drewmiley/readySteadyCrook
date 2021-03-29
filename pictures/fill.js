@@ -92,9 +92,9 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
 
 const exponentialDecayFunction = (symPoint, size, modifier, value) => {
     if (value < symPoint) {
-        return Math.exp(4 * (value - symPoint) / size);
+        return Math.exp(modifier * (value - symPoint) / size);
     } else if (value > symPoint) {
-        return Math.exp(4 * (symPoint - value) / size);
+        return Math.exp(modifier  * (symPoint - value) / size);
     } else {
         return 1;
     }
