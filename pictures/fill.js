@@ -98,7 +98,9 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
     return { widthValues, heightValues };
 }
 
-const getConcentrationPixel = (concentrationValues, largeCanvasData, width, height) => {
+const getConcentrationPixel = ({ widthValues, heightValues }, largeCanvasData, width, height) => {
+    const widthValue = widthValues[width];
+    const heightValues = heightValues[height];
     return [0, 0, 0, 0];
 }
 
