@@ -20,22 +20,22 @@ const expIncrease = (symPoint, size, modifier, value) => {
 
 const linearDecay = (symPoint, size, modifier, value) => {
     if (value < symPoint) {
-        return 1;
+        return modifier + 1 * (symPoint - value) / size;
     } else if (value > symPoint) {
-        return 1;
+        return modifier + 1 * (value - symPoint) / size;
     } else {
-        return 1;
+        return modifier;
     }
 }
 
 const linearIncrease = (symPoint, size, modifier, value) => {
-    if (value < symPoint) {
-        return 1;
-    } else if (value > symPoint) {
-        return 1;
-    } else {
-        return 1;
-    }
+  if (value < symPoint) {
+      return modifier + 1 * value / size;
+  } else if (value > symPoint) {
+      return modifier + 1 * (2 * symPoint - value) / size;
+  } else {
+      return modifier + 1 * symPoint / size;
+  }
 }
 
 const random = (symPoint, size, modifier, value) => {
