@@ -61,10 +61,11 @@ const run = largeImage => smallImage => {
     };
     const concentrateOptions = {
         isConcentrated: document.getElementById('concentrateTrue').checked,
+        orientation: getCheckedValue('concentrateOrientation'),
         x: parseFloat(document.getElementById('concentrateX').value),
         y: parseFloat(document.getElementById('concentrateY').value),
         modifier: parseFloat(document.getElementById('concentrateModifier').value),
-        type: getCheckedValue('concentrateAlgorithm')
+        algorithm: getCheckedValue('concentrateAlgorithm')
     };
     const colormergeOptions = {
         isMerging: document.getElementById('colormergeTrue').checked,

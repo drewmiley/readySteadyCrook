@@ -90,22 +90,6 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
         distortionOptions.min + Math.floor((1 + distortionOptions.max - distortionOptions.min) * Math.random());
 }
 
-const exponentialDecayFunction = (symPoint, size, modifier, value) => {
-    if (value < symPoint) {
-        return Math.exp(4 * (value - symPoint) / size);
-    } else if (value > symPoint) {
-        return Math.exp(4 * (symPoint - value) / size);
-    } else {
-        return 1;
-    }
-}
-
-const initConcentrateDecayFunction = (concentrateOptions, concentrationPoint, size) => value => {
-    if (concentrateOptions.type === 'concentrateExp') {
-        return exponentialDecayFunction(concentrationPoint, size,concentrateOptions.modifier, value);
-    }
-}
-
 const calculateConcentrationValues = (functionValues, size) => {
     const functionRunningTotals = functionValues.reduce((acc, d) => {
         return acc.length ? acc.concat([acc[acc.length - 1] + d]) : [d];
@@ -126,26 +110,36 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
     const concentrateWidth = Math.floor(concentrateOptions.x * largeCanvas.width);
     const concentrateHeight = Math.floor(concentrateOptions.y * largeCanvas.height);
 
-    const decayFunctionWidth = initConcentrateDecayFunction(concentrateOptions, concentrateWidth, largeCanvas.width);
-    const decayFunctionHeight = initConcentrateDecayFunction(concentrateOptions, concentrateHeight, largeCanvas.height);
+    const concentrateInWidth = ['concentrateBoth', 'concentrateHorizontal']
+        .includes(concentrateOptions.orientation);
+    const concentrateInHeight = ['concentrateBoth', 'concentrateVertical']
+        .includes(concentrateOptions.orientation);
+    const concentrateFunctionWidth = concentrateInWidth ?
+        initConcentrateFunction(concentrateOptions, concentrateWidth, largeCanvas.width) :
+        () => 1;
+    const concentrateFunctionHeight = concentrateInHeight ?
+        initConcentrateFunction(concentrateOptions, concentrateHeight, largeCanvas.height) :
+        () => 1;
 
-    const decayFunctionWidthValues = [...Array(largeCanvas.width * 10 + 1).keys()].map(d => decayFunctionWidth(0.1 * d));
-    const decayFunctionHeightValues = [...Array(largeCanvas.height * 10 + 1).keys()].map(d => decayFunctionHeight(0.1 * d));
+    const concentrateFunctionWidthValues = [...Array(largeCanvas.width * 10 + 1).keys()]
+        .map(d => concentrateFunctionWidth(0.1 * d));
+    const concentrateFunctionHeightValues = [...Array(largeCanvas.height * 10 + 1).keys()]
+        .map(d => concentrateFunctionHeight(0.1 * d));
 
-    const widthValues = calculateConcentrationValues(decayFunctionWidthValues, largeCanvas.width);
-    const heightValues = calculateConcentrationValues(decayFunctionHeightValues, largeCanvas.height);
+    const widthValues = calculateConcentrationValues(concentrateFunctionWidthValues, largeCanvas.width);
+    const heightValues = calculateConcentrationValues(concentrateFunctionHeightValues, largeCanvas.height);
 
     return { widthValues, heightValues };
 }
 
-const getConcentrationPixel = (concentrationValues, largeCanvas, startWidth, startHeight, x, y) => {
-    const widthValue = concentrationValues.widthValues[startWidth + x];
-    const heightValue = concentrationValues.heightValues[startHeight + y];
+const getConcentrationPixel = ({ widthValues, heightValues }, largeCanvasData, startWidth, startHeight, x, y) => {
+    const widthValue = widthValues[startWidth + x];
+    const heightValue = heightValues[startHeight + y];
     if (widthValue > 0 && heightValue > 0) {
-          const nwColor = largeCanvas.data[Math.floor(widthValue)][Math.floor(heightValue)];
-          const neColor = largeCanvas.data[Math.ceil(widthValue)][Math.floor(heightValue)];
-          const swColor = largeCanvas.data[Math.floor(widthValue)][Math.ceil(heightValue)];
-          const seColor = largeCanvas.data[Math.ceil(widthValue)][Math.ceil(heightValue)];
+          const nwColor = largeCanvasData[Math.floor(widthValue)][Math.floor(heightValue)];
+          const neColor = largeCanvasData[Math.ceil(widthValue)][Math.floor(heightValue)];
+          const swColor = largeCanvasData[Math.floor(widthValue)][Math.ceil(heightValue)];
+          const seColor = largeCanvasData[Math.ceil(widthValue)][Math.ceil(heightValue)];
           const widthRemainder = widthValue % Math.floor(widthValue);
           const heightRemainder = heightValue % Math.floor(heightValue);
           const propNW = Array.from(nwColor).map(d => 0.5 * d * (widthRemainder + heightRemainder));
@@ -165,7 +159,7 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
     const startHeight = i * smallCanvas.height;
 
     if (concentrationValues) {
-        ctx.fillStyle = getConcentrationPixel(concentrationValues, largeCanvas, startWidth, startHeight, x, y);
+        ctx.fillStyle = getConcentrationPixel(concentrationValues, largeCanvas.data, startWidth, startHeight, x, y);
         ctx.fillRect(
             startWidth + x,
             startHeight + y,
