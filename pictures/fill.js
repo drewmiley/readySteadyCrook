@@ -101,8 +101,8 @@ const exponentialDecayFunction = (symPoint, size, modifier, value) => {
 }
 
 const initConcentrateDecayFunction = (concentrateOptions, concentrationPoint, size) => value => {
-    if (concentrateOptions.type === 'concentrateExp') {
-        return exponentialDecayFunction(concentrationPoint, size,concentrateOptions.modifier, value);
+    if (concentrateOptions.algorithm === 'expDecay') {
+        return exponentialDecayFunction(concentrationPoint, size, concentrateOptions.modifier, value);
     }
 }
 
