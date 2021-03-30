@@ -44,22 +44,22 @@ const random = (symPoint, size, modifier, value) => {
 
 const inversePowerN = (symPoint, size, modifier, value) => {
     if (value < symPoint) {
-        return 1;
+        return 1 / (1 + Math.pow(symPoint - value, modifier));
     } else if (value > symPoint) {
-        return 1;
+        return 1 / (1 + Math.pow(value - symPoint, modifier));
     } else {
         return 1;
     }
 }
 
 const powerN = (symPoint, size, modifier, value) => {
-    if (value < symPoint) {
-        return 1;
-    } else if (value > symPoint) {
-        return 1;
-    } else {
-        return 1;
-    }
+  if (value < symPoint) {
+      return Math.pow(symPoint - value, modifier);
+  } else if (value > symPoint) {
+      return Math.pow(value - symPoint, modifier);
+  } else {
+      return 0;
+  }
 }
 
 const sine = (symPoint, size, modifier, value) => {
