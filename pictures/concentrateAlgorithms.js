@@ -1,4 +1,4 @@
-const exponentialDecay = (symPoint, size, modifier, value) => {
+const expDecay = (symPoint, size, modifier, value) => {
     if (value < symPoint) {
         return Math.exp(modifier * (value - symPoint) / size);
     } else if (value > symPoint) {
@@ -8,7 +8,7 @@ const exponentialDecay = (symPoint, size, modifier, value) => {
     }
 }
 
-const dummyFunction = (symPoint, size, modifier, value) => {
+const expIncrease = (symPoint, size, modifier, value) => {
     if (value < symPoint) {
         return 1;
     } else if (value > symPoint) {
@@ -18,29 +18,108 @@ const dummyFunction = (symPoint, size, modifier, value) => {
     }
 }
 
+const linearDecay = (symPoint, size, modifier, value) => {
+    if (value < symPoint) {
+        return 1;
+    } else if (value > symPoint) {
+        return 1;
+    } else {
+        return 1;
+    }
+}
+
+const linearIncrease = (symPoint, size, modifier, value) => {
+    if (value < symPoint) {
+        return 1;
+    } else if (value > symPoint) {
+        return 1;
+    } else {
+        return 1;
+    }
+}
+
+const random = (symPoint, size, modifier, value) => {
+    if (value < symPoint) {
+        return 1;
+    } else if (value > symPoint) {
+        return 1;
+    } else {
+        return 1;
+    }
+}
+
+const inversePowerN = (symPoint, size, modifier, value) => {
+    if (value < symPoint) {
+        return 1;
+    } else if (value > symPoint) {
+        return 1;
+    } else {
+        return 1;
+    }
+}
+
+const powerN = (symPoint, size, modifier, value) => {
+    if (value < symPoint) {
+        return 1;
+    } else if (value > symPoint) {
+        return 1;
+    } else {
+        return 1;
+    }
+}
+
+const sine = (symPoint, size, modifier, value) => {
+    if (value < symPoint) {
+        return 1;
+    } else if (value > symPoint) {
+        return 1;
+    } else {
+        return 1;
+    }
+}
+
+const cosine = (symPoint, size, modifier, value) => {
+    if (value < symPoint) {
+        return 1;
+    } else if (value > symPoint) {
+        return 1;
+    } else {
+        return 1;
+    }
+}
+
+const absTan = (symPoint, size, modifier, value) => {
+    if (value < symPoint) {
+        return 1;
+    } else if (value > symPoint) {
+        return 1;
+    } else {
+        return 1;
+    }
+}
 
 const initConcentrateFunction = ({ algorithm, modifier }, concentrationPoint, size) => value => {
     switch(algorithm) {
         case 'expDecay':
-            return exponentialDecay(concentrationPoint, size, modifier, value);
+            return expDecay(concentrationPoint, size, modifier, value);
         case 'expIncrease':
-            return dummyFunction(concentrationPoint, size, modifier, value);
+            return expIncrease(concentrationPoint, size, modifier, value);
         case 'linearDecay':
-            return dummyFunction(concentrationPoint, size, modifier, value);
+            return linearDecay(concentrationPoint, size, modifier, value);
         case 'linearIncrease':
-            return dummyFunction(concentrationPoint, size, modifier, value);
+            return linearIncrease(concentrationPoint, size, modifier, value);
         case 'random':
-            return dummyFunction(concentrationPoint, size, modifier, value);
+            return random(concentrationPoint, size, modifier, value);
         case 'inversePowerN':
-            return dummyFunction(concentrationPoint, size, modifier, value);
+            return inversePowerN(concentrationPoint, size, modifier, value);
         case 'powerN':
-            return dummyFunction(concentrationPoint, size, modifier, value);
+            return powerN(concentrationPoint, size, modifier, value);
         case 'sine':
-            return dummyFunction(concentrationPoint, size, modifier, value);
+            return sine(concentrationPoint, size, modifier, value);
         case 'cosine':
-            return dummyFunction(concentrationPoint, size, modifier, value);
+            return cosine(concentrationPoint, size, modifier, value);
         case 'absTan':
-            return dummyFunction(concentrationPoint, size, modifier, value);
+            return absTan(concentrationPoint, size, modifier, value);
         default:
             return 1;
     }
