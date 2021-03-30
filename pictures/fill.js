@@ -110,14 +110,24 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
     const concentrateWidth = Math.floor(concentrateOptions.x * largeCanvas.width);
     const concentrateHeight = Math.floor(concentrateOptions.y * largeCanvas.height);
 
-    const decayFunctionWidth = initConcentrateFunction(concentrateOptions, concentrateWidth, largeCanvas.width);
-    const decayFunctionHeight = initConcentrateFunction(concentrateOptions, concentrateHeight, largeCanvas.height);
+    const concentrateInWidth = ['concentrateBoth', 'concentrateHorizontal']
+        .includes(concentrateOptions.orientation);
+    const concentrateInHeight = ['concentrateBoth', 'concentrateVertical']
+        .includes(concentrateOptions.orientation);
+    const concentrateFunctionWidth = concentrateInWidth ?
+        initConcentrateFunction(concentrateOptions, concentrateWidth, largeCanvas.width) :
+        () => 1;
+    const concentrateFunctionHeight = concentrateInHeight ?
+        initConcentrateFunction(concentrateOptions, concentrateHeight, largeCanvas.height) :
+        () => 1;
 
-    const decayFunctionWidthValues = [...Array(largeCanvas.width * 10 + 1).keys()].map(d => decayFunctionWidth(0.1 * d));
-    const decayFunctionHeightValues = [...Array(largeCanvas.height * 10 + 1).keys()].map(d => decayFunctionHeight(0.1 * d));
+    const concentrateFunctionWidthValues = [...Array(largeCanvas.width * 10 + 1).keys()]
+        .map(d => concentrateFunctionWidth(0.1 * d));
+    const concentrateFunctionHeightValues = [...Array(largeCanvas.height * 10 + 1).keys()]
+        .map(d => concentrateFunctionHeight(0.1 * d));
 
-    const widthValues = calculateConcentrationValues(decayFunctionWidthValues, largeCanvas.width);
-    const heightValues = calculateConcentrationValues(decayFunctionHeightValues, largeCanvas.height);
+    const widthValues = calculateConcentrationValues(concentrateFunctionWidthValues, largeCanvas.width);
+    const heightValues = calculateConcentrationValues(concentrateFunctionHeightValues, largeCanvas.height);
 
     return { widthValues, heightValues };
 }
