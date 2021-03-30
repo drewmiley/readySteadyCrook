@@ -1,4 +1,4 @@
-const exponentialDecayFunction = (symPoint, size, modifier, value) => {
+const exponentialDecay = (symPoint, size, modifier, value) => {
     if (value < symPoint) {
         return Math.exp(modifier * (value - symPoint) / size);
     } else if (value > symPoint) {
@@ -22,12 +22,14 @@ const dummyFunction = (symPoint, size, modifier, value) => {
 const initConcentrateFunction = ({ algorithm, modifier }, concentrationPoint, size) => value => {
     switch(algorithm) {
         case 'expDecay':
-            return exponentialDecayFunction(concentrationPoint, size, modifier, value);
+            return exponentialDecay(concentrationPoint, size, modifier, value);
         case 'expIncrease':
             return dummyFunction(concentrationPoint, size, modifier, value);
         case 'linearDecay':
             return dummyFunction(concentrationPoint, size, modifier, value);
         case 'linearIncrease':
+            return dummyFunction(concentrationPoint, size, modifier, value);
+        case 'random':
             return dummyFunction(concentrationPoint, size, modifier, value);
         case 'inversePowerN':
             return dummyFunction(concentrationPoint, size, modifier, value);
