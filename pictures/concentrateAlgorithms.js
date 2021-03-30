@@ -9,7 +9,10 @@ const exponentialDecayFunction = (symPoint, size, modifier, value) => {
 }
 
 const initConcentrateFunction = (concentrateOptions, concentrationPoint, size) => value => {
-    if (concentrateOptions.algorithm === 'expDecay') {
-        return exponentialDecayFunction(concentrationPoint, size, concentrateOptions.modifier, value);
+    switch(concentrateOptions.algorithm) {
+        case 'expDecay':
+            return exponentialDecayFunction(concentrationPoint, size, concentrateOptions.modifier, value);
+        default:
+            return () => 1;
     }
 }
