@@ -90,22 +90,6 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
         distortionOptions.min + Math.floor((1 + distortionOptions.max - distortionOptions.min) * Math.random());
 }
 
-const exponentialDecayFunction = (symPoint, size, modifier, value) => {
-    if (value < symPoint) {
-        return Math.exp(modifier * (value - symPoint) / size);
-    } else if (value > symPoint) {
-        return Math.exp(modifier  * (symPoint - value) / size);
-    } else {
-        return 1;
-    }
-}
-
-const initConcentrateDecayFunction = (concentrateOptions, concentrationPoint, size) => value => {
-    if (concentrateOptions.algorithm === 'expDecay') {
-        return exponentialDecayFunction(concentrationPoint, size, concentrateOptions.modifier, value);
-    }
-}
-
 const calculateConcentrationValues = (functionValues, size) => {
     const functionRunningTotals = functionValues.reduce((acc, d) => {
         return acc.length ? acc.concat([acc[acc.length - 1] + d]) : [d];
@@ -126,8 +110,8 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
     const concentrateWidth = Math.floor(concentrateOptions.x * largeCanvas.width);
     const concentrateHeight = Math.floor(concentrateOptions.y * largeCanvas.height);
 
-    const decayFunctionWidth = initConcentrateDecayFunction(concentrateOptions, concentrateWidth, largeCanvas.width);
-    const decayFunctionHeight = initConcentrateDecayFunction(concentrateOptions, concentrateHeight, largeCanvas.height);
+    const decayFunctionWidth = initConcentrateFunction(concentrateOptions, concentrateWidth, largeCanvas.width);
+    const decayFunctionHeight = initConcentrateFunction(concentrateOptions, concentrateHeight, largeCanvas.height);
 
     const decayFunctionWidthValues = [...Array(largeCanvas.width * 10 + 1).keys()].map(d => decayFunctionWidth(0.1 * d));
     const decayFunctionHeightValues = [...Array(largeCanvas.height * 10 + 1).keys()].map(d => decayFunctionHeight(0.1 * d));
