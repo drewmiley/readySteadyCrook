@@ -9,13 +9,13 @@ const expDecay = (symPoint, size, modifier, value) => {
 }
 
 const expIncrease = (symPoint, size, modifier, value) => {
-    if (value < symPoint) {
-        return 1;
-    } else if (value > symPoint) {
-        return 1;
-    } else {
-        return 1;
-    }
+  if (value < symPoint) {
+      return Math.exp(modifier  * (symPoint - value) / size);
+  } else if (value > symPoint) {
+      return Math.exp(modifier * (value - symPoint) / size);
+  } else {
+      return 1;
+  }
 }
 
 const linearDecay = (symPoint, size, modifier, value) => {
