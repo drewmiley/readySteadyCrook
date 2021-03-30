@@ -63,33 +63,15 @@ const powerN = (symPoint, size, modifier, value) => {
 }
 
 const sine = (symPoint, size, modifier, value) => {
-    if (value < symPoint) {
-        return 1;
-    } else if (value > symPoint) {
-        return 1;
-    } else {
-        return 1;
-    }
+    return 1 + Math.sin(modifier * (value - symPoint) / size);
 }
 
 const cosine = (symPoint, size, modifier, value) => {
-    if (value < symPoint) {
-        return 1;
-    } else if (value > symPoint) {
-        return 1;
-    } else {
-        return 1;
-    }
+    return 1 + Math.cos(modifier * (value - symPoint) / size);
 }
 
 const absTan = (symPoint, size, modifier, value) => {
-    if (value < symPoint) {
-        return 1;
-    } else if (value > symPoint) {
-        return 1;
-    } else {
-        return 1;
-    }
+    return Math.abs(Math.tan(modifier * (value - symPoint) / size));
 }
 
 const initConcentrateFunction = ({ algorithm, modifier }, concentrationPoint, size) => value => {
