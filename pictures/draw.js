@@ -13,6 +13,8 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
         canvas.height = preview ? 0.2 * largeImage.naturalHeight : largeImage.naturalHeight;
         canvas.width = largeImage.naturalWidth;
     }
+    const largeImageToDrawHeight = shouldPersist ? canvas.height : largeImage.naturalHeight;
+    const largeImageToDrawWidth = shouldPersist ? canvas.width : largeImage.naturalWidth;
 
     const smallCanvasHeight = smallImage ?
         size : DEFAULT_CANVAS_DIMENSIONS.HEIGHT;
@@ -20,8 +22,8 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
         Math.floor(size * smallImage.naturalWidth / smallImage.naturalHeight) : DEFAULT_CANVAS_DIMENSIONS.WIDTH;
     smallImageCanvas.height = smallCanvasHeight;
     smallImageCanvas.width = smallCanvasWidth;
-    largeImageCanvas.height = largeImageToDraw.naturalHeight;
-    largeImageCanvas.width = largeImageToDraw.naturalWidth;
+    largeImageCanvas.height = largeImageToDrawHeight;
+    largeImageCanvas.width = largeImageToDrawWidth;
 
     const smallRatioProp = smallImage ? 1 / (ratio + 1) : 0;
     const largeRatioProp = 1 - smallRatioProp;
@@ -33,7 +35,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
     largeImageCtx.imageSmoothingQuality = 'high';
 
     if (smallImage) smallImageCtx.drawImage(smallImage, 0, 0, smallCanvasWidth, smallCanvasHeight);
-    largeImageCtx.drawImage(largeImageToDraw, 0, 0, largeImageToDraw.naturalWidth, largeImageToDraw.naturalHeight);
+    largeImageCtx.drawImage(largeImageToDraw, 0, 0, largeImageToDrawWidth, largeImageToDrawHeight);
 
     const rows = Math.ceil(canvas.height / smallCanvasHeight);
     const columns = Math.ceil(canvas.width / smallCanvasWidth);
