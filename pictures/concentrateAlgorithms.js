@@ -63,15 +63,15 @@ const powerN = (symPoint, size, modifier, value) => {
 }
 
 const sine = (symPoint, size, modifier, value) => {
-    return 1 + Math.sin(modifier * (value - symPoint) / size);
+    return 1 + Math.sin(Math.PI * modifier * (value - symPoint) / size);
 }
 
 const cosine = (symPoint, size, modifier, value) => {
-    return 1 + Math.cos(modifier * (value - symPoint) / size);
+    return 1 + Math.cos(Math.PI * modifier * (value - symPoint) / size);
 }
 
 const absTan = (symPoint, size, modifier, value) => {
-    return Math.abs(Math.tan(modifier * (value - symPoint) / size));
+    return Math.abs(Math.tan(Math.PI * modifier * (value - symPoint) / size));
 }
 
 const initConcentrateFunction = ({ algorithm, modifier }, concentrationPoint, size) => value => {
