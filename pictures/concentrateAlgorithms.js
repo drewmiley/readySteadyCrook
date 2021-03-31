@@ -39,7 +39,7 @@ const linearIncrease = (symPoint, size, modifier, value) => {
 }
 
 const random = (symPoint, size, modifier, value) => {
-    return 1 + modifier * Math.random();
+    return 1 / (modifier + Math.random());
 }
 
 const inversePowerN = (symPoint, size, modifier, value) => {
