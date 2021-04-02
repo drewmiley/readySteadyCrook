@@ -76,6 +76,11 @@ const absTan = (symPoint, size, modifier, value) => {
 
 const initConcentrateFunction = ({ symProportion, algorithm, modifier, startProportion, endProportion }, size) => value => {
     const concentrationPoint = Math.round(symProportion * size);
+    const startPoint = Math.round(startProportion * size);
+    const endPoint = Math.round(endProportion * size);
+    if (value < startPoint || value > endPoint) {
+        return null;
+    }
     switch(algorithm) {
         case 'expDecay':
             return expDecay(concentrationPoint, size, modifier, value);

@@ -91,7 +91,14 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
 }
 
 const calculateConcentrationValues = (functionValues, size) => {
-    const functionRunningTotals = functionValues.reduce((acc, d) => {
+    const definedFunctionTotals = functionValues
+        .map(d => d !== null)
+        .reduce((acc, d) => {
+          return { total: acc.total + d, index: d + 1 };
+        }, { total: 0, index: 0 });
+    const definedAverage = definedFunctionTotals.total / definedFunctionTotals.index;
+    const modifiedFunctionTotals = functionValues.map(d => d !== null ? d : definedAverage);
+    const functionRunningTotals = modifiedFunctionTotals.reduce((acc, d) => {
         return acc.length ? acc.concat([acc[acc.length - 1] + d]) : [d];
     }, []);
     const total = functionRunningTotals[functionRunningTotals.length - 1];
