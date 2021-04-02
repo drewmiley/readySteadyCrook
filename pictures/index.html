@@ -91,10 +91,9 @@
       Horizontal <input type="radio" id="concentrateHorizontal" name="concentrateOrientation" />
     </div>
     <div>Concentrate X: <input id="concentrateX" type="number" value="0.5" /></div>
-    <div>Concentrate Y: <input id="concentrateY" type="number" value="0.5" /></div>
-    <div>Concentrate Intensity Modifier: <input id="concentrateModifier" type="number" value="1" /></div>
-    <div id="concentrateAlgorithm">
-      Concentrate Algorithm Type:<br/>
+    <div>Concentrate X Intensity Modifier: <input id="concentrateXModifier" type="number" value="1" /></div>
+    <div id="concentrateXAlgorithm">
+      Concentrate X Algorithm Type:<br/>
       Exp Decay <input type="radio" id="expDecay" name="concentrateAlgorithm" checked />
       Exp Increase <input type="radio" id="expIncrease" name="concentrateAlgorithm" />
       Linear Decay <input type="radio" id="linearDecay" name="concentrateAlgorithm" />
@@ -106,6 +105,22 @@
       Sine + 1 <input type="radio" id="sine" name="concentrateAlgorithm" />
       Cosine + 1 <input type="radio" id="cosine" name="concentrateAlgorithm" />
       Absolute Tan <input type="radio" id="absTan" name="concentrateAlgorithm" />
+    </div>
+    <div>Concentrate Y: <input id="concentrateY" type="number" value="0.5" /></div>
+    <div>Concentrate Y Intensity Modifier: <input id="concentrateYModifier" type="number" value="1" /></div>
+    <div id="concentrateYAlgorithm">
+      Concentrate Y Algorithm Type:<br/>
+      Exp Decay <input type="radio" id="expDecay" name="concentrateYAlgorithm" checked />
+      Exp Increase <input type="radio" id="expIncrease" name="concentrateYAlgorithm" />
+      Linear Decay <input type="radio" id="linearDecay" name="concentrateYAlgorithm" />
+      Linear Increase <input type="radio" id="linearIncrease" name="concentrateYAlgorithm" />
+      Random <input type="radio" id="random" name="concentrateYAlgorithm" />
+      <br/>
+      Inverse to power n <input type="radio" id="inversePowerN" name="concentrateYAlgorithm" />
+      To power n <input type="radio" id="powerN" name="concentrateYAlgorithm" />
+      Sine + 1 <input type="radio" id="sine" name="concentrateYAlgorithm" />
+      Cosine + 1 <input type="radio" id="cosine" name="concentrateYAlgorithm" />
+      Absolute Tan <input type="radio" id="absTan" name="concentrateYAlgorithm" />
     </div>
     <div>
       Preview:

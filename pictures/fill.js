@@ -107,18 +107,15 @@ const calculateConcentrationValues = (functionValues, size) => {
 }
 
 const getConcentrationValues = (largeCanvas, concentrateOptions) => {
-    const concentrateWidth = Math.floor(concentrateOptions.x * largeCanvas.width);
-    const concentrateHeight = Math.floor(concentrateOptions.y * largeCanvas.height);
-
     const concentrateInWidth = ['concentrateBoth', 'concentrateHorizontal']
         .includes(concentrateOptions.orientation);
     const concentrateInHeight = ['concentrateBoth', 'concentrateVertical']
         .includes(concentrateOptions.orientation);
     const concentrateFunctionWidth = concentrateInWidth ?
-        initConcentrateFunction(concentrateOptions, concentrateWidth, largeCanvas.width) :
+        initConcentrateFunction(concentrateOptions.x, largeCanvas.width) :
         () => 1;
     const concentrateFunctionHeight = concentrateInHeight ?
-        initConcentrateFunction(concentrateOptions, concentrateHeight, largeCanvas.height) :
+        initConcentrateFunction(concentrateOptions.y, largeCanvas.height) :
         () => 1;
 
     const concentrateFunctionWidthValues = [...Array(largeCanvas.width * 10 + 1).keys()]

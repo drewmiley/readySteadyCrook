@@ -74,7 +74,8 @@ const absTan = (symPoint, size, modifier, value) => {
     return Math.abs(Math.tan(Math.PI * modifier * (value - symPoint) / size));
 }
 
-const initConcentrateFunction = ({ algorithm, modifier }, concentrationPoint, size) => value => {
+const initConcentrateFunction = ({ symProportion, algorithm, modifier }, size) => value => {
+    const concentrationPoint = Math.round(symProportion * size);
     switch(algorithm) {
         case 'expDecay':
             return expDecay(concentrationPoint, size, modifier, value);
