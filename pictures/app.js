@@ -64,11 +64,15 @@ const run = largeImage => smallImage => {
         orientation: getCheckedValue('concentrateOrientation'),
         x: {
             symProportion: parseFloat(document.getElementById('concentrateX').value),
+            startProportion: parseFloat(document.getElementById('concentrateXStart').value),
+            endProportion: parseFloat(document.getElementById('concentrateXEnd').value),
             modifier: parseFloat(document.getElementById('concentrateXModifier').value),
             algorithm: getCheckedValue('concentrateXAlgorithm')
         },
         y: {
             symProportion: parseFloat(document.getElementById('concentrateY').value),
+            startProportion: parseFloat(document.getElementById('concentrateYStart').value),
+            endProportion: parseFloat(document.getElementById('concentrateYEnd').value),
             modifier: parseFloat(document.getElementById('concentrateYModifier').value),
             algorithm: getCheckedValue('concentrateYAlgorithm')
         }
