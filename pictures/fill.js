@@ -94,7 +94,7 @@ const calculateConcentrationValues = (functionValues, size) => {
     const definedFunctionTotals = functionValues
         .map(d => d !== null)
         .reduce((acc, d) => {
-          return { total: acc.total + d, index: d + 1 };
+          return { total: acc.total + d, index: acc.index + 1 };
         }, { total: 0, index: 0 });
     const definedAverage = definedFunctionTotals.total / definedFunctionTotals.index;
     const modifiedFunctionTotals = functionValues.map(d => d !== null ? d : definedAverage);
@@ -129,9 +129,12 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
         .map(d => concentrateFunctionWidth(0.1 * d));
     const concentrateFunctionHeightValues = [...Array(largeCanvas.height * 10 + 1).keys()]
         .map(d => concentrateFunctionHeight(0.1 * d));
+    console.log(concentrateFunctionWidthValues)
 
     const widthValues = calculateConcentrationValues(concentrateFunctionWidthValues, largeCanvas.width);
     const heightValues = calculateConcentrationValues(concentrateFunctionHeightValues, largeCanvas.height);
+    console.log(widthValues)
+    console.log(heightValues)
 
     return { widthValues, heightValues };
 }
