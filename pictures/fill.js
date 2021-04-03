@@ -92,15 +92,16 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
 
 const calculateConcentrationValues = (functionValues, size) => {
     const definedFunctionTotals = functionValues
-        .map(d => d !== null)
+        .filter(d => d !== null)
         .reduce((acc, d) => {
           return { total: acc.total + d, index: acc.index + 1 };
         }, { total: 0, index: 0 });
     const definedAverage = definedFunctionTotals.total / definedFunctionTotals.index;
-    const modifiedFunctionTotals = functionValues.map(d => d !== null ? d : definedAverage);
-    const functionRunningTotals = modifiedFunctionTotals.reduce((acc, d) => {
-        return acc.length ? acc.concat([acc[acc.length - 1] + d]) : [d];
-    }, []);
+    const functionRunningTotals = functionValues
+        .map(d => d !== null ? d : definedAverage)
+        .reduce((acc, d) => {
+            return acc.length ? acc.concat([acc[acc.length - 1] + d]) : [d];
+        }, []);
     const total = functionRunningTotals[functionRunningTotals.length - 1];
     const increment = total / size;
     // TODO: Magic at the end suggests this algorithm is not perfect;
@@ -129,12 +130,9 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
         .map(d => concentrateFunctionWidth(0.1 * d));
     const concentrateFunctionHeightValues = [...Array(largeCanvas.height * 10 + 1).keys()]
         .map(d => concentrateFunctionHeight(0.1 * d));
-    console.log(concentrateFunctionWidthValues)
 
     const widthValues = calculateConcentrationValues(concentrateFunctionWidthValues, largeCanvas.width);
     const heightValues = calculateConcentrationValues(concentrateFunctionHeightValues, largeCanvas.height);
-    console.log(widthValues)
-    console.log(heightValues)
 
     return { widthValues, heightValues };
 }
