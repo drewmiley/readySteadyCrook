@@ -91,9 +91,17 @@ const getDistortionPixelInit = (ctx, smallCanvas, distortionOptions) => i => j =
 }
 
 const calculateConcentrationValues = (functionValues, size) => {
-    const functionRunningTotals = functionValues.reduce((acc, d) => {
-        return acc.length ? acc.concat([acc[acc.length - 1] + d]) : [d];
-    }, []);
+    const definedFunctionTotals = functionValues
+        .filter(d => d !== null)
+        .reduce((acc, d) => {
+          return { total: acc.total + d, index: acc.index + 1 };
+        }, { total: 0, index: 0 });
+    const definedAverage = definedFunctionTotals.total / definedFunctionTotals.index;
+    const functionRunningTotals = functionValues
+        .map(d => d !== null ? d : definedAverage)
+        .reduce((acc, d) => {
+            return acc.length ? acc.concat([acc[acc.length - 1] + d]) : [d];
+        }, []);
     const total = functionRunningTotals[functionRunningTotals.length - 1];
     const increment = total / size;
     // TODO: Magic at the end suggests this algorithm is not perfect;
@@ -107,18 +115,15 @@ const calculateConcentrationValues = (functionValues, size) => {
 }
 
 const getConcentrationValues = (largeCanvas, concentrateOptions) => {
-    const concentrateWidth = Math.floor(concentrateOptions.x * largeCanvas.width);
-    const concentrateHeight = Math.floor(concentrateOptions.y * largeCanvas.height);
-
     const concentrateInWidth = ['concentrateBoth', 'concentrateHorizontal']
         .includes(concentrateOptions.orientation);
     const concentrateInHeight = ['concentrateBoth', 'concentrateVertical']
         .includes(concentrateOptions.orientation);
     const concentrateFunctionWidth = concentrateInWidth ?
-        initConcentrateFunction(concentrateOptions, concentrateWidth, largeCanvas.width) :
+        initConcentrateFunction(concentrateOptions.x, largeCanvas.width) :
         () => 1;
     const concentrateFunctionHeight = concentrateInHeight ?
-        initConcentrateFunction(concentrateOptions, concentrateHeight, largeCanvas.height) :
+        initConcentrateFunction(concentrateOptions.y, largeCanvas.height) :
         () => 1;
 
     const concentrateFunctionWidthValues = [...Array(largeCanvas.width * 10 + 1).keys()]
