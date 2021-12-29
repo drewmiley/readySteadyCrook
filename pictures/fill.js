@@ -145,12 +145,12 @@ const getConcentrationPixel = ({ widthValues, heightValues }, largeCanvasData, s
           const neColor = largeCanvasData[Math.ceil(widthValue)][Math.floor(heightValue)];
           const swColor = largeCanvasData[Math.floor(widthValue)][Math.ceil(heightValue)];
           const seColor = largeCanvasData[Math.ceil(widthValue)][Math.ceil(heightValue)];
-          const widthRemainder = widthValue % Math.floor(widthValue);
-          const heightRemainder = heightValue % Math.floor(heightValue);
-          const propNW = Array.from(nwColor).map(d => 0.5 * d * (widthRemainder + heightRemainder));
-          const propNE = Array.from(neColor).map(d => 0.5 * d * (widthRemainder + 1 - heightRemainder));
-          const propSW = Array.from(swColor).map(d => 0.5 * d * (heightRemainder + 1 - widthRemainder));
-          const propSE = Array.from(seColor).map(d => 0.5 * d * (1 - widthRemainder - heightRemainder));
+          const widthRemainder = widthValue % (Math.floor(widthValue) || 1);
+          const heightRemainder = heightValue % (Math.floor(heightValue) || 1);
+          const propNW = Array.from(nwColor).map(d => d * (widthRemainder + heightRemainder) / 3);
+          const propNE = Array.from(neColor).map(d => d * (widthRemainder + 1 - heightRemainder) / 3);
+          const propSW = Array.from(swColor).map(d => d * (heightRemainder + 1 - widthRemainder) / 3);
+          const propSE = Array.from(seColor).map(d => d * (1 - widthRemainder - heightRemainder) / 3);
           const r = propNW[0] + propNE[0] + propSW[0] + propSE[0];
           const g = propNW[1] + propNE[1] + propSW[1] + propSE[1];
           const b = propNW[2] + propNE[2] + propSW[2] + propSE[2];
