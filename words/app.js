@@ -18,6 +18,8 @@ const run = image => {
     const options = {
         text: document.getElementById('text').value.split(','),
         size: parseInt(document.getElementById('size').value),
+        wordStart: parseInt(document.getElementById('wordStart').value),
+        wordEnd: parseInt(document.getElementById('wordEnd').value),
         offset: parseInt(document.getElementById('offset').value),
         offsetRows: parseInt(document.getElementById('offsetRows').value),
         spacing: parseInt(document.getElementById('spacing').value),

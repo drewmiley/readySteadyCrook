@@ -1,5 +1,5 @@
 function draw(canvas, imageCanvas, img,
-    { text, size, offset, offsetRows, spacing, font, backgroundImage, colorRect, letterRand, rectRand, backgroundColor, textColor, preview }
+    { text, size, wordStart, wordEnd, offset, offsetRows, spacing, font, backgroundImage, colorRect, letterRand, rectRand, backgroundColor, textColor, preview }
 ) {
     canvas.height = preview ? 0.2 * img.naturalHeight : img.naturalHeight;
     canvas.width = img.naturalWidth;
@@ -53,6 +53,8 @@ function draw(canvas, imageCanvas, img,
           const timeLeft = (rows - i) * (Date.now() - start) / i;
           console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
         }
+        const rowHeight = i * rowSpacing;
+        const shouldFillText = rowHeight >= wordStart && rowHeight < wordEnd;
         const fillRectJK = fillRectIJK(i);
         const fillTextJK = fillTextIJK(i);
         for (let j = 0; j < columnsRequiredWithOffset[i % textArray.length]; j++) {
@@ -60,11 +62,13 @@ function draw(canvas, imageCanvas, img,
             const fillTextK = fillTextJK(j);
             for (let k = 0; k < textArray[i % textArray.length].length; k++) {
                 // Fill small rect
-                if (!backgroundImage && colorRect) {
+                if ((!backgroundImage && colorRect) || !shouldFillText) {
                     fillRectK(k);
                 }
                 // Write letters
-                fillTextK(k);
+                if (shouldFillText) {
+                    fillTextK(k);
+                }
             }
         }
     }
