@@ -1,5 +1,5 @@
 function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage,
-    { size, ratio, rectRand, sample, preview, persist, bleedOptions, distortionOptions, colormergeOptions, concentrateOptions }
+    { size, ratio, rectRand, sample, preview, persist, bleedOptions, distortionOptions, colormergeOptions, concentrateOptions, setToWhiteColors }
 ) {
     const DEFAULT_CANVAS_DIMENSIONS = {
         HEIGHT: 150,
@@ -59,7 +59,7 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
     // Only do if concentrating as computationally intense
     const concentrationValues = concentrateOptions.isConcentrated && getConcentrationValues(largeCanvas, concentrateOptions);
     const colormergeModifiedOptions = {...colormergeOptions, array: colormergeOptions.isMerging && getColormergeArray(colormergeOptions)};
-    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrationValues);
+    const getFillRectIJ = getFillRect(ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrationValues, setToWhiteColors);
 
     console.log(`Drawing Rows Total ${rows}`);
     const start = Date.now();
