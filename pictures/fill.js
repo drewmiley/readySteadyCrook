@@ -156,15 +156,33 @@ const getConcentrationPixel = ({ widthValues, heightValues }, largeCanvasData, s
           const b = propNW[2] + propNE[2] + propSW[2] + propSE[2];
           const a = propNW[3] + propNE[3] + propSW[3] + propSE[3];
           return `rgba(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)}, ${Math.round(a) / 255})`;
+          return { r: Math.round(r), g: Math.round(g), b: Math.round(b), a: Math.round(a) }
+          return [Math.round(r), Math.round(g), Math.round(b), Math.round(a) / 255];
     }
 }
 
-const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrationValues) => i => j => (x, y) => {
+const setToWhiteRGBAColors = (setToWhiteColors = []) => {
+    return setToWhiteColors.map(color => {
+        return [
+            parseInt(color.slice(1, 3), 16),
+            parseInt(color.slice(3, 5), 16),
+            parseInt(color.slice(5, 7), 16)
+        ];
+    })
+}
+
+const rgbShouldBeSetToWhite = ([r, g, b, a], setToWhiteRGBA) => setToWhiteRGBA.some(setToWhite => setToWhite[0] === r && setToWhite[1] === g && setToWhite[2] === b);
+
+const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrationValues, setToWhiteColors) => i => j => (x, y) => {
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
 
+    const setToWhiteRGBA = setToWhiteRGBAColors(setToWhiteColors);
+
     if (concentrationValues) {
-        ctx.fillStyle = getConcentrationPixel(concentrationValues, largeCanvas.data, startWidth, startHeight, x, y);
+        const [r, g, b, a] = getConcentrationPixel(concentrationValues, largeCanvas.data, startWidth, startHeight, x, y);
+        const setToWhite = rgbShouldBeSetToWhite([r, g, b, a], setToWhiteRGBA);
+        ctx.fillStyle = `rgba(${!setToWhite ? r: 255}, ${!setToWhite ? g : 255}, ${!setToWhite ? b: 255}, ${!setToWhite ? a / 255: 0})`;
         ctx.fillRect(
             startWidth + x,
             startHeight + y,
@@ -179,7 +197,8 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
         const g = Math.round((smallColor[1] + largeColor[1]));
         const b = Math.round((smallColor[2] + largeColor[2]));
         const a = Math.round((smallColor[3] + largeColor[3]));
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+        const setToWhite = rgbShouldBeSetToWhite([r, g, b, a], setToWhiteRGBA);
+        ctx.fillStyle = `rgba(${!setToWhite ? r: 255}, ${!setToWhite ? g : 255}, ${!setToWhite ? b: 255}, ${!setToWhite ? a / 255: 0})`;
 
         const xFill = distortionOptions.type === 'V' ?  1 : getDistortionPixel(x, y);
         const yFill = distortionOptions.type === 'H' ?  1 : getDistortionPixel(x, y);

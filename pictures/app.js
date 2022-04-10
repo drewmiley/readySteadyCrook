@@ -97,7 +97,8 @@ const run = largeImage => smallImage => {
         bleedOptions,
         distortionOptions,
         colormergeOptions,
-        concentrateOptions
+        concentrateOptions,
+        setToWhiteColors: document.getElementById('setToWhiteColors').value.split(',')
     }
     console.log('Running');
     draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage, options);
