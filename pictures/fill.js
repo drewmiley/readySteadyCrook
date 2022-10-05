@@ -42,17 +42,32 @@ const getColormergeArray = colormergeOptions => [...Array(colormergeOptions.xAcr
     ];
 }))
 
-const getLargeCanvasDataInit = (largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeModifiedOptions) => (startWidth, startHeight, x, y) => {
-    const xMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width) : parseInt(x, 10);
-    const yMod = sample ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) : parseInt(y, 10);
+const getLargeCanvasDataInit = (largeCanvas, smallCanvas, ratio, rectRand, sampleOptions, bleedOptions, colormergeModifiedOptions) => (startWidth, startHeight, x, y) => {
+    if (sampleOptions.isSampled && sampleOptions.boxSize) {
+        const nw = null;
+        const ne = null;
+        const sw = null;
+        const se = null;
+        if (sampleOptions.type === 'sampleTypeMean') {
+          return largeCanvas.data[startWidth + x][startHeight + y];
+        } else if (sampleOptions.type === 'sampleTypeCenter') {
+          return largeCanvas.data[startWidth + x][startHeight + y];
+        } else if (sampleOptions.type === 'sampleTypeCornerMean') {
+          return largeCanvas.data[startWidth + x][startHeight + y];
+        } else if (sampleOptions.type === 'sampleTypeRand') {
+          return largeCanvas.data[startWidth + x][startHeight + y];
+        }
+    }
+    const xMod = sampleOptions.isSampled && !sampleOptions.boxSize ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width) : parseInt(x, 10);
+    const yMod = sampleOptions.isSampled && !sampleOptions.boxSize ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) : parseInt(y, 10);
     const valid = (startWidth + xMod) > 0 && (startWidth + xMod) < largeCanvas.width && (startHeight + yMod) > 0 && (startHeight + yMod) < largeCanvas.height;
     if (!valid) return [0, 0, 0, 0];
     const pixelValueToCheck = bleedOptions.horizontal ? startHeight + y : startWidth + x;
     const inBleed = bleedOptions.isBleeding && (pixelValueToCheck > bleedOptions.start) && (pixelValueToCheck <= bleedOptions.end);
-    const width = sample ?
+    const width = sampleOptions.isSampled && !sampleOptions.boxSize ?
         startWidth + Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width) :
         inBleed && !bleedOptions.horizontal ? bleedOptions.start : startWidth + x;
-    const height = sample ?
+    const height = sampleOptions.isSampled && !sampleOptions.boxSize ?
         startHeight + Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.height) :
         inBleed && bleedOptions.horizontal ? bleedOptions.start : startHeight + y;
     const largeCanvasData = largeCanvas.data[width][height];
@@ -173,7 +188,7 @@ const setToWhiteRGBAColors = (setToWhiteColors = []) => {
 
 const rgbShouldBeSetToWhite = ([r, g, b, a], setToWhiteRGBA) => setToWhiteRGBA.some(setToWhite => setToWhite[0] === r && setToWhite[1] === g && setToWhite[2] === b);
 
-const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrationValues, setToWhiteColors) => i => j => (x, y) => {
+const getFillRect = (ctx, largeCanvas, smallCanvas, ratio, rectRand, sampleOptions, bleedOptions, distortionOptions, colormergeModifiedOptions, concentrationValues, setToWhiteColors) => i => j => (x, y) => {
     const startWidth = j * smallCanvas.width;
     const startHeight = i * smallCanvas.height;
 
@@ -189,7 +204,7 @@ const getFillRect = (ctx, largeCanvas, smallCanvas, sample, ratio, rectRand, ble
             1, 1
         );
     } else {
-        const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, sample, ratio, rectRand, bleedOptions, colormergeModifiedOptions);
+        const getLargeCanvasData = getLargeCanvasDataInit(largeCanvas, smallCanvas, ratio, rectRand, sampleOptions, bleedOptions, colormergeModifiedOptions);
         const getDistortionPixel = getDistortionPixelInit(ctx, smallCanvas, distortionOptions)(i)(j);
         const largeColor = getLargeCanvasData(startWidth, startHeight, x, y);
         const smallColor = smallCanvas.data[x][y];
