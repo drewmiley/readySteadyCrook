@@ -44,18 +44,27 @@ const getColormergeArray = colormergeOptions => [...Array(colormergeOptions.xAcr
 
 const getLargeCanvasDataInit = (largeCanvas, smallCanvas, ratio, rectRand, sampleOptions, bleedOptions, colormergeModifiedOptions) => (startWidth, startHeight, x, y) => {
     if (sampleOptions.isSampled && sampleOptions.boxSize) {
-        const nw = null;
-        const ne = null;
-        const sw = null;
-        const se = null;
-        if (sampleOptions.type === 'sampleTypeMean') {
-          return largeCanvas.data[startWidth + x][startHeight + y];
-        } else if (sampleOptions.type === 'sampleTypeCenter') {
-          return largeCanvas.data[startWidth + x][startHeight + y];
-        } else if (sampleOptions.type === 'sampleTypeCornerMean') {
-          return largeCanvas.data[startWidth + x][startHeight + y];
-        } else if (sampleOptions.type === 'sampleTypeRand') {
-          return largeCanvas.data[startWidth + x][startHeight + y];
+        const modX = (startWidth + x) % sampleOptions.boxSize;
+        const modY = (startHeight + y) % sampleOptions.boxSize;
+        const nw = [startWidth + x - modX, startHeight + y - modY];
+        const ne = [startWidth + x - modX + sampleOptions.boxSize, startHeight + y - modY];
+        const sw = [startWidth + x - modX, startHeight + y - modY + sampleOptions.boxSize];
+        const se = [startWidth + x - modX + sampleOptions.boxSize, startHeight + y - modY + sampleOptions.boxSize];
+        const center = [startWidth + x - modX + 0.5 * sampleOptions.boxSize, startHeight + y - modY + 0.5 * sampleOptions.boxSize]
+        if (sampleOptions.type === 'Mean') {
+          // Modify this in testing - sampling all might be too intensive
+          const noPoints = 10;
+          return [...Array(noPoints).keys()]
+              .map(i => largeCanvas.data[nw[0] + Math.round(Math.random() * sampleOptions.boxSize)][nw[1] + Math.round(Math.random() * sampleOptions.boxSize)])
+              .reduce((acc, d) => [acc[0] + d[0] / noPoints, acc[1] + d[1] / noPoints, acc[2] + d[2] / noPoints, acc[3] + d[3] / noPoints], [0, 0, 0, 0]);
+        } else if (sampleOptions.type === 'Center') {
+          return largeCanvas.data[center[0]][center[1]];
+        } else if (sampleOptions.type === 'CornerMean') {
+          return [largeCanvas.data[nw[0]][nw[1]], largeCanvas.data[ne[0]][ne[1]], largeCanvas.data[sw[0]][sw[1]], largeCanvas.data[se[0]][se[1]]]
+              .map(i => largeCanvas.data[nw[0] + Math.round(Math.random() * sampleOptions.boxSize)][nw[1] + Math.round(Math.random() * sampleOptions.boxSize)])
+              .reduce((acc, d) => [acc[0] + d[0] / 4, acc[1] + d[1] / 4, acc[2] + d[2] / 4, acc[3] + d[3] / 4], [0, 0, 0, 0]);
+        } else if (sampleOptions.type === 'Rand') {
+          return largeCanvas.data[nw[0] + Math.round(Math.random() * sampleOptions.boxSize)][nw[1] + Math.round(Math.random() * sampleOptions.boxSize)];
         }
     }
     const xMod = sampleOptions.isSampled && !sampleOptions.boxSize ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width) : parseInt(x, 10);
