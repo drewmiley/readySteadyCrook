@@ -47,10 +47,10 @@ const getLargeCanvasDataInit = (largeCanvas, smallCanvas, ratio, rectRand, sampl
         const modX = (startWidth + x) % sampleOptions.boxSize;
         const modY = (startHeight + y) % sampleOptions.boxSize;
         const nw = [startWidth + x - modX, startHeight + y - modY];
-        const ne = [startWidth + x - modX + sampleOptions.boxSize, startHeight + y - modY];
-        const sw = [startWidth + x - modX, startHeight + y - modY + sampleOptions.boxSize];
-        const se = [startWidth + x - modX + sampleOptions.boxSize, startHeight + y - modY + sampleOptions.boxSize];
-        const center = [startWidth + x - modX + 0.5 * sampleOptions.boxSize, startHeight + y - modY + 0.5 * sampleOptions.boxSize]
+        const ne = [Math.min(startWidth + x - modX + sampleOptions.boxSize, largeCanvas.width - 1), startHeight + y - modY];
+        const sw = [startWidth + x - modX, Math.min(startHeight + y - modY + sampleOptions.boxSize, largeCanvas.height - 1)];
+        const se = [Math.min(startWidth + x - modX + sampleOptions.boxSize, largeCanvas.width - 1), Math.min(startHeight + y - modY + sampleOptions.boxSize, largeCanvas.height - 1)];
+        const center = [Math.min(startWidth + x - modX + 0.5 * sampleOptions.boxSize, largeCanvas.width - 1), Math.min(startHeight + y - modY + 0.5 * sampleOptions.boxSize, largeCanvas.height - 1)];
         if (sampleOptions.type === 'Mean') {
           // Modify this in testing - sampling all might be too intensive
           const noPoints = 10;
