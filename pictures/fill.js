@@ -55,18 +55,17 @@ const getLargeCanvasDataInit = (largeCanvas, smallCanvas, ratio, rectRand, sampl
           // Modify this in testing - sampling all might be too intensive
           const noPoints = 10;
           return [...Array(noPoints).keys()]
-              .map(i => largeCanvas.data[nw[0] + Math.round(Math.random() * sampleOptions.boxSize)][nw[1] + Math.round(Math.random() * sampleOptions.boxSize)])
+              .map(i => largeCanvas.data[Math.min(nw[0] + Math.round(Math.random() * sampleOptions.boxSize), largeCanvas.width - 1)][Math.min(nw[1] + Math.round(Math.random() * sampleOptions.boxSize), largeCanvas.height - 1)])
               .reduce((acc, d) => [acc[0] + d[0] / noPoints, acc[1] + d[1] / noPoints, acc[2] + d[2] / noPoints, acc[3] + d[3] / noPoints], [0, 0, 0, 0])
               .map(value => Math.round(value));
         } else if (sampleOptions.type === 'Center') {
           return largeCanvas.data[center[0]][center[1]];
         } else if (sampleOptions.type === 'CornerMean') {
           return [largeCanvas.data[nw[0]][nw[1]], largeCanvas.data[ne[0]][ne[1]], largeCanvas.data[sw[0]][sw[1]], largeCanvas.data[se[0]][se[1]]]
-              .map(i => largeCanvas.data[nw[0] + Math.round(Math.random() * sampleOptions.boxSize)][nw[1] + Math.round(Math.random() * sampleOptions.boxSize)])
               .reduce((acc, d) => [acc[0] + d[0] / 4, acc[1] + d[1] / 4, acc[2] + d[2] / 4, acc[3] + d[3] / 4], [0, 0, 0, 0])
               .map(value => Math.round(value));
         } else if (sampleOptions.type === 'Rand') {
-          return largeCanvas.data[nw[0] + Math.round(Math.random() * sampleOptions.boxSize)][nw[1] + Math.round(Math.random() * sampleOptions.boxSize)];
+          return largeCanvas.data[Math.min(nw[0] + Math.round(Math.random() * sampleOptions.boxSize), largeCanvas.width - 1)][Math.min(nw[1] + Math.round(Math.random() * sampleOptions.boxSize), largeCanvas.height - 1)];
         }
     }
     const xMod = sampleOptions.isSampled && !sampleOptions.boxSize ? Math.round((rectRand ? Math.random() : 0.5) * smallCanvas.width) : parseInt(x, 10);
