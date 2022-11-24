@@ -1,5 +1,5 @@
 # readySteadyCrook
-TEST
+
 ## On web
 
 drewmiley.github.io/readySteadyCrook/words

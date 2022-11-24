@@ -61,6 +61,7 @@ const getLargeCanvasDataInit = (largeCanvas, smallCanvas, ratio, rectRand, sampl
         } else if (sampleOptions.type === 'Center') {
           return largeCanvas.data[center[0]][center[1]];
         } else if (sampleOptions.type === 'CornerMean') {
+          // Need to fix corner mean
           return [largeCanvas.data[nw[0]][nw[1]], largeCanvas.data[ne[0]][ne[1]], largeCanvas.data[sw[0]][sw[1]], largeCanvas.data[se[0]][se[1]]]
               .reduce((acc, d) => [acc[0] + d[0] / 4, acc[1] + d[1] / 4, acc[2] + d[2] / 4, acc[3] + d[3] / 4], [0, 0, 0, 0])
               .map(value => Math.round(value));
