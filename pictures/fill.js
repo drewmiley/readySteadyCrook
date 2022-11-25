@@ -111,7 +111,7 @@ const calculateConcentrationValues = (functionValues, size) => {
         const largerValue = functionRunningTotals[indexLargerThan];
         const smallerValue = functionRunningTotals[indexLargerThan - 1];
         return indexLargerThan - 1 + (target - smallerValue) / (largerValue - smallerValue);
-    }).map(d => d / 10 - 1);
+    }).map(d => isNaN(d) ? 0 : d / 10 - 1);
 }
 
 const getConcentrationValues = (largeCanvas, concentrateOptions) => {
@@ -140,7 +140,7 @@ const getConcentrationValues = (largeCanvas, concentrateOptions) => {
 const getConcentrationPixel = ({ widthValues, heightValues }, largeCanvasData, startWidth, startHeight, x, y) => {
     const widthValue = widthValues[startWidth + x];
     const heightValue = heightValues[startHeight + y];
-    if (widthValue > 0 && heightValue > 0) {
+    if (widthValue >= 0 && heightValue >= 0) {
           const nwColor = largeCanvasData[Math.floor(widthValue)][Math.floor(heightValue)];
           const neColor = largeCanvasData[Math.ceil(widthValue)][Math.floor(heightValue)];
           const swColor = largeCanvasData[Math.floor(widthValue)][Math.ceil(heightValue)];

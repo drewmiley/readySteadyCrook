@@ -29,8 +29,8 @@ function draw(canvas, smallImageCanvas, largeImageCanvas, smallImage, largeImage
     const largeRatioProp = 1 - smallRatioProp;
 
     var ctx = canvas.getContext('2d');
-    var smallImageCtx = smallImageCanvas.getContext('2d');
-    var largeImageCtx = largeImageCanvas.getContext('2d');
+    var smallImageCtx = smallImageCanvas.getContext('2d', { willReadFrequently: true });
+    var largeImageCtx = largeImageCanvas.getContext('2d', { willReadFrequently: true });
     smallImageCtx.imageSmoothingQuality = 'high';
     largeImageCtx.imageSmoothingQuality = 'high';
 
