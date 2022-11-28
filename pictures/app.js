@@ -48,6 +48,11 @@ const run = largeImage => smallImage => {
         end: parseInt(document.getElementById('bleedEnd').value),
         horizontal: document.getElementById('bleedHorizontal').checked
     };
+    const sampleOptions = {
+      isSampled: document.getElementById('sampleTrue').checked,
+      type: getCheckedValue('sampleType'),
+      boxSize: parseInt(document.getElementById('sampleBoxSize').value)
+    }
     const distortionOptions = {
         isDistorted: document.getElementById('distortionTrue').checked,
         chance: parseFloat(document.getElementById('distortionChance').value),
@@ -91,9 +96,9 @@ const run = largeImage => smallImage => {
     const options = {
         size: parseInt(document.getElementById('size').value),
         ratio: parseFloat(document.getElementById('ratio').value),
-        sample: document.getElementById('sampleTrue').checked,
         preview: document.getElementById('previewTrue').checked,
         persist: document.getElementById('persistTrue').checked,
+        sampleOptions,
         bleedOptions,
         distortionOptions,
         colormergeOptions,
