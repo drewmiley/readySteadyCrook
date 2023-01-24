@@ -18,16 +18,9 @@ const run = image => {
     const options = {
         text: document.getElementById('text').value.split(','),
         size: parseInt(document.getElementById('size').value),
-        wordStart: parseInt(document.getElementById('wordStart').value),
-        wordEnd: parseInt(document.getElementById('wordEnd').value),
-        offset: parseInt(document.getElementById('offset').value),
-        offsetRows: parseInt(document.getElementById('offsetRows').value),
-        spacing: parseInt(document.getElementById('spacing').value),
+        number: parseInt(document.getElementById('number').value),
         font: document.getElementById('font').value,
-        backgroundColor: document.getElementById('backgroundColor').value,
-        textColor: document.getElementById('textColor').value,
-        backgroundImage: document.getElementById('backgroundImageTrue').checked,
-        preview: document.getElementById('previewTrue').checked
+        backgroundImage: document.getElementById('backgroundImageTrue').checked
     }
     console.log('Running');
     draw(canvas, imageCanvas, image, options);
