@@ -19,8 +19,7 @@ const run = image => {
         text: document.getElementById('text').value.split(','),
         size: parseInt(document.getElementById('size').value),
         number: parseInt(document.getElementById('number').value),
-        font: document.getElementById('font').value,
-        backgroundImage: document.getElementById('backgroundImageTrue').checked
+        font: document.getElementById('font').value
     }
     console.log('Running');
     draw(canvas, imageCanvas, image, options);
