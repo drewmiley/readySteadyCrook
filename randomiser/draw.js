@@ -21,8 +21,19 @@ function draw(canvas, imageCanvas, img,
 
     ctx.font = `bold ${size}px ${font}`;
 
-    // const textArray = Array.isArray(text) ? text : [text];
-    //
+    const textArray = Array.isArray(text) ? text : [text];
+
+    console.log(`Drawing Text Total ${number}`);
+    const start = Date.now();
+    for (let i = 0; i < number; i++) {
+      // Need to add in ctx height and width and make function of function
+      fillRandomiserText(ctx, imageCtx, textArray[i % textArray.length]);
+      if (i > 0) {
+        const timeLeft = (number - i) * (Date.now() - start) / i;
+        console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
+      }
+    }
+
     // const textWidths = textArray.map(text => text
     //     .split('')
     //     .map(d => ctx.measureText(d).width)
