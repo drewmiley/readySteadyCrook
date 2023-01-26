@@ -1,4 +1,6 @@
-function draw(canvas, img, { text, size, number, font, backgroundImage }) {
+function draw(canvas, img,
+  { text, size, number, font, backgroundImage }
+) {
     canvas.height = img.naturalHeight;
     canvas.width = img.naturalWidth;
 
