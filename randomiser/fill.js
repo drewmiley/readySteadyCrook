@@ -1,4 +1,4 @@
-const fillRandomiserText = (ctx, imageCtx, height, width) => text => {
+const fillRandomiserText = (ctx, height, width) => text => {
     const color = [Math.random() * 255, Math.random() * 255, Math.random() * 255];
     ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${255 / 255})`;
     const startWidth = Math.random() * height;

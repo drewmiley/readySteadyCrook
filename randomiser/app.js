@@ -14,7 +14,6 @@ function handleImage(e) {
 
 const run = image => {
     const canvas = document.getElementById('canvas');
-    const imageCanvas = document.createElement('canvas');
     const options = {
         text: document.getElementById('text').value.split(','),
         size: parseInt(document.getElementById('size').value),
@@ -22,5 +21,5 @@ const run = image => {
         font: document.getElementById('font').value
     }
     console.log('Running');
-    draw(canvas, imageCanvas, image, options);
+    draw(canvas, image, options);
 }
