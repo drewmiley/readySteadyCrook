@@ -7,20 +7,74 @@
   <body>
     <div>Text: <input id="text" type="text" value="ONE,TWO,THREE" /></div>
     <div>Size: <input id="size" type="number" value="12" /></div>
-    Size Randomiser (Min, Max)
+    <div>Size Variance: <input id="sizeVariance" type="number" value="0" /></div>
     <div>Number: <input id="number" type="number" value="100" /></div>
     <div>Font: <input id="font" type="text" value="Helvetica" /></div>
-    Types of randomiser
-    Power of 1, Power of 2, 1 - Power of 2, Power of 3, 1 - Power of 3, Sin, Cos, Sin Squared, Cos Squared
-    Color Randomiser
-    Width Randomiser
-    Height Randomiser
-    Angle Randomiser
-    Centre Background Color
-    Centre Text
-    Centre Text Color
-    Centre Text Size
-    Centre Background Color
+    <div id="colorRandomiserType">
+      Color Randomiser Type:
+      Power of 1<input type="radio" id="colorRandomiserTypePowerOne" name="colorRandomiserType" checked />
+      Power of 2<input type="radio" id="colorRandomiserTypePowerTwo" name="colorRandomiserType" />
+      1 - Power of 2<input type="radio" id="colorRandomiserTypeMinusPowerTwo" name="colorRandomiserType" />
+      Power of 3<input type="radio" id="colorRandomiserTypePowerThree" name="colorRandomiserType" />
+      1 - Power of 3<input type="radio" id="colorRandomiserTypeMinusPowerThree" name="colorRandomiserType" />
+      Sin<input type="radio" id="colorRandomiserTypeSin" name="colorRandomiserType" />
+      Cos<input type="radio" id="colorRandomiserTypeCos" name="colorRandomiserType" />
+      Sin Squared<input type="radio" id="colorRandomiserTypeSinSquared" name="colorRandomiserType" />
+      Cos Squared<input type="radio" id="colorRandomiserTypeCosSquared" name="colorRandomiserType" />
+    </div>
+    <div id="widthRandomiserType">
+      Width Randomiser Type:
+      Power of 1<input type="radio" id="widthRandomiserTypePowerOne" name="widthRandomiserType" checked />
+      Power of 2<input type="radio" id="widthRandomiserTypePowerTwo" name="widthRandomiserType" />
+      1 - Power of 2<input type="radio" id="widthRandomiserTypeMinusPowerTwo" name="widthRandomiserType" />
+      Power of 3<input type="radio" id="widthRandomiserTypePowerThree" name="widthRandomiserType" />
+      1 - Power of 3<input type="radio" id="widthRandomiserTypeMinusPowerThree" name="widthRandomiserType" />
+      Sin<input type="radio" id="widthRandomiserTypeSin" name="widthRandomiserType" />
+      Cos<input type="radio" id="widthRandomiserTypeCos" name="widthRandomiserType" />
+      Sin Squared<input type="radio" id="widthRandomiserTypeSinSquared" name="widthRandomiserType" />
+      Cos Squared<input type="radio" id="widthRandomiserTypeCosSquared" name="widthRandomiserType" />
+    </div>
+    <div id="heightRandomiserType">
+      Height Randomiser Type:
+      Power of 1<input type="radio" id="heightRandomiserTypePowerOne" name="heightRandomiserType" checked />
+      Power of 2<input type="radio" id="heightRandomiserTypePowerTwo" name="heightRandomiserType" />
+      1 - Power of 2<input type="radio" id="heightRandomiserTypeMinusPowerTwo" name="heightRandomiserType" />
+      Power of 3<input type="radio" id="heightRandomiserTypePowerThree" name="heightRandomiserType" />
+      1 - Power of 3<input type="radio" id="heightRandomiserTypeMinusPowerThree" name="heightRandomiserType" />
+      Sin<input type="radio" id="heightRandomiserTypeSin" name="heightRandomiserType" />
+      Cos<input type="radio" id="heightRandomiserTypeCos" name="heightRandomiserType" />
+      Sin Squared<input type="radio" id="heightRandomiserTypeSinSquared" name="heightRandomiserType" />
+      Cos Squared<input type="radio" id="heightRandomiserTypeCosSquared" name="heightRandomiserType" />
+    </div>
+    <div id="angleRandomiserType">
+      Angle Randomiser Type:
+      Power of 1<input type="radio" id="angleRandomiserTypePowerOne" name="angleRandomiserType" checked />
+      Power of 2<input type="radio" id="angleRandomiserTypePowerTwo" name="angleRandomiserType" />
+      1 - Power of 2<input type="radio" id="angleRandomiserTypeMinusPowerTwo" name="angleRandomiserType" />
+      Power of 3<input type="radio" id="angleRandomiserTypePowerThree" name="angleRandomiserType" />
+      1 - Power of 3<input type="radio" id="angleRandomiserTypeMinusPowerThree" name="angleRandomiserType" />
+      Sin<input type="radio" id="angleRandomiserTypeSin" name="angleRandomiserType" />
+      Cos<input type="radio" id="angleRandomiserTypeCos" name="angleRandomiserType" />
+      Sin Squared<input type="radio" id="angleRandomiserTypeSinSquared" name="angleRandomiserType" />
+      Cos Squared<input type="radio" id="angleRandomiserTypeCosSquared" name="angleRandomiserType" />
+    </div>
+    <div id="sizeRandomiserType">
+      Size Randomiser Type:
+      Power of 1<input type="radio" id="sizeRandomiserTypePowerOne" name="sizeRandomiserType" checked />
+      Power of 2<input type="radio" id="sizeRandomiserTypePowerTwo" name="sizeRandomiserType" />
+      1 - Power of 2<input type="radio" id="sizeRandomiserTypeMinusPowerTwo" name="sizeRandomiserType" />
+      Power of 3<input type="radio" id="sizeRandomiserTypePowerThree" name="sizeRandomiserType" />
+      1 - Power of 3<input type="radio" id="sizeRandomiserTypeMinusPowerThree" name="sizeRandomiserType" />
+      Sin<input type="radio" id="sizeRandomiserTypeSin" name="sizeRandomiserType" />
+      Cos<input type="radio" id="sizeRandomiserTypeCos" name="sizeRandomiserType" />
+      Sin Squared<input type="radio" id="sizeRandomiserTypeSinSquared" name="sizeRandomiserType" />
+      Cos Squared<input type="radio" id="sizeRandomiserTypeCosSquared" name="sizeRandomiserType" />
+    </div>
+    <div>Centre Text: <input id="centreText" type="text" value="CENTRE" /></div>
+    <div>Centre Font: <input id="centreFont" type="text" value="Helvetica" /></div>
+    <div>Centre Color: <input id="centreColor" type="text" value="black" /></div>
+    <div>Centre Size: <input id="centreSize" type="number" value="12" /></div>
+    <div>Centre Background Color: <input id="centreBackgroundColor" type="text" value="white" /></div>
     <div>Image: <input type="file" id="imageLoader" name="imageLoader"/></div>
     <button id="run">Run</button>
     <canvas id="canvas" />
