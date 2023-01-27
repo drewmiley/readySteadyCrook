@@ -1,20 +1,20 @@
 const powerOneRandom = () => Math.random();
 
-const powerTwoRandom = () => Math.random();
+const powerTwoRandom = () => Math.pow(Math.random(), 2);
 
-const minusPowerTwoRandom = () => Math.random();
+const minusPowerTwoRandom = () => 1 - Math.pow(Math.random(), 2);
 
-const powerThreeRandom = () => Math.random();
+const powerThreeRandom = () => Math.pow(Math.random(), 3);
 
-const minusPowerThreeRandom = () => Math.random();
+const minusPowerThreeRandom = () => 1 - Math.pow(Math.random(), 3);
 
-const sinRandom = () => Math.random();
+const sinRandom = () => Math.sin(Math.PI * Math.random() / 2);
 
-const cosRandom = () => Math.random();
+const cosRandom = () => Math.cos(Math.PI * Math.random() / 2);
 
-const sinSquaredRandom = () => Math.random();
+const sinSquaredRandom = () => Math.pow(Math.sin(Math.PI * Math.random() / 2), 2);
 
-const cosSquaredRandom = () => Math.random();
+const cosSquaredRandom = () => Math.pow(Math.cos(Math.PI * Math.random() / 2), 2);
 
 const getRandom = randomiserType => () => {
     switch(randomiserType) {
