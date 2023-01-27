@@ -31,12 +31,12 @@ const run = image => {
     const centreOptions = {
       text: document.getElementById('centreText').value.split(','),
       size: parseInt(document.getElementById('centreSize').value),
-      backgroundColor: document.getElementById('centreBackgroundColor').value,
-      textColor: document.getElementById('centreColor').value,
-      font: document.getElementById('centreFont').value
+      color: document.getElementById('centreColor').value,
+      font: document.getElementById('centreFont').value,
+      backgroundColor: document.getElementById('centreBackgroundColor').value
     }
     const options = {
-        text: document.getElementById('text').value.split(','),
+        text: document.getElementById('text').value,
         size: parseInt(document.getElementById('size').value),
         number: parseInt(document.getElementById('number').value),
         font: document.getElementById('font').value,

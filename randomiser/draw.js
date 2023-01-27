@@ -22,7 +22,7 @@ function draw(canvas, img,
       }
     }
 
-    // Draw centre with centreOptions here
+    if (centreOptions.text) drawCentreText(ctx, img.naturalHeight, img.naturalWidth, centreOptions);
 
     console.log('Done');
 }

@@ -16,3 +16,25 @@ const fillRandomiserText = (ctx, height, width, randomiserTypeOptions) => text =
     ctx.rotate(-1 * angle);
     ctx.translate(-1 * startWidth, -1 * startHeight);
 };
+
+const drawCentreText = (ctx, height, width, { text, size, color, font, backgroundColor }) => {
+  ctx.font = `bold ${size}px ${font}`;
+  const textWidths = text.split('').map(d => ctx.measureText(d).width);
+  ctx.fillStyle = backgroundColor;
+  // Draw background rectangle
+  ctx.fillRect(
+      Math.round(width / 2),
+      Math.round(height / 2),
+      Math.round(width / 2) + size,
+      Math.round(height / 2) + size
+  );
+  // Draw centre text
+  ctx.fillStyle = color;
+  Draw background rectangle
+  ctx.fillText(
+      text,
+      Math.round(width / 2),
+      Math.round(height / 2)
+  );
+  // TODO: Implements this correctly using text widths and maths!!!
+}
