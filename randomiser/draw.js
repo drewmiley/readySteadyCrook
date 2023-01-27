@@ -10,7 +10,7 @@ function draw(canvas, img,
     ctx.font = `bold ${size}px ${font}`;
 
     const textArray = Array.isArray(text) ? text : [text];
-    const fillRandomiser = fillRandomiserText(ctx, img.naturalHeight, img.naturalWidth);
+    const fillRandomiser = fillRandomiserText(ctx, img.naturalHeight, img.naturalWidth, randomiserTypeOptions);
 
     console.log(`Drawing Text Total ${number}`);
     const start = Date.now();
@@ -21,6 +21,8 @@ function draw(canvas, img,
         console.log(`Seconds Left: ${Math.floor(timeLeft / 1000)}`);
       }
     }
+
+    // Draw centre with centreOptions here
 
     console.log('Done');
 }
