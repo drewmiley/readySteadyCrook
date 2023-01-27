@@ -1,5 +1,5 @@
 function draw(canvas, img,
-  { text, size, number, font, backgroundImage }
+  { text, size, number, font, randomiserTypeOptions, centreOptions }
 ) {
     canvas.height = img.naturalHeight;
     canvas.width = img.naturalWidth;

@@ -26,8 +26,7 @@ const run = image => {
       blue: getCheckedValue('blueRandomiserType'),
       width: getCheckedValue('widthRandomiserType'),
       height: getCheckedValue('heightRandomiserType'),
-      angle: getCheckedValue('angleRandomiserType'),
-      size: getCheckedValue('sizeRandomiserType')
+      angle: getCheckedValue('angleRandomiserType')
     }
     const centreOptions = {
       text: document.getElementById('centreText').value.split(','),
@@ -39,7 +38,6 @@ const run = image => {
     const options = {
         text: document.getElementById('text').value.split(','),
         size: parseInt(document.getElementById('size').value),
-        sizeVariance: parseInt(document.getElementById('sizeVariance').value),
         number: parseInt(document.getElementById('number').value),
         font: document.getElementById('font').value,
         randomiserTypeOptions,
