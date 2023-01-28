@@ -19,22 +19,23 @@ const fillRandomiserText = (ctx, height, width, randomiserTypeOptions) => text =
 
 const drawCentreText = (ctx, height, width, { text, size, color, font, backgroundColor }) => {
   ctx.font = `bold ${size}px ${font}`;
-  const textWidths = text.split('').map(d => ctx.measureText(d).width);
-  console.log(textWidths);
+  const textWidth = text.split('')
+      .map(d => ctx.measureText(d).width)
+      .reduce((acc, d) => acc + d, 0);
   ctx.fillStyle = backgroundColor;
   // Draw background rectangle
   ctx.fillRect(
-      Math.round(width / 2),
-      Math.round(height / 2),
-      size,
+      Math.round((width - textWidth) / 2),
+      Math.round((height - size) / 2),
+      textWidth,
       size
   );
   // Draw centre text
   ctx.fillStyle = color;
   ctx.fillText(
       text,
-      Math.round(width / 2),
-      Math.round(height / 2)
+      Math.round((width - textWidth) / 2),
+      Math.round((height + size) / 2)
   );
   // TODO: Implements this correctly using text widths and maths!!!
 }
