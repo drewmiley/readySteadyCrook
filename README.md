@@ -5,6 +5,7 @@
 drewmiley.github.io/readySteadyCrook/words
 drewmiley.github.io/readySteadyCrook/pictures
 drewmiley.github.io/readySteadyCrook/fibonacci
+drewmiley.github.io/readySteadyCrook/randomiser
 
 ## To use
 

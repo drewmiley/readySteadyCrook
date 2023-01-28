@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ready Steady Crook Randomiser</title>
+  </head>
+  <body>
+    <div>Text: <input id="text" type="text" value="ONE,TWO,THREE" /></div>
+    <div>Size: <input id="size" type="number" value="12" /></div>
+    <div>Number: <input id="number" type="number" value="100" /></div>
+    <div>Font: <input id="font" type="text" value="Helvetica" /></div>
+    <div id="redRandomiserType">
+      Red Randomiser Type:
+      <br />
+      Power of 1<input type="radio" id="redRandomiserTypePowerOne" name="redRandomiserType" checked />
+      Power of 2<input type="radio" id="redRandomiserTypePowerTwo" name="redRandomiserType" />
+      1 - Power of 2<input type="radio" id="redRandomiserTypeMinusPowerTwo" name="redRandomiserType" />
+      Power of 3<input type="radio" id="redRandomiserTypePowerThree" name="redRandomiserType" />
+      1 - Power of 3<input type="radio" id="redRandomiserTypeMinusPowerThree" name="redRandomiserType" />
+      <br />
+      Sin<input type="radio" id="redRandomiserTypeSin" name="redRandomiserType" />
+      Cos<input type="radio" id="redRandomiserTypeCos" name="redRandomiserType" />
+      Sin Squared<input type="radio" id="redRandomiserTypeSinSquared" name="redRandomiserType" />
+      Cos Squared<input type="radio" id="redRandomiserTypeCosSquared" name="redRandomiserType" />
+    </div>
+    <div id="greenRandomiserType">
+      Green Randomiser Type:
+      <br />
+      Power of 1<input type="radio" id="greenRandomiserTypePowerOne" name="greenRandomiserType" checked />
+      Power of 2<input type="radio" id="greenRandomiserTypePowerTwo" name="greenRandomiserType" />
+      1 - Power of 2<input type="radio" id="greenRandomiserTypeMinusPowerTwo" name="greenRandomiserType" />
+      Power of 3<input type="radio" id="greenRandomiserTypePowerThree" name="greenRandomiserType" />
+      1 - Power of 3<input type="radio" id="greenRandomiserTypeMinusPowerThree" name="greenRandomiserType" />
+      <br />
+      Sin<input type="radio" id="greenRandomiserTypeSin" name="greenRandomiserType" />
+      Cos<input type="radio" id="greenRandomiserTypeCos" name="greenRandomiserType" />
+      Sin Squared<input type="radio" id="greenRandomiserTypeSinSquared" name="greenRandomiserType" />
+      Cos Squared<input type="radio" id="greenRandomiserTypeCosSquared" name="greenRandomiserType" />
+    </div>
+    <div id="blueRandomiserType">
+      Blue Randomiser Type:
+      <br />
+      Power of 1<input type="radio" id="blueRandomiserTypePowerOne" name="blueRandomiserType" checked />
+      Power of 2<input type="radio" id="blueRandomiserTypePowerTwo" name="blueRandomiserType" />
+      1 - Power of 2<input type="radio" id="blueRandomiserTypeMinusPowerTwo" name="blueRandomiserType" />
+      Power of 3<input type="radio" id="blueRandomiserTypePowerThree" name="blueRandomiserType" />
+      1 - Power of 3<input type="radio" id="blueRandomiserTypeMinusPowerThree" name="blueRandomiserType" />
+      <br />
+      Sin<input type="radio" id="blueRandomiserTypeSin" name="blueRandomiserType" />
+      Cos<input type="radio" id="blueRandomiserTypeCos" name="blueRandomiserType" />
+      Sin Squared<input type="radio" id="blueRandomiserTypeSinSquared" name="blueRandomiserType" />
+      Cos Squared<input type="radio" id="blueRandomiserTypeCosSquared" name="blueRandomiserType" />
+    </div>
+    <div id="widthRandomiserType">
+      Width Randomiser Type:
+      <br />
+      Power of 1<input type="radio" id="widthRandomiserTypePowerOne" name="widthRandomiserType" checked />
+      Power of 2<input type="radio" id="widthRandomiserTypePowerTwo" name="widthRandomiserType" />
+      1 - Power of 2<input type="radio" id="widthRandomiserTypeMinusPowerTwo" name="widthRandomiserType" />
+      Power of 3<input type="radio" id="widthRandomiserTypePowerThree" name="widthRandomiserType" />
+      1 - Power of 3<input type="radio" id="widthRandomiserTypeMinusPowerThree" name="widthRandomiserType" />
+      <br />
+      Sin<input type="radio" id="widthRandomiserTypeSin" name="widthRandomiserType" />
+      Cos<input type="radio" id="widthRandomiserTypeCos" name="widthRandomiserType" />
+      Sin Squared<input type="radio" id="widthRandomiserTypeSinSquared" name="widthRandomiserType" />
+      Cos Squared<input type="radio" id="widthRandomiserTypeCosSquared" name="widthRandomiserType" />
+    </div>
+    <div id="heightRandomiserType">
+      Height Randomiser Type:
+      <br />
+      Power of 1<input type="radio" id="heightRandomiserTypePowerOne" name="heightRandomiserType" checked />
+      Power of 2<input type="radio" id="heightRandomiserTypePowerTwo" name="heightRandomiserType" />
+      1 - Power of 2<input type="radio" id="heightRandomiserTypeMinusPowerTwo" name="heightRandomiserType" />
+      Power of 3<input type="radio" id="heightRandomiserTypePowerThree" name="heightRandomiserType" />
+      1 - Power of 3<input type="radio" id="heightRandomiserTypeMinusPowerThree" name="heightRandomiserType" />
+      <br />
+      Sin<input type="radio" id="heightRandomiserTypeSin" name="heightRandomiserType" />
+      Cos<input type="radio" id="heightRandomiserTypeCos" name="heightRandomiserType" />
+      Sin Squared<input type="radio" id="heightRandomiserTypeSinSquared" name="heightRandomiserType" />
+      Cos Squared<input type="radio" id="heightRandomiserTypeCosSquared" name="heightRandomiserType" />
+    </div>
+    <div id="angleRandomiserType">
+      Angle Randomiser Type:
+      <br />
+      Power of 1<input type="radio" id="angleRandomiserTypePowerOne" name="angleRandomiserType" checked />
+      Power of 2<input type="radio" id="angleRandomiserTypePowerTwo" name="angleRandomiserType" />
+      1 - Power of 2<input type="radio" id="angleRandomiserTypeMinusPowerTwo" name="angleRandomiserType" />
+      Power of 3<input type="radio" id="angleRandomiserTypePowerThree" name="angleRandomiserType" />
+      1 - Power of 3<input type="radio" id="angleRandomiserTypeMinusPowerThree" name="angleRandomiserType" />
+      <br />
+      Sin<input type="radio" id="angleRandomiserTypeSin" name="angleRandomiserType" />
+      Cos<input type="radio" id="angleRandomiserTypeCos" name="angleRandomiserType" />
+      Sin Squared<input type="radio" id="angleRandomiserTypeSinSquared" name="angleRandomiserType" />
+      Cos Squared<input type="radio" id="angleRandomiserTypeCosSquared" name="angleRandomiserType" />
+    </div>
+    <div>Centre Text: <input id="centreText" type="text" value="" /></div>
+    <div>Centre Font: <input id="centreFont" type="text" value="Helvetica" /></div>
+    <div>Centre Color: <input id="centreColor" type="text" value="black" /></div>
+    <div>Centre Size: <input id="centreSize" type="number" value="12" /></div>
+    <div>Centre Background Color: <input id="centreBackgroundColor" type="text" value="white" /></div>
+    <div>Image: <input type="file" id="imageLoader" name="imageLoader"/></div>
+    <button id="run">Run</button>
+    <canvas id="canvas" />
+    <script src="./randomiserTypes.js"></script>
+    <script src="./fill.js"></script>
+    <script src="./draw.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
