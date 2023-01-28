@@ -35,7 +35,6 @@ const drawCentreText = (ctx, height, width, { text, size, color, font, backgroun
   ctx.fillText(
       text,
       Math.round((width - textWidth) / 2),
-      Math.round((height + size) / 2)
+      Math.round((height + 0.74 * size) / 2)
   );
-  // TODO: Implements this correctly using text widths and maths!!!
 }
