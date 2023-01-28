@@ -20,17 +20,17 @@ const fillRandomiserText = (ctx, height, width, randomiserTypeOptions) => text =
 const drawCentreText = (ctx, height, width, { text, size, color, font, backgroundColor }) => {
   ctx.font = `bold ${size}px ${font}`;
   const textWidths = text.split('').map(d => ctx.measureText(d).width);
+  console.log(textWidths);
   ctx.fillStyle = backgroundColor;
   // Draw background rectangle
   ctx.fillRect(
       Math.round(width / 2),
       Math.round(height / 2),
-      Math.round(width / 2) + size,
-      Math.round(height / 2) + size
+      size,
+      size
   );
   // Draw centre text
   ctx.fillStyle = color;
-  Draw background rectangle
   ctx.fillText(
       text,
       Math.round(width / 2),

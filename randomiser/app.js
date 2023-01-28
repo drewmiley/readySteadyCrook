@@ -29,14 +29,14 @@ const run = image => {
       angle: getCheckedValue('angleRandomiserType')
     }
     const centreOptions = {
-      text: document.getElementById('centreText').value.split(','),
+      text: document.getElementById('centreText').value,
       size: parseInt(document.getElementById('centreSize').value),
       color: document.getElementById('centreColor').value,
       font: document.getElementById('centreFont').value,
       backgroundColor: document.getElementById('centreBackgroundColor').value
     }
     const options = {
-        text: document.getElementById('text').value,
+        text: document.getElementById('text').value.split(','),
         size: parseInt(document.getElementById('size').value),
         number: parseInt(document.getElementById('number').value),
         font: document.getElementById('font').value,
