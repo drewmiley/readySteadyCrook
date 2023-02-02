@@ -28,6 +28,23 @@ const run = image => {
       height: getCheckedValue('heightRandomiserType'),
       angle: getCheckedValue('angleRandomiserType')
     }
+    // Update below
+    const randomiserValueOptions = {
+      red: document.getElementById('centreText').value,
+      green: document.getElementById('centreText').value,
+      blue: document.getElementById('centreText').value,
+      width: document.getElementById('centreText').value,
+      height: document.getElementById('centreText').value,
+      angle: document.getElementById('centreText').value
+    }
+    const randomiserIntervalOptions = {
+      red: document.getElementById('centreText').value,
+      green: document.getElementById('centreText').value,
+      blue: document.getElementById('centreText').value,
+      width: document.getElementById('centreText').value,
+      height: document.getElementById('centreText').value,
+      angle: document.getElementById('centreText').value
+    }
     const centreOptions = {
       text: document.getElementById('centreText').value,
       size: parseInt(document.getElementById('centreSize').value),
@@ -40,7 +57,10 @@ const run = image => {
         size: parseInt(document.getElementById('size').value),
         number: parseInt(document.getElementById('number').value),
         font: document.getElementById('font').value,
+        // Invert to be purely randomiserOptions
         randomiserTypeOptions,
+        randomiserValueOptions,
+        randomiserIntervalOptions,
         centreOptions
     }
     console.log('Running');

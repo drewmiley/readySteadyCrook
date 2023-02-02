@@ -37,11 +37,11 @@ const getRandom = randomiserType => () => {
         case 'CosSquared':
             return cosSquaredRandom();
         case 'Zero':
-            return () => 0;
+            return 0;
         case 'Half':
-            return () => 0.5;
+            return 0.5;
         case 'One':
-            return () => 1;
+            return 1;
         default:
             return Math.random();
     }

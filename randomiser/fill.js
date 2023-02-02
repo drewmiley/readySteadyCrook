@@ -1,4 +1,4 @@
-const fillRandomiserText = (ctx, height, width, randomiserTypeOptions) => text => {
+const fillRandomiserText = (ctx, height, width, randomiserTypeOptions, randomiserValueOptions, randomiserIntervalOptions) => text => {
     const redRandomiser = getRandom(randomiserTypeOptions.red);
     const greenRandomiser = getRandom(randomiserTypeOptions.green);
     const blueRandomiser = getRandom(randomiserTypeOptions.blue);
