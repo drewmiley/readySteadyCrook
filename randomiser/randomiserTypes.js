@@ -8,18 +8,17 @@ const powerThreeRandom = () => Math.pow(Math.random(), 3);
 
 const minusPowerThreeRandom = () => 1 - Math.pow(Math.random(), 3);
 
-// TODO: Implement functions
-// const powerOneRandom = () => Math.random();
-//
-// const minusPowerOneRandom = () => Math.random();
-//
-// const powerTwoRandom = () => Math.pow(Math.random(), 2);
-//
-// const minusPowerTwoRandom = () => 1 - Math.pow(Math.random(), 2);
-//
-// const powerThreeRandom = () => Math.pow(Math.random(), 3);
-//
-// const minusPowerThreeRandom = () => 1 - Math.pow(Math.random(), 3);
+const powerOneMinusHalfRandom = () => 2 * Math.abs(Math.random() - 0.5);
+
+const minusPowerOneMinusHalfRandom = () => 1 - 2 * Math.abs(Math.random() - 0.5);
+
+const powerTwoMinusHalfRandom = () => 4 * Math.pow(Math.abs(Math.random() - 0.5), 2);
+
+const minusPowerTwoMinusHalfRandom = () => 1 - 4 * Math.pow(Math.abs(Math.random() - 0.5), 2);
+
+const powerThreeMinusHalfRandom = () => 8 * Math.pow(Math.abs(Math.random() - 0.5), 3);
+
+const minusPowerThreeMinusHalfRandom = () => 1 - 8 * Math.pow(Math.abs(Math.random() - 0.5), 3);
 
 const sinRandom = () => Math.sin(Math.PI * Math.random() / 2);
 
