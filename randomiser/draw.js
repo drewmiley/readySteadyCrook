@@ -1,5 +1,5 @@
 function draw(canvas, img,
-  { text, size, number, font, randomiserTypeOptions, randomiserValueOptions, randomiserIntervalOptions, centreOptions }
+  { text, size, number, font, randomiserOptions, centreOptions }
 ) {
     canvas.height = img.naturalHeight;
     canvas.width = img.naturalWidth;
@@ -10,8 +10,7 @@ function draw(canvas, img,
     ctx.font = `bold ${size}px ${font}`;
 
     const textArray = Array.isArray(text) ? text : [text];
-    const fillRandomiser = fillRandomiserText(ctx, img.naturalHeight, img.naturalWidth,
-      randomiserTypeOptions, randomiserValueOptions, randomiserIntervalOptions);
+    const fillRandomiser = fillRandomiserText(ctx, img.naturalHeight, img.naturalWidth, randomiserOptions);
 
     console.log(`Drawing Text Total ${number}`);
     const start = Date.now();

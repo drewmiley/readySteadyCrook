@@ -16,33 +16,40 @@ const sinSquaredRandom = () => Math.pow(Math.sin(Math.PI * Math.random() / 2), 2
 
 const cosSquaredRandom = () => Math.pow(Math.cos(Math.PI * Math.random() / 2), 2);
 
-const getRandom = randomiserType => () => {
-    switch(randomiserType) {
+const getRandom = ({ type, value, interval }) => () => {
+    if (value !== null) return value;
+    let random = null;
+    switch(type) {
         case 'PowerOne':
-            return powerOneRandom();
+            random = powerOneRandom();
+            break;
         case 'PowerTwo':
-            return powerTwoRandom();
+            random =  powerTwoRandom();
+            break;
         case 'MinusPowerTwo':
-            return minusPowerTwoRandom();
+            random =  minusPowerTwoRandom();
+            break;
         case 'PowerThree':
-            return powerThreeRandom();
+            random =  powerThreeRandom();
+            break;
         case 'MinusPowerThree':
-            return minusPowerThreeRandom();
+            random =  minusPowerThreeRandom();
+            break;
         case 'Sin':
-            return sinRandom();
+            random =  sinRandom();
+            break;
         case 'Cos':
-            return cosRandom();
+            random =  cosRandom();
+            break;
         case 'SinSquared':
-            return sinSquaredRandom();
+            random =  sinSquaredRandom();
+            break;
         case 'CosSquared':
-            return cosSquaredRandom();
-        case 'Zero':
-            return 0;
-        case 'Half':
-            return 0.5;
-        case 'One':
-            return 1;
+            random =  cosSquaredRandom();
+            break;
         default:
-            return Math.random();
+            random = Math.random();
+            break;
     }
+    return random;
 }

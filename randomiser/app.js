@@ -18,32 +18,23 @@ const getCheckedValue = (checkedValue) =>
         .id
         .replace(checkedValue, '');
 
+const getRandomiserOptions = (name) => {
+  return {
+    type: getCheckedValue(`${name}RandomiserType`),
+    value: document.getElementById(`${name}RandomiserValue`).value,
+    interval: document.getElementById(`${name}RandomiserInterval`).value
+  }
+}
+
 const run = image => {
     const canvas = document.getElementById('canvas');
-    const randomiserTypeOptions = {
-      red: getCheckedValue('redRandomiserType'),
-      green: getCheckedValue('greenRandomiserType'),
-      blue: getCheckedValue('blueRandomiserType'),
-      width: getCheckedValue('widthRandomiserType'),
-      height: getCheckedValue('heightRandomiserType'),
-      angle: getCheckedValue('angleRandomiserType')
-    }
-    // Update below
-    const randomiserValueOptions = {
-      red: document.getElementById('centreText').value,
-      green: document.getElementById('centreText').value,
-      blue: document.getElementById('centreText').value,
-      width: document.getElementById('centreText').value,
-      height: document.getElementById('centreText').value,
-      angle: document.getElementById('centreText').value
-    }
-    const randomiserIntervalOptions = {
-      red: document.getElementById('centreText').value,
-      green: document.getElementById('centreText').value,
-      blue: document.getElementById('centreText').value,
-      width: document.getElementById('centreText').value,
-      height: document.getElementById('centreText').value,
-      angle: document.getElementById('centreText').value
+    const randomiserOptions = {
+      red: getRandomiserOptions('red'),
+      green: getRandomiserOptions('green'),
+      blue: getRandomiserOptions('blue'),
+      width: getRandomiserOptions('width'),
+      height: getRandomiserOptions('height'),
+      angle: getRandomiserOptions('angle')
     }
     const centreOptions = {
       text: document.getElementById('centreText').value,
@@ -57,10 +48,7 @@ const run = image => {
         size: parseInt(document.getElementById('size').value),
         number: parseInt(document.getElementById('number').value),
         font: document.getElementById('font').value,
-        // Invert to be purely randomiserOptions
-        randomiserTypeOptions,
-        randomiserValueOptions,
-        randomiserIntervalOptions,
+        randomiserOptions,
         centreOptions
     }
     console.log('Running');
