@@ -8,6 +8,19 @@ const powerThreeRandom = () => Math.pow(Math.random(), 3);
 
 const minusPowerThreeRandom = () => 1 - Math.pow(Math.random(), 3);
 
+// TODO: Implement functions
+// const powerOneRandom = () => Math.random();
+//
+// const minusPowerOneRandom = () => Math.random();
+//
+// const powerTwoRandom = () => Math.pow(Math.random(), 2);
+//
+// const minusPowerTwoRandom = () => 1 - Math.pow(Math.random(), 2);
+//
+// const powerThreeRandom = () => Math.pow(Math.random(), 3);
+//
+// const minusPowerThreeRandom = () => 1 - Math.pow(Math.random(), 3);
+
 const sinRandom = () => Math.sin(Math.PI * Math.random() / 2);
 
 const cosRandom = () => Math.cos(Math.PI * Math.random() / 2);
@@ -24,32 +37,51 @@ const getRandom = ({ type, value, interval }) => () => {
             random = powerOneRandom();
             break;
         case 'PowerTwo':
-            random =  powerTwoRandom();
+            random = powerTwoRandom();
             break;
         case 'MinusPowerTwo':
-            random =  minusPowerTwoRandom();
+            random = minusPowerTwoRandom();
             break;
         case 'PowerThree':
-            random =  powerThreeRandom();
+            random = powerThreeRandom();
             break;
         case 'MinusPowerThree':
-            random =  minusPowerThreeRandom();
+            random = minusPowerThreeRandom();
+            break;
+        case 'PowerOneMinusHalf':
+            random = powerOneMinusHalfRandom();
+            break;
+        case 'MinusPowerOneMinusHalf':
+            random = minusPowerOneMinusHalfRandom();
+            break;
+        case 'PowerTwoMinusHalf':
+            random = powerTwoMinusHalfRandom();
+            break;
+        case 'MinusPowerTwoMinusHalf':
+            random = minusPowerTwoMinusHalfRandom();
+            break;
+        case 'PowerThreeMinusHalf':
+            random = powerThreeMinusHalfRandom();
+            break;
+        case 'MinusPowerThreeMinusHalf':
+            random = minusPowerThreeMinusHalfRandom();
             break;
         case 'Sin':
-            random =  sinRandom();
+            random = sinRandom();
             break;
         case 'Cos':
-            random =  cosRandom();
+            random = cosRandom();
             break;
         case 'SinSquared':
-            random =  sinSquaredRandom();
+            random = sinSquaredRandom();
             break;
         case 'CosSquared':
-            random =  cosSquaredRandom();
+            random = cosSquaredRandom();
             break;
         default:
             random = Math.random();
             break;
     }
+    // TODO: Work on interval
     return random;
 }
