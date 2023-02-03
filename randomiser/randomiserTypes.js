@@ -81,6 +81,9 @@ const getRandom = ({ type, value, interval }) => () => {
             random = Math.random();
             break;
     }
-    // TODO: Work on interval
+    if (interval) {
+      const steps = Math.round(1 / interval);
+      random = Math.round(steps * random) / steps;
+    }
     return random;
 }
