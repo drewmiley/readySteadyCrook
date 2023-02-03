@@ -29,7 +29,7 @@ const sinSquaredRandom = () => Math.pow(Math.sin(Math.PI * Math.random() / 2), 2
 const cosSquaredRandom = () => Math.pow(Math.cos(Math.PI * Math.random() / 2), 2);
 
 const getRandom = ({ type, value, interval }) => () => {
-    if (value !== null) return value;
+    if (value) return value;
     let random = null;
     switch(type) {
         case 'PowerOne':

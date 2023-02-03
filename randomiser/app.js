@@ -21,8 +21,8 @@ const getCheckedValue = (checkedValue) =>
 const getRandomiserOptions = (name) => {
   return {
     type: getCheckedValue(`${name}RandomiserType`),
-    value: document.getElementById(`${name}RandomiserValue`).value,
-    interval: document.getElementById(`${name}RandomiserInterval`).value
+    value: parseFloat(document.getElementById(`${name}RandomiserValue`).value),
+    interval: parseFloat(document.getElementById(`${name}RandomiserInterval`).value)
   }
 }
 
