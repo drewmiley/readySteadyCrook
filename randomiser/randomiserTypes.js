@@ -8,19 +8,15 @@ const powerThreeRandom = () => Math.pow(Math.random(), 3);
 
 const minusPowerThreeRandom = () => 1 - Math.pow(Math.random(), 3);
 
-// TODO: MINUS HALF SHOULD LEAM TO 0/1 EQUALLY
+// TODO: MINUS HALF SHOULD LEAM TO 0/1 EQUALLY OR AROUND 0.5
 
-const powerOneMinusHalfRandom = () => 2 * Math.abs(Math.random() - 0.5);
+const powerTwoMinusHalfRandom = () => Math.pow(Math.abs(2 * Math.random() - 1), 2);
 
-const minusPowerOneMinusHalfRandom = () => 1 - 2 * Math.abs(Math.random() - 0.5);
+const minusPowerTwoMinusHalfRandom = () => 1 - Math.pow(Math.abs(2 * Math.random() - 1), 2);
 
-const powerTwoMinusHalfRandom = () => 4 * Math.pow(Math.abs(Math.random() - 0.5), 2);
+const powerThreeMinusHalfRandom = () => Math.pow(Math.abs(2 * Math.random() - 1), 3);
 
-const minusPowerTwoMinusHalfRandom = () => 1 - 4 * Math.pow(Math.abs(Math.random() - 0.5), 2);
-
-const powerThreeMinusHalfRandom = () => 8 * Math.pow(Math.abs(Math.random() - 0.5), 3);
-
-const minusPowerThreeMinusHalfRandom = () => 1 - 8 * Math.pow(Math.abs(Math.random() - 0.5), 3);
+const minusPowerThreeMinusHalfRandom = () => 1 - Math.pow(Math.abs(2 * Math.random() - 1), 3);
 
 const sinRandom = () => Math.sin(Math.PI * Math.random() / 2);
 
@@ -48,12 +44,6 @@ const getRandom = ({ type, value, interval }) => () => {
             break;
         case 'MinusPowerThree':
             random = minusPowerThreeRandom();
-            break;
-        case 'PowerOneMinusHalf':
-            random = powerOneMinusHalfRandom();
-            break;
-        case 'MinusPowerOneMinusHalf':
-            random = minusPowerOneMinusHalfRandom();
             break;
         case 'PowerTwoMinusHalf':
             random = powerTwoMinusHalfRandom();
