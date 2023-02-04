@@ -8,6 +8,8 @@ const powerThreeRandom = () => Math.pow(Math.random(), 3);
 
 const minusPowerThreeRandom = () => 1 - Math.pow(Math.random(), 3);
 
+// TODO: MINUS HALF SHOULD LEAM TO 0/1 EQUALLY
+
 const powerOneMinusHalfRandom = () => 2 * Math.abs(Math.random() - 0.5);
 
 const minusPowerOneMinusHalfRandom = () => 1 - 2 * Math.abs(Math.random() - 0.5);
