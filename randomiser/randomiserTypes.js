@@ -24,7 +24,7 @@ const sinSquaredRandom = () => Math.pow(Math.sin(Math.PI * Math.random() / 2), 2
 
 const cosSquaredRandom = () => Math.pow(Math.cos(Math.PI * Math.random() / 2), 2);
 
-const getRandom = ({ type, value, interval }) => () => {
+const getRandom = ({ type, value, steps }) => () => {
     if (value) return value;
     let random = null;
     switch(type) {
@@ -71,9 +71,6 @@ const getRandom = ({ type, value, interval }) => () => {
             random = Math.random();
             break;
     }
-    if (interval) {
-      const steps = Math.round(1 / interval);
-      random = Math.round(steps * random) / steps;
-    }
+    if (steps) random = Math.round(steps * random) / steps;
     return random;
 }
