@@ -8,15 +8,13 @@ const powerThreeRandom = () => Math.pow(Math.random(), 3);
 
 const minusPowerThreeRandom = () => 1 - Math.pow(Math.random(), 3);
 
-// TODO: MINUS HALF SHOULD LEAM TO 0/1 EQUALLY OR AROUND 0.5
+const powerTwoMinusHalfRandom = () => Math.random() > 0.5 ? powerTwoRandom() : minusPowerTwoRandom();
 
-const powerTwoMinusHalfRandom = () => Math.pow(Math.abs(2 * Math.random() - 1), 2);
+const minusPowerTwoMinusHalfRandom = () => Math.random() > 0.5 ? 0.5 * minusPowerTwoRandom() : 1 - 0.5 * minusPowerTwoRandom();
 
-const minusPowerTwoMinusHalfRandom = () => 1 - Math.pow(Math.abs(2 * Math.random() - 1), 2);
+const powerThreeMinusHalfRandom = () => Math.random() > 0.5 ? powerThreeRandom() : minusPowerThreeRandom();
 
-const powerThreeMinusHalfRandom = () => Math.pow(Math.abs(2 * Math.random() - 1), 3);
-
-const minusPowerThreeMinusHalfRandom = () => 1 - Math.pow(Math.abs(2 * Math.random() - 1), 3);
+const minusPowerThreeMinusHalfRandom = () => Math.random() > 0.5 ? 0.5 * minusPowerThreeRandom() : 1 - 0.5 * minusPowerThreeRandom();
 
 const sinRandom = () => Math.sin(Math.PI * Math.random() / 2);
 
