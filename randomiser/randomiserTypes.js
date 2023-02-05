@@ -8,6 +8,14 @@ const powerThreeRandom = () => Math.pow(Math.random(), 3);
 
 const minusPowerThreeRandom = () => 1 - Math.pow(Math.random(), 3);
 
+const powerTwoMinusHalfRandom = () => Math.random() > 0.5 ? powerTwoRandom() : minusPowerTwoRandom();
+
+const minusPowerTwoMinusHalfRandom = () => Math.random() > 0.5 ? 0.5 * minusPowerTwoRandom() : 1 - 0.5 * minusPowerTwoRandom();
+
+const powerThreeMinusHalfRandom = () => Math.random() > 0.5 ? powerThreeRandom() : minusPowerThreeRandom();
+
+const minusPowerThreeMinusHalfRandom = () => Math.random() > 0.5 ? 0.5 * minusPowerThreeRandom() : 1 - 0.5 * minusPowerThreeRandom();
+
 const sinRandom = () => Math.sin(Math.PI * Math.random() / 2);
 
 const cosRandom = () => Math.cos(Math.PI * Math.random() / 2);
@@ -16,33 +24,53 @@ const sinSquaredRandom = () => Math.pow(Math.sin(Math.PI * Math.random() / 2), 2
 
 const cosSquaredRandom = () => Math.pow(Math.cos(Math.PI * Math.random() / 2), 2);
 
-const getRandom = randomiserType => () => {
-    switch(randomiserType) {
+const getRandom = ({ type, value, steps }) => () => {
+    if (value) return value;
+    let random = null;
+    switch(type) {
         case 'PowerOne':
-            return powerOneRandom();
+            random = powerOneRandom();
+            break;
         case 'PowerTwo':
-            return powerTwoRandom();
+            random = powerTwoRandom();
+            break;
         case 'MinusPowerTwo':
-            return minusPowerTwoRandom();
+            random = minusPowerTwoRandom();
+            break;
         case 'PowerThree':
-            return powerThreeRandom();
+            random = powerThreeRandom();
+            break;
         case 'MinusPowerThree':
-            return minusPowerThreeRandom();
+            random = minusPowerThreeRandom();
+            break;
+        case 'PowerTwoMinusHalf':
+            random = powerTwoMinusHalfRandom();
+            break;
+        case 'MinusPowerTwoMinusHalf':
+            random = minusPowerTwoMinusHalfRandom();
+            break;
+        case 'PowerThreeMinusHalf':
+            random = powerThreeMinusHalfRandom();
+            break;
+        case 'MinusPowerThreeMinusHalf':
+            random = minusPowerThreeMinusHalfRandom();
+            break;
         case 'Sin':
-            return sinRandom();
+            random = sinRandom();
+            break;
         case 'Cos':
-            return cosRandom();
+            random = cosRandom();
+            break;
         case 'SinSquared':
-            return sinSquaredRandom();
+            random = sinSquaredRandom();
+            break;
         case 'CosSquared':
-            return cosSquaredRandom();
-        case 'Zero':
-            return () => 0;
-        case 'Half':
-            return () => 0.5;
-        case 'One':
-            return () => 1;
+            random = cosSquaredRandom();
+            break;
         default:
-            return Math.random();
+            random = Math.random();
+            break;
     }
+    if (steps) random = Math.round(steps * random) / steps;
+    return random;
 }

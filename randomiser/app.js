@@ -18,15 +18,23 @@ const getCheckedValue = (checkedValue) =>
         .id
         .replace(checkedValue, '');
 
+const getRandomiserOptions = (name) => {
+  return {
+    type: getCheckedValue(`${name}RandomiserType`),
+    value: parseFloat(document.getElementById(`${name}RandomiserValue`).value),
+    steps: parseInt(document.getElementById(`${name}RandomiserSteps`).value)
+  }
+}
+
 const run = image => {
     const canvas = document.getElementById('canvas');
-    const randomiserTypeOptions = {
-      red: getCheckedValue('redRandomiserType'),
-      green: getCheckedValue('greenRandomiserType'),
-      blue: getCheckedValue('blueRandomiserType'),
-      width: getCheckedValue('widthRandomiserType'),
-      height: getCheckedValue('heightRandomiserType'),
-      angle: getCheckedValue('angleRandomiserType')
+    const randomiserOptions = {
+      red: getRandomiserOptions('red'),
+      green: getRandomiserOptions('green'),
+      blue: getRandomiserOptions('blue'),
+      width: getRandomiserOptions('width'),
+      height: getRandomiserOptions('height'),
+      angle: getRandomiserOptions('angle')
     }
     const centreOptions = {
       text: document.getElementById('centreText').value,
@@ -40,7 +48,7 @@ const run = image => {
         size: parseInt(document.getElementById('size').value),
         number: parseInt(document.getElementById('number').value),
         font: document.getElementById('font').value,
-        randomiserTypeOptions,
+        randomiserOptions,
         centreOptions
     }
     console.log('Running');

@@ -1,10 +1,10 @@
-const fillRandomiserText = (ctx, height, width, randomiserTypeOptions) => text => {
-    const redRandomiser = getRandom(randomiserTypeOptions.red);
-    const greenRandomiser = getRandom(randomiserTypeOptions.green);
-    const blueRandomiser = getRandom(randomiserTypeOptions.blue);
-    const widthRandomiser = getRandom(randomiserTypeOptions.width);
-    const heightRandomiser = getRandom(randomiserTypeOptions.height);
-    const angleRandomiser = getRandom(randomiserTypeOptions.angle);
+const fillRandomiserText = (ctx, height, width, randomiserOptions) => text => {
+    const redRandomiser = getRandom(randomiserOptions.red);
+    const greenRandomiser = getRandom(randomiserOptions.green);
+    const blueRandomiser = getRandom(randomiserOptions.blue);
+    const widthRandomiser = getRandom(randomiserOptions.width);
+    const heightRandomiser = getRandom(randomiserOptions.height);
+    const angleRandomiser = getRandom(randomiserOptions.angle);
     const color = [redRandomiser() * 255, blueRandomiser() * 255, greenRandomiser() * 255];
     ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${255 / 255})`;
     const startWidth = heightRandomiser() * height;
