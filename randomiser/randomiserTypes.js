@@ -1,71 +1,38 @@
-const powerOneRandom = () => Math.random();
+const getRandomToPower = power => Math.pow(Math.random(), power);
 
-const powerTwoRandom = () => Math.pow(Math.random(), 2);
+const getDefault = power => getRandomToPower(power);
 
-const minusPowerTwoRandom = () => 1 - Math.pow(Math.random(), 2);
+const getOneMinus = power => 1 - getRandomToPower(power);
 
-const powerThreeRandom = () => Math.pow(Math.random(), 3);
+const getSymmetric = power => Math.random() > 0.5 ? 0.5 * getOneMinus(power) : 1 - 0.5 * getOneMinus(power);
 
-const minusPowerThreeRandom = () => 1 - Math.pow(Math.random(), 3);
+const getSymmetricInverse = power => Math.random() > 0.5 ? getDefault(power) : getOneMinus(power);
 
-const powerTwoMinusHalfRandom = () => Math.random() > 0.5 ? powerTwoRandom() : minusPowerTwoRandom();
+const getSin = power => Math.pow(Math.sin(Math.PI * Math.random() / 2), power);
 
-const minusPowerTwoMinusHalfRandom = () => Math.random() > 0.5 ? 0.5 * minusPowerTwoRandom() : 1 - 0.5 * minusPowerTwoRandom();
+const getCos = power => Math.pow(Math.cos(Math.PI * Math.random() / 2), power);
 
-const powerThreeMinusHalfRandom = () => Math.random() > 0.5 ? powerThreeRandom() : minusPowerThreeRandom();
-
-const minusPowerThreeMinusHalfRandom = () => Math.random() > 0.5 ? 0.5 * minusPowerThreeRandom() : 1 - 0.5 * minusPowerThreeRandom();
-
-const sinRandom = () => Math.sin(Math.PI * Math.random() / 2);
-
-const cosRandom = () => Math.cos(Math.PI * Math.random() / 2);
-
-const sinSquaredRandom = () => Math.pow(Math.sin(Math.PI * Math.random() / 2), 2);
-
-const cosSquaredRandom = () => Math.pow(Math.cos(Math.PI * Math.random() / 2), 2);
-
-const getRandom = ({ type, value, steps }) => () => {
+const getRandom = ({ type, value, power, steps }) => () => {
     if (value) return value;
     let random = null;
     switch(type) {
-        case 'PowerOne':
-            random = powerOneRandom();
+        case 'Default':
+            random = getDefault(power);
             break;
-        case 'PowerTwo':
-            random = powerTwoRandom();
+        case 'OneMinus':
+            random = getOneMinus(power);
             break;
-        case 'MinusPowerTwo':
-            random = minusPowerTwoRandom();
+        case 'Symmetric':
+            random = getSymmetric(power);
             break;
-        case 'PowerThree':
-            random = powerThreeRandom();
-            break;
-        case 'MinusPowerThree':
-            random = minusPowerThreeRandom();
-            break;
-        case 'PowerTwoMinusHalf':
-            random = powerTwoMinusHalfRandom();
-            break;
-        case 'MinusPowerTwoMinusHalf':
-            random = minusPowerTwoMinusHalfRandom();
-            break;
-        case 'PowerThreeMinusHalf':
-            random = powerThreeMinusHalfRandom();
-            break;
-        case 'MinusPowerThreeMinusHalf':
-            random = minusPowerThreeMinusHalfRandom();
+        case 'SymmetricInverse':
+            random = getSymmetricInverse(power);
             break;
         case 'Sin':
-            random = sinRandom();
+            random = getSin(power);
             break;
         case 'Cos':
-            random = cosRandom();
-            break;
-        case 'SinSquared':
-            random = sinSquaredRandom();
-            break;
-        case 'CosSquared':
-            random = cosSquaredRandom();
+            random = getCos(power);
             break;
         default:
             random = Math.random();

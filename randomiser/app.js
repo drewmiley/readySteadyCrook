@@ -22,6 +22,7 @@ const getRandomiserOptions = (name) => {
   return {
     type: getCheckedValue(`${name}RandomiserType`),
     value: parseFloat(document.getElementById(`${name}RandomiserValue`).value),
+    power: parseFloat(document.getElementById(`${name}RandomiserPower`).value),
     steps: parseInt(document.getElementById(`${name}RandomiserSteps`).value)
   }
 }
