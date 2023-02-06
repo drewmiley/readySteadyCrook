@@ -24,9 +24,10 @@ const sinSquaredRandom = () => Math.pow(Math.sin(Math.PI * Math.random() / 2), 2
 
 const cosSquaredRandom = () => Math.pow(Math.cos(Math.PI * Math.random() / 2), 2);
 
-const getRandom = ({ type, value, steps }) => () => {
+const getRandom = ({ type, value, power, steps }) => () => {
     if (value) return value;
     let random = null;
+    // TODO: Implement powers
     switch(type) {
         case 'PowerOne':
             random = powerOneRandom();
