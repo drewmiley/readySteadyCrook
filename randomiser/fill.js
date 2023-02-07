@@ -1,3 +1,35 @@
+const getColor = (redRandomiser, greenRandomiser, blueRandomiser, { one, two }) => {
+  // TODO: Theres probably a cleaner way to write this
+  const initialColor = [redRandomiser() * 255, greenRandomiser() * 255, blueRandomiser() * 255];
+  const initialRed = redRandomiser() * 255;
+  const initialGreen = greenRandomiser() * 255;
+  const initialBlue = blueRandomiser() * 255;
+  const setToZeroRandom = Math.random();
+  // TODO: Not convinced by this
+  const setOneToZero = setToZeroRandom < one;
+  const setTwoToZero = setToZeroRandom < two;
+  // TODO: Ordering does not make correct sense
+  if (setTwoToZero) {
+    const colorRandom = Math.random();
+    const setRedGreenToZero = colorRandom < 1/3;
+    const setRedBlueToZero = colorRandom >= 1/3 && colorRandom < 2/3;
+    const setGreenBlueToZero = colorRandom >= 2/3;
+    return [
+      (setRedGreenToZero || setRedBlueToZero) ? 0 : initialRed,
+      (setRedGreenToZero || setGreenBlueToZero) ? 0 : initialGreen,
+      (setRedBlueToZero || setRedBlueToZero) ? 0 : initialBlue
+    ];
+  }
+  if (setOneToZero) {
+    const colorRandom = Math.random();
+    const setRedToZero = colorRandom < 1/3;
+    const setGreenToZero = colorRandom >= 1/3 && colorRandom < 2/3;
+    const setBlueToZero = colorRandom >= 2/3;
+    return [setRedToZero ? 0 : initialRed, setGreenToZero ? 0 : initialGreen, setBlueToZero ? 0 : initialBlue];
+  }
+  return initialColor;
+}
+
 const fillRandomiserText = (ctx, height, width, randomiserOptions) => text => {
     const redRandomiser = getRandom(randomiserOptions.red);
     const greenRandomiser = getRandom(randomiserOptions.green);
@@ -5,7 +37,7 @@ const fillRandomiserText = (ctx, height, width, randomiserOptions) => text => {
     const widthRandomiser = getRandom(randomiserOptions.width);
     const heightRandomiser = getRandom(randomiserOptions.height);
     const angleRandomiser = getRandom(randomiserOptions.angle);
-    const color = [redRandomiser() * 255, blueRandomiser() * 255, greenRandomiser() * 255];
+    const color = getColor(redRandomiser, greenRandomiser, blueRandomiser, randomiserOptions.colorsSetToZeroChance);
     ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${255 / 255})`;
     const startWidth = heightRandomiser() * height;
     const startHeight = widthRandomiser() * width;

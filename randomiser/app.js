@@ -35,7 +35,11 @@ const run = image => {
       blue: getRandomiserOptions('blue'),
       width: getRandomiserOptions('width'),
       height: getRandomiserOptions('height'),
-      angle: getRandomiserOptions('angle')
+      angle: getRandomiserOptions('angle'),
+      colorsSetToZeroChance: {
+        one: parseFloat(document.getElementById('oneColorsToZeroChance').value),
+        two: parseFloat(document.getElementById('twoColorsToZeroChance').value)
+      }
     }
     const centreOptions = {
       text: document.getElementById('centreText').value,
