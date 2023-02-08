@@ -54,14 +54,16 @@ const drawCentreText = (ctx, height, width, { text, size, color, font, backgroun
   const textWidth = text.split('')
       .map(d => ctx.measureText(d).width)
       .reduce((acc, d) => acc + d, 0);
-  ctx.fillStyle = backgroundColor;
-  // Draw background rectangle
-  ctx.fillRect(
-      Math.round((width - 1.1 * textWidth) / 2),
-      Math.round((height - size) / 2),
-      Math.round(1.1 * textWidth),
-      size
-  );
+  if (backgroundColor) {
+      ctx.fillStyle = backgroundColor;
+      // Draw background rectangle
+      ctx.fillRect(
+          Math.round((width - 1.1 * textWidth) / 2),
+          Math.round((height - size) / 2),
+          Math.round(1.1 * textWidth),
+          size
+      );
+  }
   // Draw centre text
   ctx.fillStyle = color;
   ctx.fillText(
