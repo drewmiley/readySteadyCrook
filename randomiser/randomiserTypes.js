@@ -38,10 +38,7 @@ const getRandom = ({ type, value, min, max, power, steps }) => () => {
             random = Math.random();
             break;
     }
-    // TODO: Can I avoid mutating?
-    if (min + max) {
-        random = min + (max - min) * random;
-    }
+    if (min + max) random = min + (max - min) * random;
     if (steps) random = Math.round(steps * random) / steps;
     return random;
 }
