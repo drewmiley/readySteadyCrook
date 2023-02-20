@@ -12,7 +12,7 @@ const getSin = power => Math.pow(Math.sin(Math.PI * Math.random() / 2), power);
 
 const getCos = power => Math.pow(Math.cos(Math.PI * Math.random() / 2), power);
 
-const getRandom = ({ type, value, power, steps }) => () => {
+const getRandom = ({ type, value, min, max, power, steps }) => () => {
     if (value) return value;
     let random = null;
     switch(type) {
@@ -38,6 +38,7 @@ const getRandom = ({ type, value, power, steps }) => () => {
             random = Math.random();
             break;
     }
+    if (min + max) random = min + (max - min) * random;
     if (steps) random = Math.round(steps * random) / steps;
     return random;
 }

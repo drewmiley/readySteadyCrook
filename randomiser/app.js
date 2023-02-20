@@ -22,6 +22,8 @@ const getRandomiserOptions = (name) => {
   return {
     type: getCheckedValue(`${name}RandomiserType`),
     value: parseFloat(document.getElementById(`${name}RandomiserValue`).value),
+    min: parseFloat(document.getElementById(`${name}RandomiserMin`).value),
+    max: parseFloat(document.getElementById(`${name}RandomiserMax`).value),
     power: parseFloat(document.getElementById(`${name}RandomiserPower`).value),
     steps: parseInt(document.getElementById(`${name}RandomiserSteps`).value)
   }
@@ -35,7 +37,11 @@ const run = image => {
       blue: getRandomiserOptions('blue'),
       width: getRandomiserOptions('width'),
       height: getRandomiserOptions('height'),
-      angle: getRandomiserOptions('angle')
+      angle: getRandomiserOptions('angle'),
+      colorsSetToZeroChance: {
+        one: parseFloat(document.getElementById('oneColorsToZeroChance').value),
+        two: parseFloat(document.getElementById('twoColorsToZeroChance').value)
+      }
     }
     const centreOptions = {
       text: document.getElementById('centreText').value,
