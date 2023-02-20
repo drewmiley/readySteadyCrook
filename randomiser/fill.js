@@ -1,33 +1,19 @@
 const getColor = (redRandomiser, greenRandomiser, blueRandomiser, { one, two }) => {
-  // TODO: Theres probably a cleaner way to write this
-  const initialColor = [redRandomiser() * 255, greenRandomiser() * 255, blueRandomiser() * 255];
-  const initialRed = redRandomiser() * 255;
-  const initialGreen = greenRandomiser() * 255;
-  const initialBlue = blueRandomiser() * 255;
-  const setToZeroRandom = Math.random();
-  // TODO: Not convinced by this
-  const setOneToZero = setToZeroRandom < one;
-  const setTwoToZero = setToZeroRandom < two;
-  // TODO: Ordering does not make correct sense
-  if (setTwoToZero) {
-    const colorRandom = Math.random();
-    const setRedGreenToZero = colorRandom < 1/3;
-    const setRedBlueToZero = colorRandom >= 1/3 && colorRandom < 2/3;
-    const setGreenBlueToZero = colorRandom >= 2/3;
-    return [
-      (setRedGreenToZero || setRedBlueToZero) ? 0 : initialRed,
-      (setRedGreenToZero || setGreenBlueToZero) ? 0 : initialGreen,
-      (setRedBlueToZero || setRedBlueToZero) ? 0 : initialBlue
-    ];
-  }
-  if (setOneToZero) {
-    const colorRandom = Math.random();
-    const setRedToZero = colorRandom < 1/3;
-    const setGreenToZero = colorRandom >= 1/3 && colorRandom < 2/3;
-    const setBlueToZero = colorRandom >= 2/3;
-    return [setRedToZero ? 0 : initialRed, setGreenToZero ? 0 : initialGreen, setBlueToZero ? 0 : initialBlue];
-  }
-  return initialColor;
+  const setOneToZero = Math.random() < one;
+  const setTwoToZero = Math.random() < two;
+  const oneColorRandom = Math.random();
+  const setRedToZero = setOneToZero && oneColorRandom < 1/3;
+  const setGreenToZero = setOneToZero && oneColorRandom >= 1/3 && oneColorRandom < 2/3;
+  const setBlueToZero = setOneToZero && oneColorRandom >= 2/3;;
+  const twoColorRandom = Math.random();
+  const setRedGreenToZero = setTwoToZero && twoColorRandom < 1/3;
+  const setRedBlueToZero = setTwoToZero && twoColorRandom >= 1/3 && twoColorRandom < 2/3;
+  const setGreenBlueToZero = setTwoToZero && twoColorRandom >= 2/3;;
+  return [
+    (setRedToZero || setRedGreenToZero || setRedBlueToZero) ? 0 : redRandomiser() * 255, 
+    (setGreenToZero || setRedGreenToZero || setGreenBlueToZero) ? 0 : greenRandomiser() * 255,
+    (setBlueToZero || setRedBlueToZero || setGreenBlueToZero) ? 0 : blueRandomiser() * 255
+  ];
 }
 
 const fillRandomiserText = (ctx, height, width, randomiserOptions) => text => {
